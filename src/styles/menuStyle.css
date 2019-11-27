@@ -1,0 +1,3 @@
+.ant-menu.ant-menu-dark .ant-menu-item-selected.customclass {
+    background-color: '#4E7097'; /*Overriden property*/
+  }
