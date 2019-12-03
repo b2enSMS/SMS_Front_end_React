@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+const SERVER_URL = "http//SMS-0.0.1/api"
 export const postContracts = (formData) => {
     const data = {
         orgId: formData.orgId,
@@ -9,20 +11,19 @@ export const postContracts = (formData) => {
         delYn: formData.delYn,
         contReportNo: formData.contReportNo,
     }
-    console.log("postContracts", data)
-    axios.post('/helloSpringBoot-0.0.1-SNAPSHOT/api/cont/create', data);
+    axios.post(SERVER_URL+'/cont/create', data);
 }
 
 export const getOrganization = () =>
-    axios.get('/helloSpringBoot-0.0.1-SNAPSHOT/api/org/showall');
+    axios.get(SERVER_URL+'/org/showall');
 
 export const getContracts = () =>
-    axios.get('/helloSpringBoot-0.0.1-SNAPSHOT/api/cont/showall');
+    axios.get(SERVER_URL+'/cont/showall');
 
 export const getOrgManager = () =>
-    axios.get('/helloSpringBoot-0.0.1-SNAPSHOT/api/b2en/showall');
+    axios.get(SERVER_URL+'/b2en/showall');
 
 
 export const getManagers = () => {
-    axios.get('/helloSpringBoot-0.0.1-SNAPSHOT/customers/showall');
+    axios.get(SERVER_URL+'customers/showall');
 }
