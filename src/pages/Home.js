@@ -5,7 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { MainItemList, ContractTable } from "pages";
+import MainItemList  from "../components/MainItemList";
+import ContractTableContainer from "../containers/ContractTableContainer";
+import ContractModalContainer from "../containers/ContractModalContainer";
 import Image from 'images/Logo.png';
 
 const drawerWidth = 201;
@@ -143,7 +145,8 @@ function Home() {
                     <Paper >
                         <Container maxWidth="lg" className={classes.container}>
                             <div >
-                                <ContractTable />
+                                <ContractTableContainer />
+                                <ContractModalContainer/>
                             </div>
                         </Container>
                     </Paper>
