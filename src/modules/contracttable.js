@@ -7,23 +7,23 @@ const GET_CONTRACT = 'contracttable/GET_CONTRACT';
 const GET_CONTRACT_SUCCESS = 'contracttable/GET_CONTRACT_SUCCESS';
 const GET_CONTRACT_FAILURE = 'contracttable/GET_CONTRACT_FAILURE';
 
-// const data = [];
-// for (let i = 0; i < 46; i++) {
-//     data.push({
-//         key: i,
-//         orgId: '서울시청',
-//         empId: `권대환 ${i}`,
-//         contDt: `A1234567 ${i}`,
-//         contTotAmt: '11월 15일',
-//         delYn: '5월 21일',
-//         contReportNo: 'System',
-//         //menuTag: menuTag,
-//     });
-// }
+
+const data = [];
+for (let i = 0; i < 46; i++) {
+    data.push({
+        key: i,
+        orgNm: '서울시청',
+        empNm: `권대환 ${i}`,
+        contDt: `A1234567 ${i}`,
+        contTotAmt: '11월 15일',
+        mtncStartDt: '5월 21일',
+        contReportNo: 'System',
+    });
+}
 
 
 
-export const getContractList = () =>async dispatch => {
+export const getContractList = () => async dispatch => {
     dispatch({ type: GET_CONTRACT });
     try {
         const response = await api.getContracts();

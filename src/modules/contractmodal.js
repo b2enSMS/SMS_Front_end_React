@@ -100,10 +100,8 @@ const contractmodal = handleActions(
         }),
 
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => {
-            console.log("CHANGE_INPUT", form, key, value)
             state[form][key] = value
             state.visible = true
-            console.log(state.visible)
             return state
         },
         [POST_CONTRACT]: state => ({

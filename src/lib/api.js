@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const SERVER_URL = "http//SMS-0.0.1/api"
+const SERVER_URL = "http://sms/api"
 export const postContracts = (formData) => {
     const data = {
         orgId: formData.orgId,

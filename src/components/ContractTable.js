@@ -173,8 +173,6 @@ function ContractTable({ loadingTable, contractList, showModal }) {
       {!loadingTable && contractList && (
         <Table rowSelection={rowSelection} columns={columns} dataSource={contractList} size="small" />
       )}
-      
-       {/* <Table rowSelection={rowSelection} columns={columns} dataSource={data} size="small" /> */}
 
 
     </div >
