@@ -100,9 +100,12 @@ const contractmodal = handleActions(
         }),
 
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => {
-            state[form][key] = value
-            state.visible = true
-            return state
+            const newState = Object.assign(
+                {}, state
+            );
+            newState[form][key] = value
+            newState.visible = true
+            return newState
         },
         [POST_CONTRACT]: state => ({
             ...state,

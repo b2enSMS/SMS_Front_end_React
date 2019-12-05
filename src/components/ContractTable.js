@@ -169,6 +169,7 @@ function ContractTable({ loadingTable, contractList, showModal }) {
           </RemoveButton>
       </div>
       {console.log("loadingTable",loadingTable)}
+      
       {loadingTable && '로딩 중...'}
       {!loadingTable && contractList && (
         <Table rowSelection={rowSelection} columns={columns} dataSource={contractList} size="small" />

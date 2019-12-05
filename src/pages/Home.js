@@ -1,21 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Paper } from '@material-ui/core/';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MainItemList  from "../components/MainItemList";
-import ContractTableContainer from "../containers/ContractTableContainer";
-import ContractModalContainer from "../containers/ContractModalContainer";
+
 import Image from 'images/Logo.png';
 
 const drawerWidth = 201;
 const textcolor = '#174A84';
 const toolheight = 48;
 const menucolor = '#4E7097';
-
-
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -45,12 +42,7 @@ const useStyles = makeStyles(theme => ({
         overflow: 'auto',
         backgroundColor: '#FAFDFF'
     },
-    container: {
-        paddingTop: theme.spacing(1),
-        paddingLeft: theme.spacing(0),
-        paddingRight: theme.spacing(0),
-        //paddingBottom: theme.spacing(1),
-    },
+
     paper: {
         padding: theme.spacing(1),
         display: 'flex',
@@ -73,17 +65,7 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
 
     },
-    tablepart: {
-        //paddingTop: theme.spacing(5),
-        paddingBottom: theme.spacing(5),
-        paddingLeft: theme.spacing(4),
-        paddingRight: theme.spacing(4),
-    },
-    menuName: {
-        padding: theme.spacing(5),
-        color: textcolor,
-        fontWeight: '700',
-    },
+
     divMenuItemList: {
         paddingTop: theme.spacing(13),
     },
@@ -121,9 +103,8 @@ function Home() {
     );
 
     return (
-        <div className={classes.root}>
+        <div>
             <CssBaseline />
-
             <nav className={classes.drawer} aria-label="mailbox folders">
                 {drawer}
             </nav>
@@ -134,23 +115,7 @@ function Home() {
                     </Typography>
                 </div>
                 <Divider />
-                {/* <div className={classes.toolbar} /> */}
-                <div>
-                    <Typography className={classes.menuName} variant="h5">
-                        계약정보
-                    </Typography>
-                </div>
-                {/*테이블 파트//////////////////////////////////////////////////////////////*/}
-                <div className={classes.tablepart}>
-                    <Paper >
-                        <Container maxWidth="lg" className={classes.container}>
-                            <div >
-                                <ContractTableContainer />
-                                <ContractModalContainer/>
-                            </div>
-                        </Container>
-                    </Paper>
-                </div>
+
             </main>
         </div>
     );

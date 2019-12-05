@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-
-const SERVER_URL = "http://sms/api"
+axios.defaults.baseURL = "http://localhost:9000/sms/api"
 export const postContracts = (formData) => {
     const data = {
         orgId: formData.orgId,
@@ -11,19 +10,18 @@ export const postContracts = (formData) => {
         delYn: formData.delYn,
         contReportNo: formData.contReportNo,
     }
-    axios.post(SERVER_URL+'/cont/create', data);
+    axios.post('/cont/create', data);
 }
 
 export const getOrganization = () =>
-    axios.get(SERVER_URL+'/org/showall');
+    axios.get('/org/showall');
 
 export const getContracts = () =>
-    axios.get(SERVER_URL+'/cont/showall');
+    axios.get('/cont/showall');
 
 export const getOrgManager = () =>
-    axios.get(SERVER_URL+'/b2en/showall');
-
+    axios.get('/b2en/showall');
 
 export const getManagers = () => {
-    axios.get(SERVER_URL+'customers/showall');
+    axios.get('customers/showall');
 }

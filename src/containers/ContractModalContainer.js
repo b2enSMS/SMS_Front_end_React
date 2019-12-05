@@ -14,6 +14,7 @@ const ContractModalContainer = ({
     handleChangeInput }) => {
     
     const {formData} = useSelector(({contractmodal})=>({formData : contractmodal.contractModal}));
+    console.log(formData);
 
     return (
         <ContractModal
