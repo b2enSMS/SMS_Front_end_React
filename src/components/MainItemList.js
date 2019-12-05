@@ -46,7 +46,7 @@ class MainItemList extends React.Component {
             <Menu.Item key="1" ><Link to="/"><Icon type="reconciliation" />License</Link></Menu.Item>
             
             <Menu.Item key="2" ><Icon type="user" />Customer</Menu.Item>
-
+            <Menu.Item key="2" ><Link to="Customer"><Icon type="user" />Customer</Link></Menu.Item>
           </SubMenu>
           <SubMenu
             key="sub2"
