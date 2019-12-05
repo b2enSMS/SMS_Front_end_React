@@ -123,8 +123,6 @@ for (let i = 0; i < 46; i++) {
 }
 
 
-
-
 function ContractTable({ loadingTable, contractList, showModal }) {
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
