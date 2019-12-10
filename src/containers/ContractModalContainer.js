@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useSelector,useDispatch  } from 'react-redux';
 import { ContractModal } from 'components';
 import { handleOk, handleChangeInput,getHandleCancel } from 'modules/contractmodal';
-
+import { getContractList } from 'modules/contracttable';
 
 const ContractModalContainer = ({
     visible,
@@ -13,13 +13,18 @@ const ContractModalContainer = ({
     getHandleCancel,
     handleChangeInput }) => {
     
+    const dispatch = useDispatch();
     const {formData} = useSelector(({contractmodal})=>({formData : contractmodal.contractModal}));
-    console.log(formData);
+    
+    const okok = () =>{
+        handleOk(formData);
+        dispatch(getContractList())
+    }
 
     return (
         <ContractModal
             visible={visible}
-            handleOk={()=>handleOk(formData)}
+            handleOk={okok}
             confirmLoading={confirmLoading}
             handleChangeInput={handleChangeInput}
             handleCancel ={getHandleCancel}
@@ -40,7 +45,8 @@ export default connect(
     {
         handleOk,
         handleChangeInput,
-        getHandleCancel
+        getHandleCancel,
+        getContractList
        
     }
 )(ContractModalContainer);

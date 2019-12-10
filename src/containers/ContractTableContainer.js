@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect} from 'react-redux';
 import { ContractTable } from 'components';
-import { getContractList } from 'modules/contracttable';
+import { getContractList,getDeleteData } from 'modules/contracttable';
 import { getShowModal } from 'modules/contractmodal';
 
 const ContractTableContainer = ({
@@ -9,6 +9,8 @@ const ContractTableContainer = ({
     getContractList,
     loadingTable,
     getShowModal,
+    getOnSelectChange,
+    getDeleteData,
  }) => {
 
     useEffect(() => {
@@ -20,6 +22,8 @@ const ContractTableContainer = ({
             contractList={contractList}
             loadingTable={loadingTable}
             showModal={getShowModal} 
+            onSelectChange={getOnSelectChange}
+            deleteData={getDeleteData}
         />
     );
 };
@@ -32,5 +36,6 @@ export default connect(
     {
         getContractList,
         getShowModal,
+        getDeleteData,
     }
 )(ContractTableContainer);

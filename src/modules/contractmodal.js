@@ -71,7 +71,13 @@ export const handleOk = (formData) => async dispatch => {
 const initialState = {
     visible: false,
     confirmLoading: false,
-    contractModal: {},
+    contractModal: {
+        contDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+        installDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+        checkDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+        mtncStartDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+        mtncEndDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()
+    },
     orgList: [],
     orgML: [],
 }

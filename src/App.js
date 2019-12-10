@@ -120,6 +120,7 @@ const useStyles = makeStyles(theme => ({
             </div>
             <Divider />
             <Route exact path="/" component={ContractInfoPage} />
+            {/* <Route exact path="/Customer" component={}/> */}
           </main>
         </div>
 
