@@ -13,6 +13,13 @@ export const postContracts = (formData) => {
     axios.post('/cont/create', data);
 }
 
+export const postCustomer = (formData) => {
+    const data = {
+
+    }
+    axios.post('/customer/create', data);
+}
+
 export const getOrganization = () =>
     axios.get('/org/showall');
 

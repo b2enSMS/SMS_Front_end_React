@@ -15,7 +15,6 @@ const useStyles = makeStyles(theme => ({
   tableoption: {
 
   },
-
   option: {
     marginTop: theme.spacing(16),
     marginBotton: theme.spacing(8),
@@ -99,7 +98,6 @@ const menu = (
     <Menu.Item key="1">
       수정
     </Menu.Item>
-
   </Menu>
 );
 
