@@ -22,8 +22,15 @@ export const postContracts = (formData) => {
 }
 
 export const getDeleteContracts = (deleteData) => {
+    const headers = {
+        'Authorization': '***'
+      }
+
     for (var data in deleteData) {
-        axios.delete('cont/'+data);
+        const del = {
+            contid: data
+        }
+        axios.delete('/cont',{headers,del});
     }
 }
 

@@ -150,7 +150,7 @@ function ContractTable({ loadingTable, contractList, showModal,deleteData}) {
           </ColorButton>
         </span>
         <RemoveButton
-          onClick={()=>{deleteData(selectedRowKeys);selectedRowKeys=[];}}
+          onClick={()=>{deleteData(selectedRowKeys);setSelectedRowKeys([]);}}
           className={classes.minusbutton}
           size='small'
           variant="outlined"
