@@ -3,6 +3,7 @@ import { Container, TextField } from '@material-ui/core/';
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import {Modal} from "antd";
 import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
     form: {
@@ -22,14 +23,60 @@ const useStyles = makeStyles(theme => ({
         },
     },
 }));
-const CustomerModal = () => {
+
+const code = [
+    {
+        value: 'contract',
+        label: '계약고객',
+    },
+    {
+        value: 'possible',
+        label: '임시고객',
+    },
+];
+
+const user = [
+    {
+        value: 'manager',
+        label: '담당자',
+    },
+    {
+        value: 'user',
+        label: '사용자',
+    },
+];
+
+const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList}) => {
+
+    const classes = useStyles();
+    const [tree, setTree] = React.useState('contract');
+    const [men, setMen] = React.useState('user');
+
+    console.log("orgList",orgList);
+
+    const handleChange = ev => {
+        setTree(ev.target.value);
+        handleChangeInput({form:"contractCustomerModal", key: ev.target.id, value: ev.target.value});
+    }
+    const handleChange2 = ev => {
+        setMen(ev.target.value);
+        handleChangeInput({form:"contractCustomerModal", key: ev.target.id, value: ev.target.value});
+    }
+
+
+    const autoCompleteHandleChange = (ev, value) => {
+        for(var key in value) {
+            handleChangeInput({form: "contractCustomerModal", key: key, value: value[key]});
+        }
+    }
+
     return(
         <Modal
             title="고객정보 등록"
             visible={visible}
-            //onOk={handleOk}
-            //confirmLoading={confirmLoading}
-            //onCancel={handleCancel}
+            onOk={handleOk}
+            confirmLoading={confirmLoading}
+            onCancel={handleCancel}
             style={{ top: 25 }}
         >
             <Container component="main" maxWidth="xs">
@@ -37,9 +84,9 @@ const CustomerModal = () => {
 
                     <Autocomplete
                         id="orgId"
-                        //options={orgList}
-                        //onChange={autoCompleteHandleChange}
-                        getOptionLabel={option => option.orgNm}
+                        options={orgList}
+                        onChange={autoCompleteHandleChange}
+                        getOptionLabel={options => options.orgNm}
                         renderInput={params => (
                             <TextField
                                 {...params}
@@ -47,68 +94,91 @@ const CustomerModal = () => {
                                 variant="outlined"
                                 required
                                 margin="normal"
-                                label="고객명"
+                                label="기관명"
                                 fullWidth
                             />
                         )}
                     />
-
-                    <Autocomplete
-                        id="empId"
-                        //options={orgML}
-                        //onChange={autoCompleteHandleChange}
-                        getOptionLabel={option => option.empNm}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                className={classes.textField}
-                                variant="outlined"
-                                required
-                                margin="normal"
-                                label="직책"
-                                fullWidth
-                            />
-                        )}
-                    />
-
                     <TextField
                         className={classes.textField}
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="contDt"
+                        id="custName"
+                        label="고객명"
+                        name="LicenseNumber"
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        className={classes.textField}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="position"
+                        label="직책"
+                        name="LicenseNumber"
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        className={classes.textField}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="custEmail"
                         label="이메일"
                         name="LicenseNumber"
                         onChange={handleChange}
-                        autoComplete="LicenseNumber"
                     />
-
                     <TextField
                         className={classes.textField}
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        name="contTotAmt"
+                        name="custNum"
                         label="전화번호"
                         id="date"
-                        //onChange={handleChange}
-                        autoComplete="date"
+                        onChange={handleChange}
                     />
-
                     <TextField
                         className={classes.textField}
                         variant="outlined"
                         margin="normal"
+                        id="custCode"
+                        select
                         required
+                        label="고객 유형"
                         fullWidth
-                        name="expire"
-                        label="고객구분코드"
-                        id="delYn"
-                        //onChange={handleChange}
-                        autoComplete="expire"
-                    />
+                        value={tree}
+                        onChange={handleChange}
+                    >
+                        {code.map(option => (
+                            <MenuItem  key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    <TextField
+                        className={classes.textField}
+                        variant="outlined"
+                        margin="normal"
+                        id="custCode"
+                        select
+                        required
+                        label="담당자? 사용자?"
+                        fullWidth
+                        value={men}
+                        onChange={handleChange2}
+                    >
+                        {user.map(option => (
+                            <MenuItem  key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                 </form>
             </Container>
         </Modal>

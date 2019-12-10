@@ -21,21 +21,27 @@ export const postContracts = (formData) => {
     axios.post('/cont/create', data);
 }
 
-export const getDeleteContracts = (deleteData) => {
-    for (var data in deleteData) {
-        axios.delete('cont/'+data);
+
+export const postCustomer = (formData) => {
+    const data = {}
+    axios.post('/customer/create', data);
+}
+
+    export const getDeleteContracts = (deleteData) => {
+        for (var data in deleteData) {
+            axios.delete('cont/' + data);
+        }
     }
-}
 
-export const getOrganization = () =>
-    axios.get('/org/showall');
+    export const getOrganization = () =>
+        axios.get('/org/showall');
 
-export const getContracts = () =>
-    axios.get('/cont/showall');
+    export const getContracts = () =>
+        axios.get('/cont/showall');
 
-export const getOrgManager = () =>
-    axios.get('/b2en/showall');
+    export const getOrgManager = () =>
+        axios.get('/b2en/showall');
 
-export const getManagers = () => {
-    axios.get('customers/showall');
-}
+    export const getManagers = () => {
+        axios.get('customers/showall');
+    }
