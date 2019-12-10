@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { Table, Menu, Dropdown, Icon, message } from 'antd';
+import React,{useState} from 'react';
+import { Table, Menu, Dropdown, Icon } from 'antd';
 import { withStyles, Button } from '@material-ui/core/';
 import 'antd/dist/antd.css';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
-
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,6 +54,12 @@ const RemoveButton = withStyles(theme => ({
   },
 }))(Button);
 
+
+const handleMenuClick= key =>{
+  console.log("key",key);
+}
+
+
 const columns = [
   {
     title: 'organization',
@@ -81,47 +85,32 @@ const columns = [
     title: 'etc',
     dataIndex: 'contReportNo',
   },
+
   {
     title: '',
     dataIndex: 'menuTag',
     width: '5%',
+    render: (text, record) =>
+      (<Dropdown 
+        overlay={(
+          <Menu onClick={(record)=>{
+            handleMenuClick(record.key)
+          }}>
+          <Menu.Item >
+            수정
+          </Menu.Item>
+          </Menu>
+        )} 
+        
+        placement="bottomLeft">
+
+        <Button size="small"><Icon type="menu" /></Button>
+      </Dropdown>
+      )
   },
 ];
 
-function handleMenuClick(e) {
-  message.info('Click on menu item.');
-  console.log('click', e);
-}
-
-const menu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="1">
-      수정
-    </Menu.Item>
-  </Menu>
-);
-
-const menuTag = (<Dropdown overlay={menu} placement="bottomLeft">
-  <Button size="small"><Icon type="menu" /></Button>
-</Dropdown>
-)
-
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    compNm: '서울시청',
-    mgrNm: `권대환 ${i}`,
-    lcnsNo: `A1234567 ${i}`,
-    date: '11월 15일',
-    expireDate: '5월 21일',
-    etc: 'System',
-    menuTag: menuTag,
-  });
-}
-
-
-function ContractTable({ loadingTable, contractList, showModal }) {
+function ContractTable({ loadingTable, contractList, showModal,deleteData}) {
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
@@ -156,6 +145,7 @@ function ContractTable({ loadingTable, contractList, showModal }) {
           </ColorButton>
         </span>
         <RemoveButton
+          onClick={()=>{deleteData(selectedRowKeys);setSelectedRowKeys([]);}}
           className={classes.minusbutton}
           size='small'
           variant="outlined"
@@ -164,13 +154,15 @@ function ContractTable({ loadingTable, contractList, showModal }) {
         > Remove
           </RemoveButton>
       </div>
-      {console.log("loadingTable",loadingTable)}
-      
-      {loadingTable && '로딩 중...'}
-      {!loadingTable && contractList && (
-        <Table rowSelection={rowSelection} columns={columns} dataSource={contractList} size="small" />
-      )}
 
+      <Table
+        rowKey="contId"
+        loading={loadingTable}
+        tableLayout='undefined'
+        rowSelection={rowSelection}
+        columns={columns}
+        dataSource={loadingTable ? null : contractList}
+        size="small" />
 
     </div >
 
