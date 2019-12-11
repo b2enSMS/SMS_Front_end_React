@@ -67,59 +67,57 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const handleMenuClick= key =>{
+
 }
 
-const columns = [
-    {
-        title: 'organization',
-        dataIndex: 'orgNm',
-    },
-    {
-        title: 'name',
-        dataIndex: 'custNm',
-    },
-    {
-        title: 'email',
-        dataIndex: 'email',
-    },
-    {
-        title: 'phoneNum',
-        dataIndex: 'telNo',
-    },
-    {
-        title: 'position',
-        dataIndex: 'custRankNm',
-    },
-    {
-        title: '',
-        dataIndex: 'menuTag',
-        width: '5%',
-        render: (text, record) =>
-            (<Dropdown
-                    overlay={(
-                        <Menu onClick={(record)=>{
-                            handleMenuClick(record.key)
-                        }}>
-                            <Menu.Item >
-                                수정
-                            </Menu.Item>
-                        </Menu>
-                    )}
-
-                    placement="bottomLeft">
-
-                    <Button size="small"><Icon type="menu" /></Button>
-                </Dropdown>
-            )
-    },
-];
-
-
-const ContractCustomer = ({loadingTable, customerList, showModal}) => {
+const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer, showUpdateModal}) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
-    console.log("customerList_component",customerList);
+    const columns = [
+        {
+            title: 'organization',
+            dataIndex: 'orgNm',
+        },
+        {
+            title: 'name',
+            dataIndex: 'custNm',
+        },
+        {
+            title: 'email',
+            dataIndex: 'email',
+        },
+        {
+            title: 'phoneNum',
+            dataIndex: 'telNo',
+        },
+        {
+            title: 'position',
+            dataIndex: 'custRankNm',
+        },
+        {
+            title: '',
+            dataIndex: 'menuTag',
+            width: '5%',
+            render: (text, record) =>
+                (<Dropdown
+                        overlay={(
+                            <Menu onClick={(record)=>{
+                                handleMenuClick(record.key)
+                            }}>
+                                <Menu.Item onClick={showUpdateModal}>
+                                    수정
+                                </Menu.Item>
+                            </Menu>
+                        )}
+
+                        placement="bottomLeft">
+
+                        <Button size="small"><Icon type="menu" /></Button>
+                    </Dropdown>
+                )
+        },
+    ];
 
     const onSelectChange = selectedRowKeys => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -158,6 +156,7 @@ const ContractCustomer = ({loadingTable, customerList, showModal}) => {
                     variant="outlined"
                     color="secondary"
                     endIcon={<RemoveIcon />}
+                    onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
                 > Remove
                 </RemoveButton>
             </div>

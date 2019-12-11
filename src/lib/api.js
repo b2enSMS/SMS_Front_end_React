@@ -26,6 +26,16 @@ export const getDeleteContracts = (selectedRowKeys) => {
     }
 }
 
+//고객 테이블 - 삭제
+export const deleteCustomer = (selectedRowKeys) => {
+    for (var i in selectedRowKeys) {
+        axios.delete(`/cust/${selectedRowKeys[i]}`)
+    }
+}
+
+export const updateCustomer = () => {
+}
+
 //고객 등록
 export const postCustomer = (formData) => {
     const data = {
@@ -46,11 +56,12 @@ export const getOrganization = () =>
 //계약 리스트
 export const getContracts = () =>
     axios.get('/cont/showall');
+
 //비투엔 담당자 리스트
 export const getB2enManager = () =>
     axios.get('/b2en/showall');
 
 //기관 담당자 리스트
-export const getManagers = () => {
-    axios.get('customers/showall');
-}
+export const getManagers = () =>
+    axios.get('/cust/showall');
+
