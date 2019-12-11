@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { withStyles, Button } from '@material-ui/core/';
-import {Table} from "antd";
+import {Dropdown, Icon, Menu, Table} from "antd";
 
 const textcolor = '#174A84';
 
@@ -55,7 +55,6 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(5),
         textAlign: 'right',
         marginTop: -21,
-
     },
     plusbutton: {
         paddingRight: theme.spacing(3),
@@ -67,26 +66,51 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const handleMenuClick= key =>{
+}
+
 const columns = [
     {
         title: 'organization',
-        dataIndex: 'customerName',
+        dataIndex: 'orgNm',
     },
     {
         title: 'name',
-        dataIndex: 'custName',
+        dataIndex: 'custNm',
     },
     {
         title: 'email',
-        dataIndex: 'custEmail',
+        dataIndex: 'email',
     },
     {
         title: 'phoneNum',
-        dataIndex: 'custNum',
+        dataIndex: 'telNo',
     },
     {
-        title: 'customerCode',
-        dataIndex: 'custCode',
+        title: 'position',
+        dataIndex: 'custRankNm',
+    },
+    {
+        title: '',
+        dataIndex: 'menuTag',
+        width: '5%',
+        render: (text, record) =>
+            (<Dropdown
+                    overlay={(
+                        <Menu onClick={(record)=>{
+                            handleMenuClick(record.key)
+                        }}>
+                            <Menu.Item >
+                                수정
+                            </Menu.Item>
+                        </Menu>
+                    )}
+
+                    placement="bottomLeft">
+
+                    <Button size="small"><Icon type="menu" /></Button>
+                </Dropdown>
+            )
     },
 ];
 
@@ -94,6 +118,8 @@ const columns = [
 const ContractCustomer = ({loadingTable, customerList, showModal}) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+    console.log("customerList_component",customerList);
 
     const onSelectChange = selectedRowKeys => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -135,11 +161,14 @@ const ContractCustomer = ({loadingTable, customerList, showModal}) => {
                 > Remove
                 </RemoveButton>
             </div>
-            {console.log("loadingTable",loadingTable)}
-            {loadingTable && '로딩 중...'}
-            {!loadingTable && customerList && (
-                <Table rowSelection={rowSelection} columns={columns} dataSource={customerList} size="small" />
-            )}
+            <Table
+                rowKey="custId"
+                loading={loadingTable}
+                tableLayout='undefined'
+                rowSelection={rowSelection}
+                columns={columns}
+                dataSource={loadingTable ? null : customerList}
+                size="small" />
         </div>
     );
 }

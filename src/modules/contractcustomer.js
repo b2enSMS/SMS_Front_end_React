@@ -8,7 +8,7 @@ const GET_CUSTOMER_FAILURE = 'contractcustomer/GET_CUSTOMER_FAILURE';
 export const getCustomerList = () => async dispatch => {
     dispatch({ type: GET_CUSTOMER });
     try {
-        const response = await api.getContracts();
+        const response = await api.getManagers();
         dispatch({
            type: GET_CUSTOMER_SUCCESS,
            payload: response.data
@@ -38,7 +38,8 @@ const contractcustomer = handleActions(
         }),
         [GET_CUSTOMER_SUCCESS]: (state, action) => ({
             ...state,
-            loadingTable: false
+            loadingTable: false,
+            customerList: action.payload,
         }),
     },
     initialState,
