@@ -1,8 +1,9 @@
 import React from 'react';
 import CustomerModal from "../components/CustomerModal";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { connect } from 'react-redux';
 import { handleOk, handleChangeInput, getHandleCancel } from "modules/contractcustomermodal";
+import { getCustomerList } from "../modules/contractcustomer";
 
 const CustomerModalContainer = ({
     visible,
@@ -14,12 +15,18 @@ const CustomerModalContainer = ({
     handleChangeInput
 }) => {
 
+    const dispatch = useDispatch();
     const {formData} = useSelector(({contractcustomermodal})=>({formData : contractcustomermodal.contractCustomerModal}))
+
+    const okok = () =>{
+        handleOk(formData);
+        dispatch(getCustomerList())
+    }
 
     return(
         <CustomerModal
             visible={visible}
-            handleOk={()=>handleOk(formData)}
+            handleOk={okok}
             confirmLoading={confirmLoading}
             handleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
