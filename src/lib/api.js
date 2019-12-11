@@ -21,10 +21,17 @@ export const postContracts = (formData) => {
     axios.post('/cont/create', data);
 }
 
-
 export const postCustomer = (formData) => {
-    const data = {}
-    axios.post('/customer/create', data);
+    const data = {
+        orgId: formData.orgId,
+        orgNm: formData.orgNm,
+        custId: formData.custId,
+        custNm: formData.custNm,
+        custRankNm: formData.custRankNm,
+        email: formData.email,
+        telNo: formData.telNo,
+    }
+    axios.post('/cust/create', data);
 }
 
     export const getDeleteContracts = (deleteData) => {
@@ -42,6 +49,5 @@ export const postCustomer = (formData) => {
     export const getOrgManager = () =>
         axios.get('/b2en/showall');
 
-    export const getManagers = () => {
-        axios.get('customers/showall');
-    }
+    export const getManagers = () =>
+        axios.get('/cust/showall');
