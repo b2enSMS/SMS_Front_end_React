@@ -52,5 +52,12 @@ export const getB2enManager = () =>
 
 //기관 담당자 리스트
 export const getManagers = () => {
-    axios.get('customers/showall');
+    axios.get('/customers/showall');
+}
+
+export const getProducts = () =>
+    axios.get('/prdt/showall');
+
+export const getLicenseCode= ()=>{
+    axios.get('/code/license');
 }

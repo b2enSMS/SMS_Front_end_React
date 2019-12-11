@@ -163,7 +163,6 @@ function ContractTable({ loadingTable, contractList, showModal,deleteData}) {
         columns={columns}
         dataSource={loadingTable ? null : contractList}
         size="small" />
-
     </div >
 
 

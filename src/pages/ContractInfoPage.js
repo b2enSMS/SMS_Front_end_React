@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
 import { ContractTableContainer } from "containers";
 import { ContractModalContainer } from "containers";
+import {LicenseContainer} from "containers";
 
 const textcolor = '#174A84';
 
@@ -47,6 +48,7 @@ const ContractInfoPage = () => {
                         <div >
                             <ContractTableContainer />
                             <ContractModalContainer />
+                            <LicenseContainer/>
                         </div>
                     </Container>
                 </Paper>

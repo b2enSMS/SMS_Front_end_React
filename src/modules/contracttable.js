@@ -36,7 +36,6 @@ export const getContractList = () => async dispatch => {
             payload: response.data
         });
     } catch (e) {
-        console.log("error")
         dispatch({
             type: GET_CONTRACT_FAILURE,
             payload: e,
