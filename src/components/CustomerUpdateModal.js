@@ -46,7 +46,7 @@ const user = [
     },
 ];
 
-const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList}) => {
+const CustomerUpdateModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList}) => {
 
     const classes = useStyles();
     const [tree, setTree] = React.useState('contract');
@@ -185,4 +185,4 @@ const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleC
     );
 }
 
-export default CustomerModal
+export default CustomerUpdateModal
