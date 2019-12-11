@@ -15,34 +15,36 @@ export const postContracts = (formData) => {
         mtncStartDt: formData.mtncStartDt,
         mtncEndDt: formData.mtncEndDt,
         contReportNo: formData.contReportNo,
-        lcnsNo: formData.lcnsNo,
     }
     console.log("Data", data);
     axios.post('/cont/create', data);
 }
-
-export const getDeleteContracts = (deleteData) => {
-    const headers = {
-        'Authorization': '***'
-      }
-
-    for (var data in deleteData) {
-        const del = {
-            contid: data
-        }
-        axios.delete('/cont',{headers,del});
+//계약 테이블 - 리스트 삭제
+export const getDeleteContracts = (selectedRowKeys) => {
+    for (var i in selectedRowKeys) {
+        axios.delete(`/cont/${selectedRowKeys[i]}`)
     }
 }
 
+//고객 등록
+export const postCustomer = (formData) => {
+    const data = {}
+    axios.post('/customer/create', data);
+
+}
+
+//기관 리스트
 export const getOrganization = () =>
     axios.get('/org/showall');
 
+//계약 리스트
 export const getContracts = () =>
     axios.get('/cont/showall');
-
-export const getOrgManager = () =>
+//비투엔 담당자 리스트
+export const getB2enManager = () =>
     axios.get('/b2en/showall');
 
+//기관 담당자 리스트
 export const getManagers = () => {
     axios.get('customers/showall');
 }

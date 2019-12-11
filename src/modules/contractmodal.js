@@ -1,14 +1,12 @@
 import { handleActions, createAction } from 'redux-actions';
 import * as api from '../lib/api';
 
-
-
 const CHANGE_INPUT = 'contractmodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'contractmodal/HANDLE_CANCLE';
 
 const SHOW_MODAL = 'contractmodal/SHOW_MODAL';
-const SHOW_MODAL_SUCCESS = 'contractmodal/SHOW_MODAL_SUCCESS'
-const SHOW_MODAL_FAILURE = 'contractmodal/SHOW_MODAL_FAILURE'
+const SHOW_MODAL_SUCCESS = 'contractmodal/SHOW_MODAL_SUCCESS';
+const SHOW_MODAL_FAILURE = 'contractmodal/SHOW_MODAL_FAILURE';
 
 const POST_CONTRACT = 'contractmodal/POST_CONTRACT';
 const POST_CONTRACT_SUCCESS = 'contractmodal/POST_CONTRACT_SUCCESS';
@@ -21,7 +19,7 @@ export const getShowModal = () => async dispatch => {
     dispatch({ type: SHOW_MODAL });
     try {
         const response = await api.getOrganization();
-        const responseML = await api.getOrgManager();
+        const responseML = await api.getB2enManager();
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
@@ -110,7 +108,7 @@ const contractmodal = handleActions(
                 {}, state
             );
             newState[form][key] = value
-            newState.visible = true
+            //newState.visible = true
             return newState
         },
         [POST_CONTRACT]: state => ({

@@ -1,3 +1,5 @@
 export {default as ContractModal} from './ContractModal'
 export {default as MainItemList} from './MainItemList'
 export {default as ContractTable} from './ContractTable'
+export {default as ContractCustomer} from './ContractCustomer'
+export {default as CustomerModal} from './CustomerModal'

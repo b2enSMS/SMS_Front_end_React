@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { withStyles, Button } from '@material-ui/core/';
-import { Container, Paper } from '@material-ui/core/';
 import {Table} from "antd";
 
 const textcolor = '#174A84';
@@ -71,28 +69,29 @@ const useStyles = makeStyles(theme => ({
 
 const columns = [
     {
-        title: 'name',
+        title: 'organization',
         dataIndex: 'customerName',
     },
     {
-        title: 'manager',
-        dataIndex: 'empNm',
+        title: 'name',
+        dataIndex: 'custName',
     },
     {
         title: 'email',
-        dataIndex: 'customerEmail',
+        dataIndex: 'custEmail',
     },
     {
         title: 'phoneNum',
-        dataIndex: 'customerPhone',
+        dataIndex: 'custNum',
     },
     {
         title: 'customerCode',
-        dataIndex: 'code',
+        dataIndex: 'custCode',
     },
 ];
 
-const ContractCustomer = (loadingTable, contractList, showModal) => {
+
+const ContractCustomer = ({loadingTable, customerList, showModal}) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
@@ -105,18 +104,11 @@ const ContractCustomer = (loadingTable, contractList, showModal) => {
         selectedRowKeys,
         onChange: onSelectChange,
     };
+
     const hasSelected = selectedRowKeys.length > 0;
+
     return(
         <div>
-            <div>
-                <Typography className={classes.menuName} variant="h5">
-                    고객정보
-                </Typography>
-            </div>
-            <div className={classes.tablepart}>
-                <Paper >
-                    <Container maxWidth="lg" className={classes.container}>
-                        <div >
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
                 {hasSelected ? `Selected ${selectedRowKeys.length} items` : 'Selected 0 item'}
             </div>
@@ -125,7 +117,7 @@ const ContractCustomer = (loadingTable, contractList, showModal) => {
                 <span style={{ paddingRight: 14 }}>
 
               <ColorButton
-                  //onClick={showModal}
+                  onClick={showModal}
                   className={classes.plusbutton}
                   size='small'
                   variant="outlined"
@@ -145,15 +137,10 @@ const ContractCustomer = (loadingTable, contractList, showModal) => {
             </div>
             {console.log("loadingTable",loadingTable)}
             {loadingTable && '로딩 중...'}
-            {!loadingTable && contractList && (
-                <Table rowSelection={rowSelection} columns={columns} dataSource={contractList} size="small" />
+            {!loadingTable && customerList && (
+                <Table rowSelection={rowSelection} columns={columns} dataSource={customerList} size="small" />
             )}
-                        </div>
-                    </Container>
-                </Paper>
-            </div>
         </div>
     );
-};
-
+}
 export default ContractCustomer;

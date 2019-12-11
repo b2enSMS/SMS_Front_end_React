@@ -17,6 +17,7 @@ const ContractTableContainer = ({
         getContractList();
     }, [getContractList]);
 
+
     return (
         <ContractTable
             contractList={contractList}

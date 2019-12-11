@@ -6,8 +6,6 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 
-
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -15,7 +13,6 @@ const useStyles = makeStyles(theme => ({
   tableoption: {
 
   },
-
   option: {
     marginTop: theme.spacing(16),
     marginBotton: theme.spacing(8),
@@ -97,7 +94,6 @@ const columns = [
       (<Dropdown 
         overlay={(
           <Menu onClick={(record)=>{
-            console.log("recode",record.key)
             handleMenuClick(record.key)
           }}>
           <Menu.Item >
@@ -113,7 +109,6 @@ const columns = [
       )
   },
 ];
-
 
 function ContractTable({ loadingTable, contractList, showModal,deleteData}) {
   const classes = useStyles();

@@ -11,11 +11,12 @@ const DELETE_CONTRACT_SUCCESS = 'contracttable/DELETE_CONTRACT_SUCCESS';
 const DELETE_CONTRACT_FAILURE = 'contracttable/DELETE_CONTRACT_FAILURE'
 
 
-export const getDeleteData = (selectedRowKeys) => async dispatch => {
+export const getDeleteData = selectedRowKeys => async dispatch => {
     dispatch({type: DELETE_CONTRACT});
     try{
-        await api.getDeleteContracts(selectedRowKeys)
+        await api.getDeleteContracts(selectedRowKeys);
         dispatch({type: DELETE_CONTRACT_SUCCESS});
+
     }catch(e){
         dispatch({
             type: DELETE_CONTRACT_FAILURE,
@@ -49,7 +50,6 @@ const initialState = {
     visible: false,
     contractList: null,
     loadingTable: false,
-    selectedRowKeys: [],
 }
 
 const contracttable = handleActions(
