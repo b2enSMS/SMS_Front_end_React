@@ -28,11 +28,17 @@ export const getDeleteContracts = (selectedRowKeys) => {
 
 //고객 등록
 export const postCustomer = (formData) => {
-    const data = {}
-    axios.post('/customer/create', data);
-
+    const data = {
+        orgId: formData.orgId,
+        orgNm: formData.orgNm,
+        custId: formData.custId,
+        custNm: formData.custNm,
+        custRankNm: formData.custRankNm,
+        email: formData.email,
+        telNo: formData.telNo,
+    }
+    axios.post('/cust/create', data);
 }
-
 //기관 리스트
 export const getOrganization = () =>
     axios.get('/org/showall');
