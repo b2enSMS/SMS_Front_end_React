@@ -18,7 +18,6 @@ export const getCustomerList = () => async dispatch => {
            payload: response.data
         });
     } catch (e) {
-        console.log("err");
         dispatch({
             type: GET_CUSTOMER_FAILURE,
             payload: e,

@@ -19,8 +19,7 @@ export const getShowModal = () => async dispatch => {
     dispatch({ type: SHOW_LIMO });
     try {
         const responseProduct = await api.getProducts();
-        console.log("responseProduct",responseProduct)
-        const responseLicenseCode = null;//await api.getLicenseCode();
+        //const responseLicenseCode = null;//await api.getLicenseCode();
         dispatch({
             type: SHOW_LIMO_SUCCESS,
             payload: {
@@ -52,7 +51,7 @@ export const handleOk = (formData) => async dispatch => {
 
     dispatch({ type: POST_LICENSE });
     try {
-        await api.postContracts(formData);
+        await api.postLicense(formData);
         dispatch({
             type: POST_LICENSE_SUCCESS,
         });
@@ -77,7 +76,7 @@ const initialState = {
         mtncStartDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
         mtncEndDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()
     },
-    licensemodal: [],
+    licenseForm: [],
     products: [],
     licCode: [],
 }

@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const ContractModal = ({ licenseModalShow,visible, orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, onInsert, onRemove, licenses, }) => {
+const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, onInsert, onRemove, licenses, }) => {
     const classes = useStyles();
 
     const handleChange = ev => {
@@ -83,6 +83,7 @@ const ContractModal = ({ licenseModalShow,visible, orgList, orgML, confirmLoadin
             onCancel={handleCancel}
             style={{ top: 25 }}
             width="60%"
+            maskClosable={false}
         >
             <Container component="main" fixed>
                 <form className={classes.form} autoComplete="off">
@@ -254,9 +255,18 @@ const ContractModal = ({ licenseModalShow,visible, orgList, orgML, confirmLoadin
                         <Grid item xs={12} sm={4}>
                             <Button onClick={licenseModalShow} variant="outlined">라이센스 등록</Button>
                         </Grid>
-                        <Grid item xs={12}>
-
-                            {"라이센스:"}{licenses.text}{"-"}
+                        <Grid item xs={12} sm={8}>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <TextField
+                                disabled
+                                id="filled-disabled"
+                                label="Disabled"
+                                defaultValue="라이센스:"
+                            />
+                            {licenses.text}
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 id="contAmt"
                                 label="제품 가격"
@@ -268,7 +278,12 @@ const ContractModal = ({ licenseModalShow,visible, orgList, orgML, confirmLoadin
                                     shrink: true,
                                 }}
                             />
-                            <button onClick={() => onRemove(licenses.id)}>삭제</button>
+
+                        </Grid>
+                        <Grid item xs={12} sm={2}>
+
+                            <Button variant="contained" onClick={() => onRemove(licenses.id)}>삭제</Button>
+
                         </Grid>
                     </Grid>
                 </form>

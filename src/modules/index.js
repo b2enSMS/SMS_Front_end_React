@@ -9,8 +9,6 @@ import licensemodal from "./licensemodal";
 
 const rootReducer = combineReducers({
     contractmodal,contracttable,contractcustomer,contractcustomermodal,licensemodal,customerupdatemodal
-
-
 });
 
 export default rootReducer;

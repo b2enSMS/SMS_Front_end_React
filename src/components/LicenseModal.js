@@ -29,17 +29,17 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const LicenseModal = ({ visible, orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, onInsert, onRemove, licenses, }) => {
+const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleChangeInput,licenseCodeList,productList,}) => {
     const classes = useStyles();
 
     const handleChange = ev => {
-        handleChangeInput({ form: "contractModal", key: ev.target.id, value: ev.target.value })
+        handleChangeInput({ form: "licenseForm", key: ev.target.id, value: ev.target.value })
     }
 
     const autoCompleteHandleChange = (ev, value) => {
         console.log("autoCompleteHandleChange", value)
         for (var key in value) {
-            handleChangeInput({ form: "contractModal", key: key, value: value[key] });
+            handleChangeInput({ form: "licenseForm", key: key, value: value[key] });
         }
     }
 
@@ -47,19 +47,19 @@ const LicenseModal = ({ visible, orgList, orgML, confirmLoading, handleOk, handl
      const [selectedlcnsIssuDt, setSelectedlcnsIssuDt] = React.useState(new Date());
      const handlelcnsIssuDtChange = (id, date) => {
          setSelectedlcnsIssuDt(date);
-         handleChangeInput({ form: "contractModal", key: "lcnsIssuDt", value: date })
+         handleChangeInput({ form: "licenseForm", key: "lcnsIssuDt", value: date })
      };
      //개시일자 변경
      const [selectedlcnsStartDt, setSelectedlcnsStartDt] = React.useState();
      const handlelcnsStartDtChange = (id, date) => {
          setSelectedlcnsStartDt(date);
-         handleChangeInput({ form: "contractModal", key: "lcnsStartDt", value: date })
+         handleChangeInput({ form: "licenseForm", key: "lcnsStartDt", value: date })
      };
      //종료일자 변경
      const [selectedlcnsEndDt, setSelectedlcnsEndDt] = React.useState(new Date());
      const handlelcnsEndDtChange = (id, date) => {
          setSelectedlcnsEndDt(date);
-         handleChangeInput({ form: "contractModal", key: "lcnsEndDt", value: date })
+         handleChangeInput({ form: "licenseForm", key: "lcnsEndDt", value: date })
      };
 
     return (
@@ -71,6 +71,7 @@ const LicenseModal = ({ visible, orgList, orgML, confirmLoading, handleOk, handl
             onCancel={handleCancel}
             style={{ top: 25 }}
             width="40%"
+            maskClosable={false}
         >
             <Container component="main" fixed>
                 <form className={classes.form} autoComplete="off">
@@ -78,7 +79,7 @@ const LicenseModal = ({ visible, orgList, orgML, confirmLoading, handleOk, handl
                         <Grid item xs={12}>
                             <Autocomplete
                                 id="prdtId"
-                                options={orgList}
+                                options={productList}
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.orgNm}
                                 renderInput={params => (
@@ -97,7 +98,7 @@ const LicenseModal = ({ visible, orgList, orgML, confirmLoading, handleOk, handl
                         <Grid item xs={12}>
                             <Autocomplete
                                 id="lcnsTpCd"
-                                options={orgList}
+                                options={licenseCodeList}
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.orgNm}
                                 renderInput={params => (
@@ -177,7 +178,7 @@ const LicenseModal = ({ visible, orgList, orgML, confirmLoading, handleOk, handl
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <KeyboardDatePicker
                                     disableToolbar
                                     variant="inline"
