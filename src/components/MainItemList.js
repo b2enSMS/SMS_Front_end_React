@@ -12,9 +12,9 @@ class MainItemList extends React.Component {
   // submenu keys of first level
 
 
-  rootSubmenuKeys = ['sub1', 'sub2'];
+  rootSubmenuKeys = ['sub1', 'sub2', 'sub3'];
   state = {
-    openKeys: ['sub1', 'sub2'],
+    openKeys: ['sub1', 'sub2', 'sub3'],
   };
 
   onOpenChange = openKeys => {
@@ -38,26 +38,39 @@ class MainItemList extends React.Component {
             title={
               <span style={{ color: '#AAFFBE' }}>
                 <Icon type="appstore" />
-                <span >Contract</span>
+                <span >계약 정보 관리</span>
               </span>
             }
           >
 
-            <Menu.Item key="1" ><Link to="/"><Icon type="reconciliation" />License</Link></Menu.Item>
-            <Menu.Item key="2" ><Link to="/Customer"><Icon type="user" />Customer</Link></Menu.Item>
+            <Menu.Item key="1" ><Link to="/"><Icon type="reconciliation" />계약 라이선스</Link></Menu.Item>
+            <Menu.Item key="2" ><Link to="/Customer"><Icon type="user" />계약 고객 관리</Link></Menu.Item>
           </SubMenu>
           <SubMenu
             key="sub2"
             title={
               <span style={{ color: '#AAFFBE' }}>
                 <Icon type="appstore" />
-                <span>Possible</span>
+                <span>임시 정보 관리</span>
               </span>
             }
           >
-            <Menu.Item key="5"><Icon type="reconciliation"/>License</Menu.Item>
-            <Menu.Item key="6"><Icon type="user" />Customer</Menu.Item>
-            <Menu.Item key="7"><Icon type="team" />Meeting</Menu.Item>
+            <Menu.Item key="5"><Icon type="reconciliation"/>임시 라이선스</Menu.Item>
+            <Menu.Item key="6"><Icon type="user" />임시 고객 관리</Menu.Item>
+            <Menu.Item key="7"><Icon type="team" />미팅이력 관리</Menu.Item>
+          </SubMenu>
+          <SubMenu
+              key="sub3"
+              title={
+                <span style={{ color: '#AAFFBE' }}>
+                <Icon type="appstore" />
+                <span>관리자 페이지</span>
+              </span>
+              }
+          >
+            <Menu.Item key="8"><Icon type="reconciliation"/>제품관리</Menu.Item>
+            <Menu.Item key="9"><Icon type="user" />b2en 담당자 관리</Menu.Item>
+            <Menu.Item key="10"><Icon type="team" />고객사 관리</Menu.Item>
           </SubMenu>
         </Menu>
       </div>

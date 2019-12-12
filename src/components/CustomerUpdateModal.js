@@ -72,7 +72,7 @@ const CustomerUpdateModal = ({visible, handleOk, confirmLoading, handleCancel, h
 
     return(
         <Modal
-            title="고객정보 등록"
+            title="고객정보 수정"
             visible={visible}
             onOk={handleOk}
             confirmLoading={confirmLoading}
