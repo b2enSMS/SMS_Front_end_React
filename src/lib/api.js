@@ -6,8 +6,24 @@ axios.defaults.baseURL = "/sms/api";
 if (process.env.NODE_ENV === "development") {
     axios.defaults.baseURL = "http://localhost:9000/sms/api";
 }
+
+export const postLicense = (formData) => {
+    const data={
+        prdtId: formData.prdtId,
+        lcnsTpCd: formData.lcnsTpCd,
+        lcnsNo: formData.lcnsNo,
+        lcnslssuDt: formData.lcnslssuDt,
+        certNo: formData.certNo,
+        lcnsStartDt: formData.lcnsStartDt,
+        lcnsEndDt: formData.lcnsEndDt,
+    }
+    axios.post('/lcns/create', data);
+}
 export const postContracts = (formData) => {
     const data = {
+        checkDt: formData.checkDt,
+        lcnsNo:[],
+        contAmt:[],
         orgId: formData.orgId,
         empId: formData.empId,
         contDt: formData.contDt,
@@ -16,7 +32,6 @@ export const postContracts = (formData) => {
         mtncEndDt: formData.mtncEndDt,
         contReportNo: formData.contReportNo,
     }
-    console.log("Data", data);
     axios.post('/cont/create', data);
 }
 //계약 테이블 - 리스트 삭제
@@ -56,7 +71,7 @@ export const postCustomer = (formData) => {
 }
 //기관 리스트
 export const getOrganization = () =>
-    axios.get('/org/showall');
+    axios.get('/org/aclist');
 
 //계약 리스트
 export const getContracts = () =>
@@ -64,9 +79,16 @@ export const getContracts = () =>
 
 //비투엔 담당자 리스트
 export const getB2enManager = () =>
-    axios.get('/b2en/showall');
+    axios.get('/b2en/aclist');
 
 //기관 담당자 리스트
-export const getManagers = () =>
+export const getManagers = () => 
     axios.get('/cust/showall');
+
+
+export const getProducts = () =>
+    axios.get('/prdt/aclist');
+
+export const getLicenseCode= ()=>
+    axios.get('/code/aclist');
 

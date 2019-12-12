@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect, useSelector,useDispatch  } from 'react-redux';
 import { ContractModal } from 'components';
-import { handleOk, handleChangeInput,getHandleCancel } from 'modules/contractmodal';
+import { insert,remove,handleOk, handleChangeInput,getHandleCancel } from 'modules/contractmodal';
 import { getContractList } from 'modules/contracttable';
+import { getShowModal } from 'modules/licensemodal';
 
 const ContractModalContainer = ({
     visible,
@@ -11,7 +12,12 @@ const ContractModalContainer = ({
     confirmLoading,
     handleOk,
     getHandleCancel,
-    handleChangeInput }) => {
+    handleChangeInput,
+    insert,
+    remove,
+    licenses,
+    getShowModal
+}) => {
     
     const dispatch = useDispatch();
     const {formData} = useSelector(({contractmodal})=>({formData : contractmodal.contractModal}));
@@ -30,6 +36,10 @@ const ContractModalContainer = ({
             handleCancel ={getHandleCancel}
             orgList={orgList}
             orgML={orgML}
+            onInsert={insert}
+            onRemove={remove}
+            licenses={licenses}
+            licenseModalShow={getShowModal}
         />
     );
 };
@@ -37,6 +47,7 @@ const ContractModalContainer = ({
 export default connect(
     ({ contractmodal }) => ({
         visible: contractmodal.visible,
+        licenses: contractmodal.licenses,
         confirmLoading: contractmodal.confirmLoading,
         contractModal: contractmodal.contractModal,
         orgList: contractmodal.orgList,
@@ -44,9 +55,12 @@ export default connect(
     }),
     {
         handleOk,
+        remove,
+        insert,
         handleChangeInput,
         getHandleCancel,
-        getContractList
+        getContractList,
+        getShowModal
        
     }
 )(ContractModalContainer);

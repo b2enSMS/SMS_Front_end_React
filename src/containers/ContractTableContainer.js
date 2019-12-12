@@ -9,7 +9,6 @@ const ContractTableContainer = ({
     getContractList,
     loadingTable,
     getShowModal,
-    getOnSelectChange,
     getDeleteData,
  }) => {
 
@@ -23,7 +22,6 @@ const ContractTableContainer = ({
             contractList={contractList}
             loadingTable={loadingTable}
             showModal={getShowModal} 
-            onSelectChange={getOnSelectChange}
             deleteData={getDeleteData}
         />
     );

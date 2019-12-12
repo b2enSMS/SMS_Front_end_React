@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
-import { Container, TextField, Grid } from '@material-ui/core/';
+import { Container, TextField, Grid, Button } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -28,7 +28,8 @@ const useStyles = makeStyles(theme => ({
     },
 
 }));
-const ContractModal = ({ visible, orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput }) => {
+
+const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, onInsert, onRemove, licenses, }) => {
     const classes = useStyles();
 
     const handleChange = ev => {
@@ -44,33 +45,33 @@ const ContractModal = ({ visible, orgList, orgML, confirmLoading, handleOk, hand
 
     //계약 일자 변경
     const [selectedcontDt, setSelectedcontDt] = React.useState(new Date());
-    const handlecontDtChange = (id,date) => {
+    const handlecontDtChange = (id, date) => {
         setSelectedcontDt(date);
-        handleChangeInput({ form: "contractModal", key: "contDt" , value: date })
+        handleChangeInput({ form: "contractModal", key: "contDt", value: date })
     };
     //설치 일자 변경
     const [selectedinstallDt, setSelectedinstallDt] = React.useState();
-    const handleinstallDtChange =  (id,date) => {
+    const handleinstallDtChange = (id, date) => {
         setSelectedinstallDt(date);
-        handleChangeInput({ form: "contractModal", key: "installDt" , value: date })
+        handleChangeInput({ form: "contractModal", key: "installDt", value: date })
     };
     //검수 일자 변경
     const [selectedcheckDt, setSelectedcheckDt] = React.useState(new Date());
-    const handlecheckDtChange =  (id,date) => {
+    const handlecheckDtChange = (id, date) => {
         setSelectedcheckDt(date);
-        handleChangeInput({ form: "contractModal", key: "checkDt" , value: date })
+        handleChangeInput({ form: "contractModal", key: "checkDt", value: date })
     };
     //유지보수개시일 변경
     const [selectedmtncStartDt, setSelectedmtncStartDt] = React.useState(new Date());
-    const handlemtncStartDtChange = (id,date) => {
+    const handlemtncStartDtChange = (id, date) => {
         setSelectedmtncStartDt(date);
-        handleChangeInput({ form: "contractModal", key: "mtncStartDt" , value: date })
+        handleChangeInput({ form: "contractModal", key: "mtncStartDt", value: date })
     };
     //유지보수종료일 변경
     const [selectedmtncEndDt, setSelectedmtncEndDt] = React.useState(new Date());
-    const handlemtncEndDtChange =  (id,date) => {
+    const handlemtncEndDtChange = (id, date) => {
         setSelectedmtncEndDt(date);
-        handleChangeInput({ form: "contractModal", key: "mtncEndDt" , value: date })
+        handleChangeInput({ form: "contractModal", key: "mtncEndDt", value: date })
     };
 
     return (
@@ -82,6 +83,7 @@ const ContractModal = ({ visible, orgList, orgML, confirmLoading, handleOk, hand
             onCancel={handleCancel}
             style={{ top: 25 }}
             width="60%"
+            maskClosable={false}
         >
             <Container component="main" fixed>
                 <form className={classes.form} autoComplete="off">
@@ -139,23 +141,23 @@ const ContractModal = ({ visible, orgList, orgML, confirmLoading, handleOk, hand
                             />
                         </Grid>
 
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>                            
-                        <Grid item xs={12} sm={6}>
-                            <KeyboardDatePicker
-                                disableToolbar
-                                variant="inline"
-                                format="yyyy-MM-dd"
-                                margin="normal"
-                                id="contDt"
-                                label="계약일자"
-                                fullWidth
-                                value={selectedcontDt}
-                                onChange={handlecontDtChange}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            />
-                        </Grid>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <Grid item xs={12} sm={6}>
+                                <KeyboardDatePicker
+                                    disableToolbar
+                                    variant="inline"
+                                    format="yyyy-MM-dd"
+                                    margin="normal"
+                                    id="contDt"
+                                    label="계약일자"
+                                    fullWidth
+                                    value={selectedcontDt}
+                                    onChange={handlecontDtChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
                             <Grid item xs={12} sm={6}>
                                 <KeyboardDatePicker
                                     disableToolbar
@@ -249,6 +251,39 @@ const ContractModal = ({ visible, orgList, orgML, confirmLoading, handleOk, hand
                                 onChange={handleChange}
                                 autoComplete="off"
                             />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Button onClick={licenseModalShow} variant="outlined">라이센스 등록</Button>
+                        </Grid>
+                        <Grid item xs={12} sm={8}>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <TextField
+                                disabled
+                                id="filled-disabled"
+                                label="Disabled"
+                                defaultValue="라이센스:"
+                            />
+                            {licenses.text}
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                id="contAmt"
+                                label="제품 가격"
+                                type="number"
+                                required
+                                fullWidth
+                                onChange={handleChange}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+
+                        </Grid>
+                        <Grid item xs={12} sm={2}>
+
+                            <Button variant="contained" onClick={() => onRemove(licenses.id)}>삭제</Button>
+
                         </Grid>
                     </Grid>
                 </form>
