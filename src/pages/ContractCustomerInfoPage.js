@@ -37,7 +37,7 @@ const ContractCustomerInfoPage = () => {
         <span>
             <div>
                 <Typography className={classes.menuName} variant="h5">
-                    고객정보
+                    계약 고객 관리
                 </Typography>
             </div>
             <div className={classes.tablepart}>

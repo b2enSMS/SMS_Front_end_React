@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   divMenuItemList: {
-    paddingTop: theme.spacing(13),
+    paddingTop: theme.spacing(4),
   },
   button: {
     paddingTop: theme.spacing(1),
