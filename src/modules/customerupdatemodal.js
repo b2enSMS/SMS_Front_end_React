@@ -5,6 +5,10 @@ const UPDATE = 'contractcustomermodal/UPDATE';
 const UPDATE_SUCCESS = 'contractcustomermodal/UPDATE_SUCCESS';
 const UPDATE_FAILURE = 'contractcustomermodal/UPDATE_FAILURE';
 
+const GET_CUSTOMER = 'contractcustomermodal/GET_CUSTOMER';
+const GET_CUSTOMER_SUCCESS = 'contractcustomermodal/GET_CUSTOMER_SUCCESS';
+const GET_CUSTOMER_FAILURE = 'contractcustomermodal/GET_CUSTOMER_FAILURE';
+
 const SHOW_MODAL = 'contractcustomermodal/SHOW_MODAL';
 const SHOW_MODAL_SUCCESS = 'contractcustomermodal/SHOW_MODAL_SUCCESS';
 const SHOW_MODAL_FAILURE = 'contractcustomermodal/SHOW_MODAL_FAILURE';
@@ -29,6 +33,20 @@ export const getShowUpdateModal = () => async dispatch => {
         throw e;
     }
 };
+
+export const getCustomerInfo = (custId) => async dispatch =>{
+    dispatch({ type: GET_CUSTOMER })
+    try {
+        const res = await api.getCust(custId);
+    } catch (e) {
+        dispatch({
+            type: GET_CUSTOMER_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+}
 
 export const updateCustomer = () => async dispatch => {
     dispatch({type: UPDATE});
@@ -67,12 +85,20 @@ const customerupdatemodal = handleActions(
         }),
         [UPDATE]: state => ({
             ...state,
-            visible: true,
         }),
         [UPDATE_SUCCESS]: (state, action) => ({
             ...state,
         }),
         [UPDATE_FAILURE]: state => ({
+            ...state,
+        }),
+        [GET_CUSTOMER]: state => ({
+            ...state,
+        }),
+        [GET_CUSTOMER_SUCCESS]: (state, action) => ({
+            ...state,
+        }),
+        [GET_CUSTOMER_FAILURE]: state => ({
             ...state,
         }),
     },
