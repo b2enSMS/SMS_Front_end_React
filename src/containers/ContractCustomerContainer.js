@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {connect, useDispatch} from 'react-redux';
+import {connect} from 'react-redux';
 import  { ContractCustomer } from "components";
 import { getShowCustomerModal } from "modules/contractcustomermodal";
 import { getCustomerList, deleteCustomer } from "modules/contractcustomer";
