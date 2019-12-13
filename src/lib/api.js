@@ -17,8 +17,19 @@ export const postLicense = (formData) => {
         lcnsStartDt: formData.lcnsStartDt,
         lcnsEndDt: formData.lcnsEndDt,
     }
-    axios.post('/lcns/create', data);
+    return axios.post('/lcns/create', data);
 }
+
+export const getLicense = () => 
+    axios.get('/lcns/newest');
+
+
+export const deleteLicenses = (licenseId) => {
+    for (var i in licenseId) {
+        return axios.delete(`/lcns/${licenseId[i]}`)
+    }
+}
+
 export const postContracts = (formData) => {
     const data = {
         checkDt: formData.checkDt,
@@ -32,19 +43,19 @@ export const postContracts = (formData) => {
         mtncEndDt: formData.mtncEndDt,
         contReportNo: formData.contReportNo,
     }
-    axios.post('/cont/create', data);
+    return axios.post('/cont/create', data);
 }
 //계약 테이블 - 리스트 삭제
 export const getDeleteContracts = (selectedRowKeys) => {
     for (var i in selectedRowKeys) {
-        axios.delete(`/cont/${selectedRowKeys[i]}`)
+        return axios.delete(`/cont/${selectedRowKeys[i]}`)
     }
 }
 
 //고객 테이블 - 삭제
 export const deleteCustomer = (selectedRowKeys) => {
     for (var i in selectedRowKeys) {
-        axios.delete(`/cust/${selectedRowKeys[i]}`)
+        return axios.delete(`/cust/${selectedRowKeys[i]}`)
     }
 }
 
@@ -62,7 +73,7 @@ export const postCustomer = (formData) => {
         email: formData.email,
         telNo: formData.telNo,
     }
-    axios.post('/cust/create', data);
+    return axios.post('/cust/create', data);
 }
 //기관 리스트
 export const getOrganization = () =>
@@ -85,5 +96,5 @@ export const getProducts = () =>
     axios.get('/prdt/aclist');
 
 export const getLicenseCode= ()=>
-    axios.get('/code/aclist');
+    axios.get('/cmmncd/lcns');
 
