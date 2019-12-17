@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect, useSelector,useDispatch  } from 'react-redux';
 import { ContractModal } from 'components';
-import { insert,remove,handleOk, handleChangeInput,getHandleCancel } from 'modules/contractmodal';
-import { getContractList } from 'modules/contracttable';
-import { getShowModal } from 'modules/licensemodal';
+import { insert,remove,handleOk, handleChangeInput,getHandleCancel } from 'modules/contract/contractmodal';
+import { getContractList } from 'modules/contract/contracttable';
+import { getShowModal } from 'modules/contract/licensemodal';
 
 const ContractModalContainer = ({
     visible,

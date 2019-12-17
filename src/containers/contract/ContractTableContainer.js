@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect} from 'react-redux';
 import { ContractTable } from 'components';
-import { getContractList,getDeleteData } from 'modules/contracttable';
-import { getShowModal } from 'modules/contractmodal';
+import { getContractList,getDeleteData } from 'modules/contract/contracttable';
+import { getShowModal } from 'modules/contract/contractmodal';
 
 const ContractTableContainer = ({
     contractList,

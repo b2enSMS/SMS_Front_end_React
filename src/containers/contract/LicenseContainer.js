@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { LicenseModal } from 'components';
-import {handleOk, handleChangeInput,getHandleCancel } from 'modules/licensemodal';
+import {handleOk, handleChangeInput,getHandleCancel } from 'modules/contract/licensemodal';
 
 const LicenseContainer = ({
     visible,

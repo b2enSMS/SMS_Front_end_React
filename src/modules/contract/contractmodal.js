@@ -1,35 +1,44 @@
 import { handleActions, createAction } from 'redux-actions';
-import * as api from '../lib/api';
+import * as api from '../../lib/api';
 
-const CHANGE_INPUT = 'licensemodal/CHANGE_INPUT';
-const HANDLE_CANCEL = 'licensemodal/HANDLE_CANCLE';
+const CHANGE_INPUT = 'contractmodal/CHANGE_INPUT';
+const HANDLE_CANCEL = 'contractmodal/HANDLE_CANCLE';
 
-const SHOW_LIMO = 'licensemodal/SHOW_LIMO';
-const SHOW_LIMO_SUCCESS = 'licensemodal/SHOW_LIMO_SUCCESS';
-const SHOW_LIMO_FAILURE = 'licensemodal/SHOW_LIMO_FAILURE';
+const SHOW_MODAL = 'contractmodal/SHOW_MODAL';
+const SHOW_MODAL_SUCCESS = 'contractmodal/SHOW_MODAL_SUCCESS';
+const SHOW_MODAL_FAILURE = 'contractmodal/SHOW_MODAL_FAILURE';
 
-const POST_LICENSE = 'licensemodal/POST_LICENSE';
-const POST_LICENSE_SUCCESS = 'licensemodal/POST_LICENSE_SUCCESS';
-const POST_LICENSE_FAILURE = 'licensemodal/POST_LICENSE_FAILURE';
+const POST_CONTRACT = 'contractmodal/POST_CONTRACT';
+const POST_CONTRACT_SUCCESS = 'contractmodal/POST_CONTRACT_SUCCESS';
+const POST_CONTRACT_FAILURE = 'contractmodal/POST_CONTRACT_FAILURE';
 
+const INSERT = 'contractmodal/INSERT';
+const REMOVE = 'contractmodal/REMOVE';
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+let id = 0;
+export const insert = createAction(INSERT, text => ({
+    id: id++,
+    text,
+}));
+export const remove = createAction(REMOVE, id => id);
+
 
 export const getShowModal = () => async dispatch => {
-    dispatch({ type: SHOW_LIMO });
+    dispatch({ type: SHOW_MODAL });
     try {
-        const responseProduct = await api.getProducts();
-        //const responseLicenseCode = null;//await api.getLicenseCode();
+        const response = await api.getOrganization();
+        const responseML = await api.getB2enManager();
         dispatch({
-            type: SHOW_LIMO_SUCCESS,
+            type: SHOW_MODAL_SUCCESS,
             payload: {
-                products: responseProduct.data,
-                //licCode: responseLicenseCode.data,
+                org: response.data,
+                orgML: responseML.data
             }
         });
     } catch (e) {
         dispatch({
-            type: SHOW_LIMO_FAILURE,
+            type: SHOW_MODAL_FAILURE,
             payload: e,
             error: true
         });
@@ -49,15 +58,15 @@ export const handleChangeInput = (changeData) => dispatch => {
 
 export const handleOk = (formData) => async dispatch => {
 
-    dispatch({ type: POST_LICENSE });
+    dispatch({ type: POST_CONTRACT });
     try {
-        await api.postLicense(formData);
+        await api.postContracts(formData);
         dispatch({
-            type: POST_LICENSE_SUCCESS,
+            type: POST_CONTRACT_SUCCESS,
         });
     } catch (e) {
         dispatch({
-            type: POST_LICENSE_FAILURE,
+            type: POST_CONTRACT_FAILURE,
             payload: e,
             error: true
         });
@@ -76,25 +85,25 @@ const initialState = {
         mtncStartDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
         mtncEndDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()
     },
-    licenseForm: [],
-    products: [],
-    licCode: [],
+    orgList: [],
+    orgML: [],
+    licenses: [],
 }
 
-const licensemodal = handleActions(
+const contractmodal = handleActions(
     {
 
-        [SHOW_LIMO]: state => ({
+        [SHOW_MODAL]: state => ({
             ...state,
             visible: true,
         }),
-        [SHOW_LIMO_SUCCESS]: (state, action) => ({
+        [SHOW_MODAL_SUCCESS]: (state, action) => ({
             ...state,
-            products: action.payload.products,
-            //licCode: action.payload.licCode
+            orgList: action.payload.org,
+            orgML: action.payload.orgML
         }),
 
-        [SHOW_LIMO_FAILURE]: (state) => ({
+        [SHOW_MODAL_FAILURE]: (state) => ({
             ...state,
         }),
 
@@ -111,21 +120,33 @@ const licensemodal = handleActions(
             //newState.visible = true
             return newState
         },
-        [POST_LICENSE]: state => ({
+        [POST_CONTRACT]: state => ({
             ...state,
             confirmLoading: true,
         }),
-        [POST_LICENSE_SUCCESS]: (state, action) => ({
+        [POST_CONTRACT_SUCCESS]: (state, action) => ({
             ...state,
             confirmLoading: false,
             visible: false
         }),
-        [POST_LICENSE_FAILURE]: (state, action) => ({
+        [POST_CONTRACT_FAILURE]: (state, action) => ({
             ...state,
             confirmLoading: false,
         }),
+
+
+        [INSERT]:
+            (state, { payload: insertLicense }) => ({
+                ...state,
+                licenses: state.licenses.concat(insertLicense)
+            }),
+        [REMOVE]:
+            (state, { payload: id }) => ({
+                ...state,
+                licenses: state.licenses.filter(insertLicense => insertLicense.id !== id)
+            }),
     },
     initialState,
 );
 
-export default licensemodal;
+export default contractmodal;

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import  { ContractCustomer } from "components";
-import { getShowCustomerModal } from "modules/contractcustomermodal";
-import { getCustomerList, deleteCustomer } from "modules/contractcustomer";
-import { getShowUpdateModal } from "modules/customerupdatemodal";
+import { getShowCustomerModal } from "../../modules/contractCustomer/contractcustomermodal";
+import { getCustomerList, deleteCustomer } from "../../modules/contractCustomer/contractcustomer";
+import { getShowUpdateModal } from "../../modules/contractCustomer/customerupdatemodal";
 
 const ContractCustomerContainer = ({
     customerList,

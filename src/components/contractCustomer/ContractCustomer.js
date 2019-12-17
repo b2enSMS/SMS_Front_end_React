@@ -67,13 +67,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const handleMenuClick= key =>{
-
+    console.log("key",key);
 }
 
 const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer, showUpdateModal}) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
     const columns = [
         {
             title: 'organization',
@@ -96,16 +95,23 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
             dataIndex: 'custRankNm',
         },
         {
+            title: '담/사',
+            dataIndex: 'custTpCd',
+        },
+        {
             title: '',
             dataIndex: 'menuTag',
             width: '5%',
             render: (text, record) =>
                 (<Dropdown
                         overlay={(
-                            <Menu onClick={(record)=>{
-                                handleMenuClick(record.key)
-                            }}>
-                                <Menu.Item onClick={showUpdateModal}>
+                            <Menu>
+                                <Menu.Item onClick={()=>{
+                                    const index = record.custId;
+                                    console.log("recordrecord",record)
+                                    const cust = customerList[index]
+                                    showUpdateModal(index)
+                                }}>
                                     수정
                                 </Menu.Item>
                             </Menu>

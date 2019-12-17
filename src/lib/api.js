@@ -41,10 +41,10 @@ export const getDeleteContracts = (selectedRowKeys) => {
     }
 }
 
-// 고객 두당 하나씩 가져오기
-export const getCust = (custId) => {
+// 고객 하나씩 가져오기
+export const getCust = (custId) =>
+    axios.get(`/cust/${custId}`)
 
-}
 
 //고객 테이블 - 삭제
 export const deleteCustomer = (selectedRowKeys) => {
@@ -53,7 +53,18 @@ export const deleteCustomer = (selectedRowKeys) => {
     }
 }
 
-export const updateCustomer = () => {
+// 고객 수정
+export const updateCustomer = (custId ,formData) => {
+    const data = {
+        orgId: formData.orgId,
+        orgNm: formData.orgNm,
+        custNm: formData.custNm,
+        custRankNm: formData.custRankNm,
+        email: formData.email,
+        telNo: formData.telNo,
+        custTpCd: formData.custTpCd,
+    }
+    axios.get(`/cust/${custId}`, data);
 }
 
 //고객 등록
@@ -66,6 +77,7 @@ export const postCustomer = (formData) => {
         custRankNm: formData.custRankNm,
         email: formData.email,
         telNo: formData.telNo,
+        custTpCd: formData.custTpCd,
     }
     axios.post('/cust/create', data);
 }
