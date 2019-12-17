@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import * as api from '../lib/api';
+import * as api from '../../lib/api';
 
 
 const GET_CONTRACT = 'contracttable/GET_CONTRACT';

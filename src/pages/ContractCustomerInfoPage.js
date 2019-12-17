@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
-import ContractCustomerContainer from "../containers/ContractCustomerContainer";
-import CustomerModalContainer from "../containers/CustomerModalContainer";
+import ContractCustomerContainer from "../containers/contractCustomer/ContractCustomerContainer";
+import CustomerModalContainer from "../containers/contractCustomer/CustomerModalContainer";
+import CustomerUpdateModalContainer from "../containers/contractCustomer/CustomerUpdateModalContainer";
 
 const textcolor = '#174A84';
 
@@ -46,6 +47,7 @@ const ContractCustomerInfoPage = () => {
                         <div >
                             <ContractCustomerContainer />
                             <CustomerModalContainer />
+                            <CustomerUpdateModalContainer />
                         </div>
                     </Container>
                 </Paper>
