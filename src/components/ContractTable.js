@@ -66,24 +66,28 @@ const columns = [
     dataIndex: 'orgNm',
   },
   {
-    title: 'manager',
+    title: 'b2en',
     dataIndex: 'empNm',
   },
   {
-    title: 'address',
+    title: 'contractdate',
     dataIndex: 'contDt',
   },
   {
-    title: 'date',
-    dataIndex: 'contTotAmt',
+    title: 'installDate',
+    dataIndex: 'installDt',
   },
   {
-    title: 'valid',
+    title: 'checkDate',
+    dataIndex: 'checkDt',
+  },
+  {
+    title: 'maintenanceStart',
     dataIndex: 'mtncStartDt',
   },
   {
-    title: 'etc',
-    dataIndex: 'contReportNo',
+    title: 'maintenanceEnd',
+    dataIndex: 'mtncEndDt',
   },
 
   {
@@ -93,8 +97,8 @@ const columns = [
     render: (text, record) =>
       (<Dropdown 
         overlay={(
-          <Menu onClick={(record)=>{
-            handleMenuClick(record.key)
+          <Menu onClick={()=>{
+            handleMenuClick(record.contId)
           }}>
           <Menu.Item >
             수정

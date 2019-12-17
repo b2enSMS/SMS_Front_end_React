@@ -7,20 +7,23 @@ const HANDLE_CANCEL = 'licensemodal/HANDLE_CANCLE';
 const SHOW_LIMO = 'licensemodal/SHOW_LIMO';
 const SHOW_LIMO_SUCCESS = 'licensemodal/SHOW_LIMO_SUCCESS';
 const SHOW_LIMO_FAILURE = 'licensemodal/SHOW_LIMO_FAILURE';
-const OFF_MODAL ='licensemodal/OFF_MODAL'
+const OFF_MODAL = 'licensemodal/OFF_MODAL';
+
+
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+
 
 export const getShowModal = () => async dispatch => {
     dispatch({ type: SHOW_LIMO });
     try {
         const responseProduct = await api.getProducts();
-        //const responseLicenseCode = null;//await api.getLicenseCode();
+        const responseLicenseCode = await api.getLicenseCode();
         dispatch({
             type: SHOW_LIMO_SUCCESS,
             payload: {
                 products: responseProduct.data,
-                //licCode: responseLicenseCode.data,
+                licCode: responseLicenseCode.data,
             }
         });
     } catch (e) {
@@ -44,16 +47,17 @@ export const handleChangeInput = (changeData) => dispatch => {
 }
 
 export const handleOk = () => dispatch => {
-    dispatch({ type: SHOW_LIMO });
+    dispatch({ type: OFF_MODAL });
 };
 
 const initialState = {
     visible: false,
     confirmLoading: false,
-    lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-    lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-    lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-    licenseForm: {},
+    licenseForm: {
+        lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+    },
     products: [],
     licCode: [],
     tempLcnsId: null,
@@ -65,10 +69,11 @@ const licensemodal = handleActions(
             ...state,
             visible: false,
             confirmLoading: false,
-            lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-            lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-            lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-            licenseForm: {},
+            licenseForm: {
+                lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+            },
             products: [],
             licCode: [],
         }),
@@ -79,7 +84,7 @@ const licensemodal = handleActions(
         [SHOW_LIMO_SUCCESS]: (state, action) => ({
             ...state,
             products: action.payload.products,
-            //licCode: action.payload.licCode
+            licCode: action.payload.licCode
         }),
         [SHOW_LIMO_FAILURE]: (state) => ({
             ...state,

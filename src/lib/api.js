@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export const postLicense = (formData) => {
-    const data={
+    const data = {
         prdtId: formData.prdtId,
         lcnsTpCd: formData.lcnsTpCd,
         lcnsNo: formData.lcnsNo,
@@ -20,7 +20,7 @@ export const postLicense = (formData) => {
     return axios.post('/lcns/create', data);
 }
 
-export const getLicense = () => 
+export const getLicense = () =>
     axios.get('/lcns/newest');
 
 
@@ -31,10 +31,11 @@ export const deleteLicenses = (licenseId) => {
 }
 
 export const postContracts = (formData) => {
+    console.log("formData야야야야ㅑ",formData.lcns)
     const data = {
+        prdtId: formData.prdtId,
         checkDt: formData.checkDt,
-        lcnsNo:[],
-        contAmt:[],
+        lcns: formData.lcns,
         orgId: formData.orgId,
         empId: formData.empId,
         contDt: formData.contDt,
@@ -42,6 +43,7 @@ export const postContracts = (formData) => {
         mtncStartDt: formData.mtncStartDt,
         mtncEndDt: formData.mtncEndDt,
         contReportNo: formData.contReportNo,
+        contTpCd: formData.contTpCd,
     }
     return axios.post('/cont/create', data);
 }
@@ -88,13 +90,17 @@ export const getB2enManager = () =>
     axios.get('/b2en/aclist');
 
 //기관 담당자 리스트
-export const getManagers = () => 
+export const getManagers = () =>
     axios.get('/cust/showall');
+
+//계약 코드 리스트
+export const getcontCD = () =>
+    axios.get('/cmmncd/cont_tp_cd');
 
 
 export const getProducts = () =>
     axios.get('/prdt/aclist');
 
-export const getLicenseCode= ()=>
-    axios.get('/cmmncd/lcns');
+export const getLicenseCode = () =>
+    axios.get('/cmmncd/lcns_tp_cd');
 

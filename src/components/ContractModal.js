@@ -31,11 +31,15 @@ const useStyles = makeStyles(theme => ({
     },
     inputButton: {
         marginTop: theme.spacing(1),
-    }
+    },
+    dynamicSpan: {
+        width: '100%',
+    },
 
 }));
 
-const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, }) => {
+
+const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler }) => {
     const classes = useStyles();
 
     const handleChange = ev => {
@@ -49,10 +53,12 @@ const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoadi
         }
     }
 
-    const lcnsInputHandleChange = (ev) => {
-        console.log("name, hidden", ev.target.value, ev.target.hidden);
-        handleChange({ form: "contractModal", key: `contAmt[${ev.target.id}]`, value: ev.target.value })
-    }
+    // const lcnsInputHandleChange = ev => {
+    //     console.log("lcnsInputHandleChange", ev);
+    //     console.log("name, hidden", ev.target.value, ev.target.hidden, ev.target.id, ev.target.value);
+    //     inputPriceChange({ form: "contractModal", key: "contAmt", idx: ev.target.id, value: ev.target.value })
+
+    // }
 
     //계약 일자 변경
     const [selectedcontDt, setSelectedcontDt] = React.useState(new Date());
@@ -133,10 +139,32 @@ const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoadi
                                         margin="normal"
                                         label="담당자명"
                                         fullWidth
+                                        autoComplete="off"
                                     />
                                 )}
                             />
                         </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <Autocomplete
+                                id="contTpCd"
+                                options={contCdList}
+                                onChange={autoCompleteHandleChange}
+                                getOptionLabel={option => option.cmmnDetailCdNm}
+                                renderInput={params => (
+                                    <TextField
+                                        {...params}
+                                        className={classes.textField}
+                                        variant="outlined"
+                                        required
+                                        margin="normal"
+                                        label="계약 유형"
+                                        fullWidth
+                                    />
+                                )}
+                            />
+                        </Grid>
+
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 className={classes.textField}
@@ -144,31 +172,16 @@ const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoadi
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="contTotAmt"
-                                label="총계약금액"
-                                id="contTotAmt"
+                                name="expire"
+                                label="수주보고서 번호"
+                                id="contReportNo"
                                 onChange={handleChange}
                                 autoComplete="off"
                             />
                         </Grid>
 
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid item xs={12} sm={6}>
-                                <KeyboardDatePicker
-                                    disableToolbar
-                                    variant="inline"
-                                    format="yyyy-MM-dd"
-                                    margin="normal"
-                                    id="contDt"
-                                    label="계약일자"
-                                    fullWidth
-                                    value={selectedcontDt}
-                                    onChange={handlecontDtChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
-                            </Grid>
+
                             <Grid item xs={12} sm={6}>
                                 <KeyboardDatePicker
                                     disableToolbar
@@ -233,80 +246,79 @@ const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoadi
                                     }}
                                 />
                             </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <Button onClick={licenseModalShow} variant="outlined">라이센스 등록</Button>
+                            </Grid>
+                            <Grid item xs={12} sm={8}>
+                                <KeyboardDatePicker
+                                    disableToolbar
+                                    variant="inline"
+                                    format="yyyy-MM-dd"
+                                    margin="normal"
+                                    id="contDt"
+                                    label="계약일자"
+                                    fullWidth
+                                    value={selectedcontDt}
+                                    onChange={handlecontDtChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
                         </MuiPickersUtilsProvider>
 
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                className={classes.textField}
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="expire"
-                                label="수주보고서 번호"
-                                id="contReportNo"
-                                onChange={handleChange}
-                                autoComplete="off"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                className={classes.textField}
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="etc"
-                                label="라이센스 번호"
-                                id="contReportNo"
-                                onChange={handleChange}
-                                autoComplete="off"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Button onClick={licenseModalShow} variant="outlined">라이센스 등록</Button>
-                        </Grid>
-                        <Grid item xs={12} sm={8}>
-                        </Grid>
-
-                        {licenses.map((license,index) => (
-                            <Grid>
-                                <Grid item xs={12} sm={4}>
-                                    <Input
-                                        className={classes.textInput}
-                                        defaultValue={license.lcnsNo + ": "}
-                                        disabled inputProps={{ 'aria-label': 'description' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        id={index}
-                                        label="제품 가격"
-                                        type="number"
-                                        required
-                                        fullWidth
-                                        onChange={handleChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-
-                                </Grid>
-                                <Grid item xs={12} sm={2}>
-                                    <Button
-                                        className={classes.inputButton}
-                                        variant="contained"
-                                        onClick="">
-                                        삭제
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                                ))}
-                }
                     </Grid>
+
+                    {licenses.map((license, index) => (
+
+                        <LicenseItem
+
+                            license={license}
+                            key={index}
+                            id={index.toString()}
+                            keyvar={index}
+                            removeLicenseHandler={removeLicenseHandler}
+                            classes={classes}
+                        >
+                            {console.log("kwon Index", index)}
+                        </LicenseItem>
+                    ))}
+
                 </form>
             </Container>
         </Modal>
     );
 }
+const LicenseItem = ({ keyvar, license, removeLicenseHandler, classes }) => {
+    return (
+        <Grid container spacing={2} >
+            {console.log("indexLicense", keyvar, license)}
+            <Grid item xs={12} sm={4}>
+                <Input
+                    className={classes.textInput}
+                    defaultValue={"제품명: " + license.licenseForm.prdtNm}
+                    disabled inputProps={{ 'aria-label': 'description' }}
+                />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <Input
+                    className={classes.textInput}
+                    defaultValue={"납품 단가: " + license.licenseForm.contAmt + "원"}
+                    disabled inputProps={{ 'aria-label': 'description' }}
+                />
+
+            </Grid>
+            <Grid item xs={12} sm={2}>
+                <Button
+                    className={classes.inputButton}
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => removeLicenseHandler(keyvar)}
+                >삭제
+                </Button>
+            </Grid>
+        </Grid>
+    );
+};
+
 export default ContractModal;

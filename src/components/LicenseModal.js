@@ -39,10 +39,13 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
     const autoCompleteHandleChange = (ev, value) => {
         console.log("autoCompleteHandleChange", value)
         for (var key in value) {
+            console.log("key",key)
             handleChangeInput({ form: "licenseForm", key: key, value: value[key] });
         }
     }
-
+    const licenseCodeHandleChange=(ev,value)=>{
+        handleChangeInput({ form: "licenseForm", key: "lcnsTpCd", value: value["cmmnDetailCd"] });
+    }
      //발행일 변경
      const [selectedlcnsIssuDt, setSelectedlcnsIssuDt] = React.useState(new Date());
      const handlelcnsIssuDtChange = (id, date) => {
@@ -74,14 +77,14 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
             maskClosable={false}
         >
             <Container component="main" fixed>
-                <form className={classes.form} autoComplete="off">
-                    <Grid container spacing={2}>
+                <form className={classes.form} >
+                    <Grid container >
                         <Grid item xs={12}>
                             <Autocomplete
                                 id="prdtId"
                                 options={productList}
                                 onChange={autoCompleteHandleChange}
-                                getOptionLabel={option => option.orgNm}
+                                getOptionLabel={option => option.prdtNm}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -91,16 +94,32 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                         margin="normal"
                                         label="제품 이름"
                                         fullWidth
+                                        autoComplete="false"
                                     />
                                 )}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                className={classes.textField}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                type="number"
+                                name="contAmt"
+                                label="제품 가격"
+                                id="contAmt"
+                                onChange={handleChange}
+                                autoComplete="off"
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <Autocomplete
                                 id="lcnsTpCd"
                                 options={licenseCodeList}
-                                onChange={autoCompleteHandleChange}
-                                getOptionLabel={option => option.orgNm}
+                                onChange={licenseCodeHandleChange}
+                                getOptionLabel={option => option.cmmnDetailCdNm}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -110,6 +129,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                         margin="normal"
                                         label="라이센스 유형"
                                         fullWidth
+                                        autoComplete="off"
                                     />
                                 )}
                             />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, useSelector,useDispatch  } from 'react-redux';
 import { ContractModal } from 'components';
-import {handleOk, handleChangeInput,getHandleCancel } from 'modules/contractmodal';
+import {handleOk, handleChangeInput,getHandleCancel,getRemoveLicense } from 'modules/contractmodal';
 import { getContractList } from 'modules/contracttable';
 import { getShowModal } from 'modules/licensemodal';
 
@@ -14,7 +14,9 @@ const ContractModalContainer = ({
     getHandleCancel,
     handleChangeInput,
     licenses,
-    getShowModal
+    contCdList,
+    getShowModal,
+    getRemoveLicense
 }) => {
     
     const dispatch = useDispatch();
@@ -36,6 +38,8 @@ const ContractModalContainer = ({
             orgML={orgML}
             licenses={licenses}
             licenseModalShow={getShowModal}
+            removeLicenseHandler={getRemoveLicense}
+            contCdList={contCdList}
         />
     );
 };
@@ -48,13 +52,15 @@ export default connect(
         contractModal: contractmodal.contractModal,
         orgList: contractmodal.orgList,
         orgML: contractmodal.orgML,
+        contCdList: contractmodal.contCdList,
     }),
     {
         handleOk,
         handleChangeInput,
         getHandleCancel,
         getContractList,
-        getShowModal
+        getShowModal,
+        getRemoveLicense
        
     }
 )(ContractModalContainer);

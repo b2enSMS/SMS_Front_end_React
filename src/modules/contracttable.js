@@ -16,10 +16,25 @@ export const getDeleteData = selectedRowKeys => async dispatch => {
     try{
         await api.getDeleteContracts(selectedRowKeys);
         dispatch({type: DELETE_CONTRACT_SUCCESS});
-
     }catch(e){
         dispatch({
             type: DELETE_CONTRACT_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+
+    dispatch({ type: GET_CONTRACT });
+    try {
+        const response = await api.getContracts();
+        dispatch({
+            type: GET_CONTRACT_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        dispatch({
+            type: GET_CONTRACT_FAILURE,
             payload: e,
             error: true
         });

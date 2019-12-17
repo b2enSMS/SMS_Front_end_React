@@ -10,9 +10,8 @@ const LicenseContainer = ({
     handleOk,
     getHandleCancel,
     handleChangeInput,
-    licenseCodeList,
-    productList,
-    inputLicense,
+    products,
+    licCode,
 
 }) => {
     const { formData } = useSelector(({ licensemodal }) => ({ formData: licensemodal.licenseForm}));
@@ -30,8 +29,8 @@ const LicenseContainer = ({
             confirmLoading={confirmLoading}
             handleChangeInput={handleChangeInput}
             handleCancel={getHandleCancel}
-            productList={productList}
-            licenseCodeList={licenseCodeList}
+            productList={products}
+            licenseCodeList={licCode}
         />
     );
 };
@@ -42,8 +41,8 @@ export default connect(
         licenses: licensemodal.licenses,
         confirmLoading: licensemodal.confirmLoading,
         licenseForm: licensemodal.licenseForm,
-        productList: licensemodal.productList,
-        licenseCodeList: licensemodal.licenseCodeList,
+        products: licensemodal.products,
+        licCode: licensemodal.licCode,
     }),
     {
         handleOk,
