@@ -1,9 +1,9 @@
 import React from 'react';
-import CustomerModal from "../components/CustomerModal";
+import CustomerModal from "../../components/contractCustomer/CustomerModal";
 import {useDispatch, useSelector} from "react-redux";
 import { connect } from 'react-redux';
-import { handleOk, handleChangeInput, getHandleCancel } from "modules/contractcustomermodal";
-import { getCustomerList } from "../modules/contractcustomer";
+import { handleOk, handleChangeInput, getHandleCancel } from "../../modules/contractCustomer/contractcustomermodal";
+import { getCustomerList } from "../../modules/contractCustomer/contractcustomer";
 
 const CustomerModalContainer = ({
     visible,
@@ -20,6 +20,7 @@ const CustomerModalContainer = ({
 
     const okok = () =>{
         handleOk(formData);
+        console.log("formDataformData",formData);
         dispatch(getCustomerList())
     }
 

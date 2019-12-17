@@ -1,5 +1,5 @@
 import { handleActions, createAction } from 'redux-actions';
-import * as api from '../lib/api';
+import * as api from '../../lib/api';
 
 const CHANGE_INPUT = 'licensemodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'licensemodal/HANDLE_CANCLE';

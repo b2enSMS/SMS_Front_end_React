@@ -46,7 +46,7 @@ const user = [
     },
 ];
 
-const CustomerUpdateModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList}) => {
+const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList}) => {
 
     const classes = useStyles();
     const [tree, setTree] = React.useState('contract');
@@ -72,7 +72,7 @@ const CustomerUpdateModal = ({visible, handleOk, confirmLoading, handleCancel, h
 
     return(
         <Modal
-            title="고객정보 수정"
+            title="고객정보 등록"
             visible={visible}
             onOk={handleOk}
             confirmLoading={confirmLoading}
@@ -165,7 +165,7 @@ const CustomerUpdateModal = ({visible, handleOk, confirmLoading, handleCancel, h
                         className={classes.textField}
                         variant="outlined"
                         margin="normal"
-                        id="custCode"
+                        id="custTpCd"
                         select
                         required
                         label="담당자? 사용자?"
@@ -185,4 +185,4 @@ const CustomerUpdateModal = ({visible, handleOk, confirmLoading, handleCancel, h
     );
 }
 
-export default CustomerUpdateModal
+export default CustomerModal
