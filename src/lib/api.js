@@ -52,6 +52,11 @@ export const getDeleteContracts = (selectedRowKeys) => {
     }
 }
 
+// 고객 두당 하나씩 가져오기
+export const getCust = (custId) => {
+
+}
+
 //고객 테이블 - 삭제
 export const deleteCustomer = (selectedRowKeys) => {
     for (var i in selectedRowKeys) {
