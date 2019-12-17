@@ -12,16 +12,17 @@ const POST_CONTRACT = 'contractmodal/POST_CONTRACT';
 const POST_CONTRACT_SUCCESS = 'contractmodal/POST_CONTRACT_SUCCESS';
 const POST_CONTRACT_FAILURE = 'contractmodal/POST_CONTRACT_FAILURE';
 
-const INSERT = 'contractmodal/INSERT';
-const REMOVE = 'contractmodal/REMOVE';
+const INPUT_LICENSE = 'licensemodal/INPUT_LICENSE';
+
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
-let id = 0;
-export const insert = createAction(INSERT, text => ({
-    id: id++,
-    text,
-}));
-export const remove = createAction(REMOVE, id => id);
+
+export const inputLicense = (licenseForm) => dispatch => {
+    dispatch({
+        type: INPUT_LICENSE,
+        payload: licenseForm
+    })
+}
 
 
 export const getShowModal = () => async dispatch => {
@@ -79,11 +80,12 @@ const initialState = {
     visible: false,
     confirmLoading: false,
     contractModal: {
-        contDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-        installDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-        checkDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-        mtncStartDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-        mtncEndDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()
+        contDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        installDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        checkDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        mtncStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        mtncEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        licenseList: []
     },
     orgList: [],
     orgML: [],
@@ -93,6 +95,10 @@ const initialState = {
 const contractmodal = handleActions(
     {
 
+        [INPUT_LICENSE]: (state, action) => ({
+            ...state,
+            licenses: state.licenses.concat(action.payload.licenseForm)
+        }),
         [SHOW_MODAL]: state => ({
             ...state,
             visible: true,
@@ -100,7 +106,19 @@ const contractmodal = handleActions(
         [SHOW_MODAL_SUCCESS]: (state, action) => ({
             ...state,
             orgList: action.payload.org,
-            orgML: action.payload.orgML
+            orgML: action.payload.orgML,
+            contractModal: {
+                orgId: "",
+                empId: "",
+                contReportNo: "",
+                contDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                installDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                checkDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                mtncStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                mtncEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                licenseList: []
+            },
+            licenses: [],
         }),
 
         [SHOW_MODAL_FAILURE]: (state) => ({
@@ -110,6 +128,7 @@ const contractmodal = handleActions(
         [HANDLE_CANCEL]: state => ({
             ...state,
             visible: false,
+            licenses: [],
         }),
 
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => {
@@ -117,7 +136,6 @@ const contractmodal = handleActions(
                 {}, state
             );
             newState[form][key] = value
-            //newState.visible = true
             return newState
         },
         [POST_CONTRACT]: state => ({
@@ -133,18 +151,6 @@ const contractmodal = handleActions(
             ...state,
             confirmLoading: false,
         }),
-
-
-        [INSERT]:
-            (state, { payload: insertLicense }) => ({
-                ...state,
-                licenses: state.licenses.concat(insertLicense)
-            }),
-        [REMOVE]:
-            (state, { payload: id }) => ({
-                ...state,
-                licenses: state.licenses.filter(insertLicense => insertLicense.id !== id)
-            }),
     },
     initialState,
 );

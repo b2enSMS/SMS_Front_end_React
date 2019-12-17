@@ -7,11 +7,7 @@ const HANDLE_CANCEL = 'licensemodal/HANDLE_CANCLE';
 const SHOW_LIMO = 'licensemodal/SHOW_LIMO';
 const SHOW_LIMO_SUCCESS = 'licensemodal/SHOW_LIMO_SUCCESS';
 const SHOW_LIMO_FAILURE = 'licensemodal/SHOW_LIMO_FAILURE';
-
-const POST_LICENSE = 'licensemodal/POST_LICENSE';
-const POST_LICENSE_SUCCESS = 'licensemodal/POST_LICENSE_SUCCESS';
-const POST_LICENSE_FAILURE = 'licensemodal/POST_LICENSE_FAILURE';
-
+const OFF_MODAL ='licensemodal/OFF_MODAL'
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
 
@@ -47,43 +43,35 @@ export const handleChangeInput = (changeData) => dispatch => {
     dispatch({ type: CHANGE_INPUT, payload: changeData });
 }
 
-export const handleOk = (formData) => async dispatch => {
-
-    dispatch({ type: POST_LICENSE });
-    try {
-        await api.postLicense(formData);
-        dispatch({
-            type: POST_LICENSE_SUCCESS,
-        });
-    } catch (e) {
-        dispatch({
-            type: POST_LICENSE_FAILURE,
-            payload: e,
-            error: true
-        });
-        throw e;
-    }
+export const handleOk = () => dispatch => {
+    dispatch({ type: SHOW_LIMO });
 };
-
 
 const initialState = {
     visible: false,
     confirmLoading: false,
-    contractModal: {
-        contDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-        installDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-        checkDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-        mtncStartDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-        mtncEndDt: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()
-    },
-    licenseForm: [],
+    lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+    lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+    lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+    licenseForm: {},
     products: [],
     licCode: [],
+    tempLcnsId: null,
 }
 
 const licensemodal = handleActions(
     {
-
+        [OFF_MODAL]: state => ({
+            ...state,
+            visible: false,
+            confirmLoading: false,
+            lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+            lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+            lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+            licenseForm: {},
+            products: [],
+            licCode: [],
+        }),
         [SHOW_LIMO]: state => ({
             ...state,
             visible: true,
@@ -93,37 +81,20 @@ const licensemodal = handleActions(
             products: action.payload.products,
             //licCode: action.payload.licCode
         }),
-
         [SHOW_LIMO_FAILURE]: (state) => ({
             ...state,
         }),
-
         [HANDLE_CANCEL]: state => ({
             ...state,
             visible: false,
         }),
-
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => {
             const newState = Object.assign(
                 {}, state
             );
             newState[form][key] = value
-            //newState.visible = true
             return newState
         },
-        [POST_LICENSE]: state => ({
-            ...state,
-            confirmLoading: true,
-        }),
-        [POST_LICENSE_SUCCESS]: (state, action) => ({
-            ...state,
-            confirmLoading: false,
-            visible: false
-        }),
-        [POST_LICENSE_FAILURE]: (state, action) => ({
-            ...state,
-            confirmLoading: false,
-        }),
     },
     initialState,
 );

@@ -56,7 +56,6 @@ const RemoveButton = withStyles(theme => ({
 
 
 const handleMenuClick= key =>{
-
   console.log("key",key);
 }
 
@@ -165,7 +164,6 @@ function ContractTable({ loadingTable, contractList, showModal,deleteData}) {
         dataSource={loadingTable ? null : contractList}
         size="small" />
     </div >
-
 
   );
 }

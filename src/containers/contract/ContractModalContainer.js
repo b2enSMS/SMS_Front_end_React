@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect, useSelector,useDispatch  } from 'react-redux';
 import { ContractModal } from 'components';
-import { insert,remove,handleOk, handleChangeInput,getHandleCancel } from 'modules/contract/contractmodal';
-import { getContractList } from 'modules/contract/contracttable';
-import { getShowModal } from 'modules/contract/licensemodal';
+import {handleOk, handleChangeInput,getHandleCancel } from 'modules/contractmodal';
+import { getContractList } from 'modules/contracttable';
+import { getShowModal } from 'modules/licensemodal';
 
 const ContractModalContainer = ({
     visible,
@@ -13,8 +13,6 @@ const ContractModalContainer = ({
     handleOk,
     getHandleCancel,
     handleChangeInput,
-    insert,
-    remove,
     licenses,
     getShowModal
 }) => {
@@ -36,8 +34,6 @@ const ContractModalContainer = ({
             handleCancel ={getHandleCancel}
             orgList={orgList}
             orgML={orgML}
-            onInsert={insert}
-            onRemove={remove}
             licenses={licenses}
             licenseModalShow={getShowModal}
         />
@@ -55,8 +51,6 @@ export default connect(
     }),
     {
         handleOk,
-        remove,
-        insert,
         handleChangeInput,
         getHandleCancel,
         getContractList,

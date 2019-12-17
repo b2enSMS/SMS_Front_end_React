@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
-import { Container, TextField, Grid, Button } from '@material-ui/core/';
+import { Container, TextField, Grid, Button, Input } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -26,10 +26,16 @@ const useStyles = makeStyles(theme => ({
 
         },
     },
+    textInput: {
+        paddingTop: theme.spacing(2),
+    },
+    inputButton: {
+        marginTop: theme.spacing(1),
+    }
 
 }));
 
-const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, onInsert, onRemove, licenses, }) => {
+const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, }) => {
     const classes = useStyles();
 
     const handleChange = ev => {
@@ -41,6 +47,11 @@ const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoadi
         for (var key in value) {
             handleChangeInput({ form: "contractModal", key: key, value: value[key] });
         }
+    }
+
+    const lcnsInputHandleChange = (ev) => {
+        console.log("name, hidden", ev.target.value, ev.target.hidden);
+        handleChange({ form: "contractModal", key: `contAmt[${ev.target.id}]`, value: ev.target.value })
     }
 
     //계약 일자 변경
@@ -257,34 +268,41 @@ const ContractModal = ({ licenseModalShow, visible, orgList, orgML, confirmLoadi
                         </Grid>
                         <Grid item xs={12} sm={8}>
                         </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <TextField
-                                disabled
-                                id="filled-disabled"
-                                label="Disabled"
-                                defaultValue="라이센스:"
-                            />
-                            {licenses.text}
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                id="contAmt"
-                                label="제품 가격"
-                                type="number"
-                                required
-                                fullWidth
-                                onChange={handleChange}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
 
-                        </Grid>
-                        <Grid item xs={12} sm={2}>
+                        {licenses.map((license,index) => (
+                            <Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Input
+                                        className={classes.textInput}
+                                        defaultValue={license.lcnsNo + ": "}
+                                        disabled inputProps={{ 'aria-label': 'description' }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        id={index}
+                                        label="제품 가격"
+                                        type="number"
+                                        required
+                                        fullWidth
+                                        onChange={handleChange}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
 
-                            <Button variant="contained" onClick={() => onRemove(licenses.id)}>삭제</Button>
-
-                        </Grid>
+                                </Grid>
+                                <Grid item xs={12} sm={2}>
+                                    <Button
+                                        className={classes.inputButton}
+                                        variant="contained"
+                                        onClick="">
+                                        삭제
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                                ))}
+                }
                     </Grid>
                 </form>
             </Container>
