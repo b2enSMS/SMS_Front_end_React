@@ -63,127 +63,129 @@ const RemoveButton = withStyles(theme => ({
 }))(Button);
 
 
-const handleMenuClick = key => {
-  console.log("key", key);
-}
 
 
-const columns = [
-  {
-    title: '기관/회사',
-    dataIndex: 'orgNm',
-  },
-  {
-    title: '담당자',
-    dataIndex: 'empNm',
-  },
-  {
-    title: '수주번호',
-    dataIndex: 'contReportNo',
-    align: 'center',
-    render: (value, record, index) =>{
-      return {
-        children: value,
-        props: {
-          align: 'center',
-        },
-      };
-    }
-  },
-  {
-    title: '계약일자',
-    dataIndex: 'contDt',
-    align: 'center',
-    render: (value, record, index) =>{
-      return {
-        children: value,
-        props: {
-          align: 'center',
-        },
-      };
-    }
-  },
-  {
-    title: '계약금액',
-    dataIndex: 'contTotAmt',
-    align: 'right',
-    render: (value, record, index) =>{
-      return {
-        children: (value==null?"-":parseInt(value)/1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 만원 ",
-        props: {
-          align: 'right',
-        },
-      };
-    }
-  },
-  {
-    title: '검수일자',
-    dataIndex: 'checkDt',
-    align: 'center',
-    render: (value, record, index) =>{
-      return {
-        children: value,
-        props: {
-          align: 'center',
-        },
-      };
-    }
-  },
-  {
-    title: '유지보수개시일자',
-    dataIndex: 'mtncStartDt',
-    align: 'center',
-    render: (value, record, index) =>{
-      return {
-        children: value,
-        props: {
-          align: 'center',
-        },
-      };
-    }
-  },
-  {
-    title: '유지보수종료일자',
-    dataIndex: 'mtncEndDt',
-    align: 'center',
-    render: (value, record, index) =>{
-      return {
-        children: value,
-        props: {
-          align: 'center',
-        },
-      };
-    }
-  },
 
-  {
-    title: '',
-    dataIndex: 'menuTag',
-    width: '5%',
-    render: (text, record) =>
-      (<Dropdown
-        overlay={(
-          <Menu onClick={() => {
-            handleMenuClick(record.contId)
-          }}>
-            <Menu.Item >
-              수정
-          </Menu.Item>
-          </Menu>
-        )}
 
-        placement="bottomLeft">
 
-        <Button size="small"><Icon type="menu" /></Button>
-      </Dropdown>
-      )
-  },
-];
-
-function ContractTable({ loadingTable, contractList, showModal, deleteData }) {
+function ContractTable({ loadingTable, contractList, showModal, deleteData,updateModalHandler }) {
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
+  const handleMenuClick = key => {
+    console.log("key", key);
+    updateModalHandler(key)
+  }
+  const columns = [
+    {
+      title: '기관/회사',
+      dataIndex: 'orgNm',
+    },
+    {
+      title: '담당자',
+      dataIndex: 'empNm',
+    },
+    {
+      title: '수주번호',
+      dataIndex: 'contReportNo',
+      align: 'center',
+      render: (value, record, index) =>{
+        return {
+          children: value,
+          props: {
+            align: 'center',
+          },
+        };
+      }
+    },
+    {
+      title: '계약일자',
+      dataIndex: 'contDt',
+      align: 'center',
+      render: (value, record, index) =>{
+        return {
+          children: value,
+          props: {
+            align: 'center',
+          },
+        };
+      }
+    },
+    {
+      title: '계약금액',
+      dataIndex: 'contTotAmt',
+      align: 'right',
+      render: (value, record, index) =>{
+        return {
+          children: (value==null?"-":parseInt(value)/1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 만원 ",
+          props: {
+            align: 'right',
+          },
+        };
+      }
+    },
+    {
+      title: '검수일자',
+      dataIndex: 'checkDt',
+      align: 'center',
+      render: (value, record, index) =>{
+        return {
+          children: value,
+          props: {
+            align: 'center',
+          },
+        };
+      }
+    },
+    {
+      title: '유지보수개시일자',
+      dataIndex: 'mtncStartDt',
+      align: 'center',
+      render: (value, record, index) =>{
+        return {
+          children: value,
+          props: {
+            align: 'center',
+          },
+        };
+      }
+    },
+    {
+      title: '유지보수종료일자',
+      dataIndex: 'mtncEndDt',
+      align: 'center',
+      render: (value, record, index) =>{
+        return {
+          children: value,
+          props: {
+            align: 'center',
+          },
+        };
+      }
+    },
+  
+    {
+      title: '',
+      dataIndex: 'menuTag',
+      width: '5%',
+      render: (text, record) =>
+        (<Dropdown
+          overlay={(
+            <Menu onClick={() => {
+              handleMenuClick(record.contId)
+            }}>
+              <Menu.Item >
+                수정
+            </Menu.Item>
+            </Menu>
+          )}
+  
+          placement="bottomLeft">
+  
+          <Button size="small"><Icon type="menu" /></Button>
+        </Dropdown>
+        )
+    },
+  ];
   const onSelectChange = selectedRowKeys => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);
     setSelectedRowKeys(selectedRowKeys)

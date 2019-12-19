@@ -46,21 +46,15 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
         handleChangeInput({ form: "licenseForm", key: "lcnsTpNm", value: value["cmmnDetailCdNm"] });
     }
      //발행일 변경
-     const [selectedlcnsIssuDt, setSelectedlcnsIssuDt] = React.useState(new Date());
      const handlelcnsIssuDtChange = (id, date) => {
-         setSelectedlcnsIssuDt(date);
          handleChangeInput({ form: "licenseForm", key: "lcnsIssuDt", value: date })
      };
      //개시일자 변경
-     const [selectedlcnsStartDt, setSelectedlcnsStartDt] = React.useState();
      const handlelcnsStartDtChange = (id, date) => {
-         setSelectedlcnsStartDt(date);
          handleChangeInput({ form: "licenseForm", key: "lcnsStartDt", value: date })
      };
      //종료일자 변경
-     const [selectedlcnsEndDt, setSelectedlcnsEndDt] = React.useState(new Date());
      const handlelcnsEndDtChange = (id, date) => {
-         setSelectedlcnsEndDt(date);
          handleChangeInput({ form: "licenseForm", key: "lcnsEndDt", value: date })
      };
 
@@ -74,7 +68,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
             onCancel={handleCancel}
             cancelText="취소"
             style={{ top: 25 }}
-            width="35%"
+            width="30%"
             maskClosable={false}
         >
             <Container component="main" fixed>
@@ -182,7 +176,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                     id="lcnsStartDt"
                                     label="계약일자"
                                     fullWidth
-                                    value={selectedlcnsStartDt}
+                                    value={licenseForm.lcnsStartDt}
                                     onChange={handlelcnsStartDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -198,7 +192,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                     id="lcnsEndDt"
                                     label="종료일자"
                                     fullWidth
-                                    value={selectedlcnsEndDt}
+                                    value={licenseForm.lcnsEndDt}
                                     onChange={handlelcnsEndDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -214,7 +208,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                     id="lcnsIssuDt"
                                     label="발행일"
                                     fullWidth
-                                    value={selectedlcnsIssuDt}
+                                    value={licenseForm.lcnsIssuDt}
                                     onChange={handlelcnsIssuDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',

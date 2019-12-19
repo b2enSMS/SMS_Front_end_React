@@ -38,16 +38,15 @@ const useStyles = makeStyles(theme => ({
     textDate: {
 
     },
-    prdtBtn:{
+    prdtBtn: {
         marginTop: theme.spacing(3.5)
     }
 
 }));
 
 
-const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler,contractForm }) => {
+const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
     const classes = useStyles();
-
     const handleChange = ev => {
         handleChangeInput({ form: "contractModal", key: ev.target.id, value: ev.target.value })
     }
@@ -58,7 +57,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
             handleChangeInput({ form: "contractModal", key: key, value: value[key] });
         }
     }
-    const contractCodeHandleChange = (ev, value)=>{
+    const contractCodeHandleChange = (ev, value) => {
         handleChangeInput({ form: "contractModal", key: "contTpCd", value: value["cmmnDetailCd"] });
         handleChangeInput({ form: "contractModal", key: "contTpNm", value: value["cmmnDetailCdNm"] });
 
@@ -71,33 +70,23 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
     // }
 
     //계약 일자 변경
-    const [selectedcontDt, setSelectedcontDt] = React.useState(new Date());
     const handlecontDtChange = (id, date) => {
-        setSelectedcontDt(date);
         handleChangeInput({ form: "contractModal", key: "contDt", value: date })
     };
     //설치 일자 변경
-    const [selectedinstallDt, setSelectedinstallDt] = React.useState();
     const handleinstallDtChange = (id, date) => {
-        setSelectedinstallDt(date);
         handleChangeInput({ form: "contractModal", key: "installDt", value: date })
     };
     //검수 일자 변경
-    const [selectedcheckDt, setSelectedcheckDt] = React.useState(new Date());
     const handlecheckDtChange = (id, date) => {
-        setSelectedcheckDt(date);
         handleChangeInput({ form: "contractModal", key: "checkDt", value: date })
     };
     //유지보수개시일 변경
-    const [selectedmtncStartDt, setSelectedmtncStartDt] = React.useState(new Date());
     const handlemtncStartDtChange = (id, date) => {
-        setSelectedmtncStartDt(date);
         handleChangeInput({ form: "contractModal", key: "mtncStartDt", value: date })
     };
     //유지보수종료일 변경
-    const [selectedmtncEndDt, setSelectedmtncEndDt] = React.useState(new Date());
     const handlemtncEndDtChange = (id, date) => {
-        setSelectedmtncEndDt(date);
         handleChangeInput({ form: "contractModal", key: "mtncEndDt", value: date })
     };
 
@@ -111,7 +100,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
             onCancel={handleCancel}
             cancelText="취소"
             style={{ top: 50 }}
-            width="50%"
+            width="40%"
             maskClosable={false}
         >
             <Container component="main" fixed>
@@ -140,7 +129,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                         <Grid item xs={12} sm={6}>
                             <Autocomplete
                                 id="empId"
-                                options={orgML}
+                                options={b2enML}
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.empNm}
                                 inputValue={contractForm.empNm}
@@ -165,7 +154,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                 options={contCdList}
                                 onChange={contractCodeHandleChange}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
-                                inputValue={contractForm.contTpCd}
+                                inputValue={contractForm.contTpNm}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -207,7 +196,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                     id="installDt"
                                     label="설치일자"
                                     fullWidth
-                                    value={selectedinstallDt}
+                                    value={contractForm.installDt}
                                     onChange={handleinstallDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -223,7 +212,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                     id="checkDt"
                                     label="검수일자"
                                     fullWidth
-                                    value={selectedcheckDt}
+                                    value={contractForm.checkDt}
                                     onChange={handlecheckDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -239,7 +228,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                     id="mtncStartDt"
                                     label="유지보수 개시일"
                                     fullWidth
-                                    value={selectedmtncStartDt}
+                                    value={contractForm.mtncStartDt}
                                     onChange={handlemtncStartDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -255,7 +244,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                     id="mtncEndDt"
                                     label="유지보수 종료일"
                                     fullWidth
-                                    value={selectedmtncEndDt}
+                                    value={contractForm.mtncEndDt}
                                     onChange={handlemtncEndDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -277,7 +266,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                     id="contDt"
                                     label="계약일자"
                                     fullWidth
-                                    value={selectedcontDt}
+                                    value={contractForm.contDt}
                                     onChange={handlecontDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -287,23 +276,21 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                         </MuiPickersUtilsProvider>
 
                     </Grid>
-
-                    {licenses.map((license, index) => (
-
-                        <LicenseItem
-
-                            license={license}
-                            key={index}
-                            id={index.toString()}
-                            keyvar={index}
-                            removeLicenseHandler={removeLicenseHandler}
-                            classes={classes}
-                        >
-                            {console.log("kwon Index", index)}
-                        </LicenseItem>
-                    ))}
-
                 </form>
+                {contractForm.lcns.map((license, index) => (
+
+                    <LicenseItem
+
+                        license={license}
+                        key={index}
+                        id={index.toString()}
+                        keyvar={index}
+                        removeLicenseHandler={removeLicenseHandler}
+                        classes={classes}
+                    >
+                        {console.log("kwon Index", index)}
+                    </LicenseItem>
+                ))}
             </Container>
         </Modal>
     );
@@ -315,14 +302,14 @@ const LicenseItem = ({ keyvar, license, removeLicenseHandler, classes }) => {
             <Grid item xs={12} sm={4}>
                 <Input
                     className={classes.textInput}
-                    defaultValue={"제품명: " + license.licenseForm.prdtNm}
+                    defaultValue={"제품명: " + license.prdtNm}
                     disabled inputProps={{ 'aria-label': 'description' }}
                 />
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Input
                     className={classes.textInput}
-                    defaultValue={"납품 단가: " + license.licenseForm.contAmt + "원"}
+                    defaultValue={"납품 단가: " + license.contAmt + "원"}
                     disabled inputProps={{ 'aria-label': 'description' }}
                 />
 

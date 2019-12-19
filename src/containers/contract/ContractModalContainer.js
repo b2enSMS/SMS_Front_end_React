@@ -8,7 +8,7 @@ import { getShowModal } from 'modules/contract/licensemodal';
 const ContractModalContainer = ({
     visible,
     orgList,
-    orgML,
+    b2enML,
     confirmLoading,
     handleOk,
     getHandleCancel,
@@ -17,7 +17,7 @@ const ContractModalContainer = ({
     contCdList,
     getShowModal,
     getRemoveLicense,
-    contractModal
+    contractModal,
 }) => {
     const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ const ContractModalContainer = ({
 
     const {formData} = useSelector(({contractmodal})=>({formData : contractmodal.contractModal}));
     
-    const okok = () =>{
+    const okok= ()  =>{
         handleOk(formData);
         dispatch(getContractList())
     }
@@ -40,7 +40,7 @@ const ContractModalContainer = ({
             handleChangeInput={handleChangeInput}
             handleCancel ={getHandleCancel}
             orgList={orgList}
-            orgML={orgML}
+            b2enML={b2enML}
             licenses={licenses}
             licenseModalShow={getShowModal}
             removeLicenseHandler={getRemoveLicense}
@@ -57,7 +57,7 @@ export default connect(
         confirmLoading: contractmodal.confirmLoading,
         contractModal: contractmodal.contractModal,
         orgList: contractmodal.orgList,
-        orgML: contractmodal.orgML,
+        b2enML: contractmodal.b2enML,
         contCdList: contractmodal.contCdList,
     }),
     {

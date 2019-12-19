@@ -35,21 +35,28 @@ export const getRemoveLicense = (idx) => dispacth => {
 }
 
 export const getUpdateModal = (key) => async dispatch => {
-    dispatch({type: UPDATE_CONTRACT})
-    try{
+    dispatch({ type: UPDATE_CONTRACT })
+    try {
         const response = await api.getContract(key)
+        const responseOrg = await api.getOrganization();
+        const responseML = await api.getB2enManager();
+        const responseCD = await api.getcontCD();
         dispatch({
             type: UPDATE_CONTRACT_SUCCESS,
-            payload: response.data,
+            payload: {
+                form: response.data,
+                orgList: responseOrg.data,
+                b2enML: responseML.data,
+                contCdList: responseCD.data
+            }
         })
-    }catch(e){
-
+    } catch (e) {
         dispatch({
             type: UPDATE_CONTRACT_FAILURE,
             payload: e,
             error: true
-        })
-        throw(e);
+        });
+        throw (e);
     }
 }
 
@@ -76,7 +83,7 @@ export const getShowModal = () => async dispatch => {
             type: SHOW_MODAL_SUCCESS,
             payload: {
                 org: response.data,
-                orgML: responseML.data,
+                b2enML: responseML.data,
                 contCdList: responseCD.data
             }
         });
@@ -93,7 +100,7 @@ export const getShowModal = () => async dispatch => {
 export const getHandleCancel = () => dispatch => {
     console.log("getHandleCancel")
     dispatch({ type: HANDLE_CANCEL });
-    dispatch({ type: INITIALIZE_FORM, payload: "contractModal"});
+    dispatch({ type: INITIALIZE_FORM, payload: "contractModal" });
 }
 
 export const handleChangeInput = (changeData) => dispatch => {
@@ -109,7 +116,7 @@ export const handleOk = (formData) => async dispatch => {
         dispatch({
             type: POST_CONTRACT_SUCCESS,
         });
-        dispatch({ type: INITIALIZE_FORM, payload: "contractModal"});
+        dispatch({ type: INITIALIZE_FORM, payload: "contractModal" });
     } catch (e) {
         dispatch({
             type: POST_CONTRACT_FAILURE,
@@ -129,48 +136,55 @@ const initialState = {
         installDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         checkDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         mtncStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-        mtncEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        mtncEndDt: (new Date().getFullYear()+1) + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         lcns: [],
-        orgNm:"",
-        empNm:"",
-        cmmnDetailCdNm:"",
-
-        contTpCd:"",
-        contTpNm:"",
-        contReportNo:"",
+        orgNm: "",
+        empNm: "",
+        cmmnDetailCdNm: "",
+        contTpCd: "",
+        contTpNm: "",
+        contReportNo: "",
     },
     orgList: [],
-    orgML: [],
+    b2enML: [],
     contCdList: [],
-    licenses: [],
 }
 
 const contractmodal = handleActions(
     {
 
-        [REMOVE_LICENSE]: (state,{ payload: idx }) => ({
+        [UPDATE_CONTRACT]: state => ({
             ...state,
-            licenses: state.licenses.filter((license,index) => index !== idx),
-            contractModal:{
-                lcns : state.contractModal.lcns.filter((license,index) => index !== idx),
+            confirmLoading: true,
+            visible: true,
+        }),
+
+        [UPDATE_CONTRACT_SUCCESS]: (state, { payload: {form,orgList, b2enML,contCdList}}) =>
+            produce(state, draft => {
+                draft["orgList"] =orgList
+                draft["b2enML"] = b2enML
+                draft["contCdList"] = contCdList
+                draft["contractModal"] = form
+                draft["confirmLoading"] = false
+            }),
+
+        [UPDATE_CONTRACT_FAILURE]: (state, action) => ({
+            ...state,
+            confirmLoading: false,
+        }),
+
+
+        [REMOVE_LICENSE]: (state, { payload: idx }) => ({
+            ...state,
+            contractModal: {
+                lcns: state.contractModal.lcns.filter((license, index) => index !== idx),
             }
         }),
 
-        // [ARRAY_INPUT]: (state, { payload: { form, key, value, idx } }) => {
-        //     console.log("-------------",form,key,value,idx,state.form.key)
-        //     const newState = Object.assign(
-        //         {}, state
-        //     );
-        //     newState[form][key]['a'] = value;
-        //     return newState
-        // },
-
-
-        [INPUT_LICENSE]: (state, action) => 
+        [INPUT_LICENSE]: (state, action) =>
             produce(state, draft => {
                 draft["contractModal"]["lcns"] = state.contractModal.lcns.concat(action.payload.licenseForm)
-                draft["licenses"] = state.licenses.concat(action.payload)
-        }),
+            }),
 
         [SHOW_MODAL]: state => ({
             ...state,
@@ -179,7 +193,7 @@ const contractmodal = handleActions(
         [SHOW_MODAL_SUCCESS]: (state, action) => ({
             ...state,
             orgList: action.payload.org,
-            orgML: action.payload.orgML,
+            b2enML: action.payload.b2enML,
             contCdList: action.payload.contCdList,
             licenses: [],
         }),
@@ -194,10 +208,10 @@ const contractmodal = handleActions(
             licenses: [],
         }),
 
-        [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => 
+        [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
             produce(state, draft => {
                 draft[form][key] = value
-        }),
+            }),
         [POST_CONTRACT]: state => ({
             ...state,
             confirmLoading: true,
@@ -211,7 +225,7 @@ const contractmodal = handleActions(
             ...state,
             confirmLoading: false,
         }),
-        [INITIALIZE_FORM]: (state, {payload: form}) => ({
+        [INITIALIZE_FORM]: (state, { payload: form }) => ({
             ...state,
             [form]: initialState[form],
         })
