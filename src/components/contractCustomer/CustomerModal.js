@@ -3,7 +3,7 @@ import { Container, TextField } from '@material-ui/core/';
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import {Modal} from "antd";
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+//import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
     form: {
@@ -23,17 +23,6 @@ const useStyles = makeStyles(theme => ({
         },
     },
 }));
-
-const code = [
-    {
-        value: 'contract',
-        label: '계약고객',
-    },
-    {
-        value: 'possible',
-        label: '임시고객',
-    },
-];
 
 const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList, custCdList}) => {
 

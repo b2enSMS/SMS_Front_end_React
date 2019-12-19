@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect, useDispatch} from 'react-redux';
+import {connect} from 'react-redux';
 import { getShowUpdateModal, getHandleCancel, handleChangeInput } from "../../modules/product/productupdatemodal";
 import ProductUpdateModal from "../../components/product/ProductUpdateModal";
 

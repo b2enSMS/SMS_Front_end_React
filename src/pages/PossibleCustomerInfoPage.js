@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
-import {ManagerTableContainer} from "../containers";
+//import {ManagerTableContainer} from "../containers";
 
 const textcolor = '#174A84';
 

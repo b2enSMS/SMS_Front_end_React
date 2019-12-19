@@ -89,8 +89,8 @@ const CompanyTable = ({ companyList, loadingTable }) => {
                         overlay={(
                             <Menu>
                                 <Menu.Item onClick={()=>{
-                                    const index = record.custId;
-                                    console.log("recordrecord",record)
+                                    // const index = record.custId;
+                                    // console.log("recordrecord",record)
                                     //showUpdateModal(index)
                                 }}>
                                     수정
