@@ -35,11 +35,17 @@ const useStyles = makeStyles(theme => ({
     dynamicSpan: {
         width: '100%',
     },
+    textDate: {
+
+    },
+    prdtBtn:{
+        marginTop: theme.spacing(3.5)
+    }
 
 }));
 
 
-const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler }) => {
+const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler,contractForm }) => {
     const classes = useStyles();
 
     const handleChange = ev => {
@@ -52,12 +58,16 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
             handleChangeInput({ form: "contractModal", key: key, value: value[key] });
         }
     }
+    const contractCodeHandleChange = (ev, value)=>{
+        handleChangeInput({ form: "contractModal", key: "contTpCd", value: value["cmmnDetailCd"] });
+        handleChangeInput({ form: "contractModal", key: "contTpNm", value: value["cmmnDetailCdNm"] });
+
+    }
 
     // const lcnsInputHandleChange = ev => {
     //     console.log("lcnsInputHandleChange", ev);
     //     console.log("name, hidden", ev.target.value, ev.target.hidden, ev.target.id, ev.target.value);
     //     inputPriceChange({ form: "contractModal", key: "contAmt", idx: ev.target.id, value: ev.target.value })
-
     // }
 
     //계약 일자 변경
@@ -96,21 +106,24 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
             title="계약정보 등록"
             visible={visible}
             onOk={handleOk}
+            okText="등록"
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
-            style={{ top: 25 }}
-            width="60%"
+            cancelText="취소"
+            style={{ top: 50 }}
+            width="50%"
             maskClosable={false}
         >
             <Container component="main" fixed>
                 <form className={classes.form} autoComplete="off">
-                    <Grid container spacing={3}>
+                    <Grid container spacing={1}>
                         <Grid item xs={12} sm={6}>
                             <Autocomplete
                                 id="orgId"
                                 options={orgList}
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.orgNm}
+                                inputValue={contractForm.orgNm}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -130,6 +143,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                 options={orgML}
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.empNm}
+                                inputValue={contractForm.empNm}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -149,8 +163,9 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                             <Autocomplete
                                 id="contTpCd"
                                 options={contCdList}
-                                onChange={autoCompleteHandleChange}
+                                onChange={contractCodeHandleChange}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
+                                inputValue={contractForm.contTpCd}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -177,6 +192,7 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                 id="contReportNo"
                                 onChange={handleChange}
                                 autoComplete="off"
+                                value={contractForm.contReportNo}
                             />
                         </Grid>
 
@@ -247,11 +263,14 @@ const ContractModal = ({ licenseModalShow, visible,contCdList ,orgList, orgML, c
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <Button onClick={licenseModalShow} variant="outlined">라이센스 등록</Button>
+                                <Button size="large" className={classes.prdtBtn} onClick={licenseModalShow} variant="outlined">제품 등록</Button>
                             </Grid>
-                            <Grid item xs={12} sm={8}>
+                            <Grid item xs={12} sm={2}>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
                                 <KeyboardDatePicker
                                     disableToolbar
+                                    className={classes.textDate}
                                     variant="inline"
                                     format="yyyy-MM-dd"
                                     margin="normal"

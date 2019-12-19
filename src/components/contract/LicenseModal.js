@@ -29,9 +29,8 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleChangeInput,licenseCodeList,productList,}) => {
+const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleChangeInput,licenseCodeList,productList,licenseForm}) => {
     const classes = useStyles();
-
     const handleChange = ev => {
         handleChangeInput({ form: "licenseForm", key: ev.target.id, value: ev.target.value })
     }
@@ -39,12 +38,12 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
     const autoCompleteHandleChange = (ev, value) => {
         console.log("autoCompleteHandleChange", value)
         for (var key in value) {
-            console.log("key",key)
             handleChangeInput({ form: "licenseForm", key: key, value: value[key] });
         }
     }
     const licenseCodeHandleChange=(ev,value)=>{
         handleChangeInput({ form: "licenseForm", key: "lcnsTpCd", value: value["cmmnDetailCd"] });
+        handleChangeInput({ form: "licenseForm", key: "lcnsTpNm", value: value["cmmnDetailCdNm"] });
     }
      //발행일 변경
      const [selectedlcnsIssuDt, setSelectedlcnsIssuDt] = React.useState(new Date());
@@ -67,13 +66,15 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
 
     return (
         <Modal
-            title="라이센스 등록"
+            title="제품 등록"
             visible={visible}
             onOk={handleOk}
+            okText="등록"
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
+            cancelText="취소"
             style={{ top: 25 }}
-            width="40%"
+            width="35%"
             maskClosable={false}
         >
             <Container component="main" fixed>
@@ -85,6 +86,8 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 options={productList}
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.prdtNm}
+                                inputValue={licenseForm.prdtNm}
+                                disableClearable={true}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -94,7 +97,6 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                         margin="normal"
                                         label="제품 이름"
                                         fullWidth
-                                        autoComplete="false"
                                     />
                                 )}
                             />
@@ -112,6 +114,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 id="contAmt"
                                 onChange={handleChange}
                                 autoComplete="off"
+                                value={licenseForm.contAmt}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -120,6 +123,8 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 options={licenseCodeList}
                                 onChange={licenseCodeHandleChange}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
+                                inputValue={licenseForm.lcnsTpNm}
+                                disableClearable={true}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -146,6 +151,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 id="lcnsNo"
                                 onChange={handleChange}
                                 autoComplete="off"
+                                value={licenseForm.lcnsNo}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -160,6 +166,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 id="certNo"
                                 onChange={handleChange}
                                 autoComplete="off"
+                                value={licenseForm.certNo}
                             />
                         </Grid>
 

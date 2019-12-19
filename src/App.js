@@ -16,6 +16,23 @@ const toolheight = 48;
 const menucolor = '#4E7097';
 
 const useStyles = makeStyles(theme => ({
+  "@global": {
+    body: {
+      fontFamily: [
+        '"Noto Sans KR"',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+    },
+  },
   root: {
     display: 'flex',
   },

@@ -1,4 +1,5 @@
 import { handleActions, createAction } from 'redux-actions';
+import produce from 'immer';
 import * as api from '../../lib/api';
 
 const CHANGE_INPUT = 'licensemodal/CHANGE_INPUT';
@@ -8,11 +9,12 @@ const SHOW_LIMO = 'licensemodal/SHOW_LIMO';
 const SHOW_LIMO_SUCCESS = 'licensemodal/SHOW_LIMO_SUCCESS';
 const SHOW_LIMO_FAILURE = 'licensemodal/SHOW_LIMO_FAILURE';
 const OFF_MODAL = 'licensemodal/OFF_MODAL';
+const INITIALIZE_FORM = 'licensemodal/INITIALIZE_FORM'
 
 
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
-
+export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 
 export const getShowModal = () => async dispatch => {
     dispatch({ type: SHOW_LIMO });
@@ -39,6 +41,7 @@ export const getShowModal = () => async dispatch => {
 export const getHandleCancel = () => dispatch => {
     console.log("getHandleCancel")
     dispatch({ type: HANDLE_CANCEL });
+    dispatch({ type: INITIALIZE_FORM, payload: "licenseForm"});
 }
 
 export const handleChangeInput = (changeData) => dispatch => {
@@ -48,6 +51,7 @@ export const handleChangeInput = (changeData) => dispatch => {
 
 export const handleOk = () => dispatch => {
     dispatch({ type: OFF_MODAL });
+    dispatch({ type: INITIALIZE_FORM, payload: "licenseForm"});
 };
 
 const initialState = {
@@ -57,6 +61,14 @@ const initialState = {
         lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        prdtId: "",
+        prdtNm: "",
+        contAmt: "",
+        lcnsNo: "",
+        certNo: "",
+        lcnsTpCd:"",
+        lcnsTpNm:"",
+        cmmnDetailCd:"",
     },
     products: [],
     licCode: [],
@@ -68,18 +80,14 @@ const licensemodal = handleActions(
         [OFF_MODAL]: state => ({
             ...state,
             visible: false,
-            confirmLoading: false,
-            licenseForm: {
-                lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-            },
+            confirmLoading: true,
             products: [],
             licCode: [],
         }),
         [SHOW_LIMO]: state => ({
             ...state,
             visible: true,
+            confirmLoading: false,
         }),
         [SHOW_LIMO_SUCCESS]: (state, action) => ({
             ...state,
@@ -93,13 +101,14 @@ const licensemodal = handleActions(
             ...state,
             visible: false,
         }),
-        [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => {
-            const newState = Object.assign(
-                {}, state
-            );
-            newState[form][key] = value
-            return newState
-        },
+        [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => 
+            produce(state, draft => {
+                draft[form][key] = value
+        }),
+        [INITIALIZE_FORM]: (state, {payload: form}) => ({
+            ...state,
+            [form]: initialState[form],
+        })
     },
     initialState,
 );
