@@ -17,7 +17,6 @@ const ContractCustomerContainer = ({
         getCustomerList();
     }, [getCustomerList]);
 
-
     return (
         <ContractCustomer
             loadingTable={loadingTable}

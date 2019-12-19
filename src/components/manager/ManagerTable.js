@@ -66,17 +66,13 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer, showUpdateModal}) => {
+const ManagerTable = ({ managerList, loadingTable }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const columns = [
         {
-            title: '기관',
-            dataIndex: 'orgNm',
-        },
-        {
-            title: '고객 이름',
-            dataIndex: 'custNm',
+            title: '이름',
+            dataIndex: 'empNm',
         },
         {
             title: '이메일',
@@ -85,14 +81,6 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
         {
             title: '연락처',
             dataIndex: 'telNo',
-        },
-        {
-            title: '직급',
-            dataIndex: 'custRankNm',
-        },
-        {
-            title: '고객 유형',
-            dataIndex: 'custTpNm',
         },
         {
             title: '',
@@ -105,7 +93,7 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
                                 <Menu.Item onClick={()=>{
                                     const index = record.custId;
                                     console.log("recordrecord",record)
-                                    showUpdateModal(index)
+                                    //showUpdateModal(index)
                                 }}>
                                     수정
                                 </Menu.Item>
@@ -142,7 +130,7 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
                 <span style={{ paddingRight: 14 }}>
 
               <ColorButton
-                  onClick={showModal}
+                  //onClick={showModal}
                   className={classes.plusbutton}
                   size='small'
                   variant="outlined"
@@ -157,19 +145,19 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
                     variant="outlined"
                     color="secondary"
                     endIcon={<RemoveIcon />}
-                    onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
+                    //onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
                 > Remove
                 </RemoveButton>
             </div>
             <Table
-                rowKey="custId"
+                rowKey="empId"
                 loading={loadingTable}
                 tableLayout='undefined'
                 rowSelection={rowSelection}
                 columns={columns}
-                dataSource={loadingTable ? null : customerList}
+                dataSource={loadingTable ? null : managerList}
                 size="small" />
         </div>
     );
 }
-export default ContractCustomer;
+export default ManagerTable;

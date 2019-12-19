@@ -12,7 +12,8 @@ const CustomerModalContainer = ({
     confirmLoading,
     handleOk,
     getHandleCancel,
-    handleChangeInput
+    handleChangeInput,
+    custCdList,
 }) => {
 
     const dispatch = useDispatch();
@@ -20,7 +21,6 @@ const CustomerModalContainer = ({
 
     const okok = () =>{
         handleOk(formData);
-        console.log("formDataformData",formData);
         dispatch(getCustomerList())
     }
 
@@ -33,6 +33,7 @@ const CustomerModalContainer = ({
             handleChangeInput={handleChangeInput}
             orgList={orgList}
             orgNameList={orgNameList}
+            custCdList={custCdList}
         />
     );
 };
@@ -44,6 +45,7 @@ export default connect(
         contractCustomerModal: contractcustomermodal.contractCustomerModal,
         orgList: contractcustomermodal.orgList,
         orgNameList: contractcustomermodal.orgNameList,
+        custCdList: contractcustomermodal.custCdList,
     }),
     {
         handleOk,

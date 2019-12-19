@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { ContractInfoPage } from 'pages';
+import {CompanyInfoPage, ContractInfoPage, PossibleCustomerInfoPage} from 'pages';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {MainItemList} from "components";
-import { ContractCustomerInfoPage } from "pages";
+import { ContractCustomerInfoPage, ProductInfoPage, ManagerInfoPage  } from "pages";
 
 import Image from 'images/Logo.png';
 
@@ -138,8 +138,11 @@ const useStyles = makeStyles(theme => ({
             </div>
             <Divider />
             <Route exact path="/" component={ContractInfoPage} />
-            <Route exact path="/Customer" component={ContractCustomerInfoPage} />
-
+            <Route exact path="/contractcustomer" component={ContractCustomerInfoPage} />
+            <Route exact path="/product" component={ProductInfoPage} />
+            <Route exact path="/manager" component={ManagerInfoPage} />
+            <Route exact path="/possiblecustomer" component={PossibleCustomerInfoPage} />
+            <Route exact path="/company" component={CompanyInfoPage} />
           </main>
         </div>
 

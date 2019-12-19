@@ -66,33 +66,26 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer, showUpdateModal}) => {
+const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateModal }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const columns = [
         {
-            title: '기관',
-            dataIndex: 'orgNm',
+            title: '이름',
+            dataIndex: 'prdtNm',
+
         },
         {
-            title: '고객 이름',
-            dataIndex: 'custNm',
+            title: '버전',
+            dataIndex: 'prdtVer',
         },
         {
-            title: '이메일',
-            dataIndex: 'email',
+            title: '가격',
+            dataIndex: 'prdtAmt',
         },
         {
-            title: '연락처',
-            dataIndex: 'telNo',
-        },
-        {
-            title: '직급',
-            dataIndex: 'custRankNm',
-        },
-        {
-            title: '고객 유형',
-            dataIndex: 'custTpNm',
+            title: '설명',
+            dataIndex: 'prdtDesc',
         },
         {
             title: '',
@@ -142,7 +135,7 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
                 <span style={{ paddingRight: 14 }}>
 
               <ColorButton
-                  onClick={showModal}
+                  //onClick={showModal}
                   className={classes.plusbutton}
                   size='small'
                   variant="outlined"
@@ -157,19 +150,19 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
                     variant="outlined"
                     color="secondary"
                     endIcon={<RemoveIcon />}
-                    onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
+                    onClick={()=>{getDeleteProduct(selectedRowKeys);setSelectedRowKeys([]);}}
                 > Remove
                 </RemoveButton>
             </div>
             <Table
-                rowKey="custId"
+                rowKey="prdtId"
                 loading={loadingTable}
                 tableLayout='undefined'
                 rowSelection={rowSelection}
                 columns={columns}
-                dataSource={loadingTable ? null : customerList}
+                dataSource={loadingTable ? null : productList}
                 size="small" />
         </div>
     );
 }
-export default ContractCustomer;
+export default ProductTable;

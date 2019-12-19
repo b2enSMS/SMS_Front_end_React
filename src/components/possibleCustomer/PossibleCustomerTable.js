@@ -66,33 +66,33 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer, showUpdateModal}) => {
+const PossibleCustomerTable = ({loadingTable, customerList, showModal, deleteCustomer, showUpdateModal}) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const columns = [
         {
-            title: '기관',
+            title: 'organization',
             dataIndex: 'orgNm',
         },
         {
-            title: '고객 이름',
+            title: 'name',
             dataIndex: 'custNm',
         },
         {
-            title: '이메일',
+            title: 'email',
             dataIndex: 'email',
         },
         {
-            title: '연락처',
+            title: 'phoneNum',
             dataIndex: 'telNo',
         },
         {
-            title: '직급',
+            title: 'position',
             dataIndex: 'custRankNm',
         },
         {
-            title: '고객 유형',
-            dataIndex: 'custTpNm',
+            title: '담/사',
+            dataIndex: 'custTpCd',
         },
         {
             title: '',
@@ -172,4 +172,4 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
         </div>
     );
 }
-export default ContractCustomer;
+export default PossibleCustomerTable;

@@ -13,6 +13,7 @@ export const getCustomerList = () => async dispatch => {
     dispatch({ type: GET_CUSTOMER });
     try {
         const response = await api.getManagers();
+        console.log("하하하하ㅏ",response)
         dispatch({
            type: GET_CUSTOMER_SUCCESS,
            payload: response.data
@@ -37,6 +38,22 @@ export const deleteCustomer = selectedRowKeys => async dispatch => {
     } catch (e) {
         dispatch({
             type: DELETE_CUSTOMER_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+
+    dispatch({ type: GET_CUSTOMER });
+    try {
+        const response = await api.getManagers();
+        dispatch({
+            type: GET_CUSTOMER_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        dispatch({
+            type: GET_CUSTOMER_FAILURE,
             payload: e,
             error: true
         });
