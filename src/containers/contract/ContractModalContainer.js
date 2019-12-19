@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect, useSelector,useDispatch  } from 'react-redux';
 import { ContractModal } from 'components';
-import {handleOk, handleChangeInput,getHandleCancel,getRemoveLicense } from 'modules/contract/contractmodal';
+import {initializeForm,handleOk, handleChangeInput,getHandleCancel,getRemoveLicense } from 'modules/contract/contractmodal';
 import { getContractList } from 'modules/contract/contracttable';
 import { getShowModal } from 'modules/contract/licensemodal';
 
@@ -16,10 +16,15 @@ const ContractModalContainer = ({
     licenses,
     contCdList,
     getShowModal,
-    getRemoveLicense
+    getRemoveLicense,
+    contractModal
 }) => {
-    
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(initializeForm("contractModal"));
+    },[dispatch])
+
     const {formData} = useSelector(({contractmodal})=>({formData : contractmodal.contractModal}));
     
     const okok = () =>{
@@ -40,6 +45,7 @@ const ContractModalContainer = ({
             licenseModalShow={getShowModal}
             removeLicenseHandler={getRemoveLicense}
             contCdList={contCdList}
+            contractForm={contractModal}
         />
     );
 };

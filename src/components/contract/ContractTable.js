@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { Table, Menu, Dropdown, Icon } from 'antd';
 import { withStyles, Button } from '@material-ui/core/';
 import 'antd/dist/antd.css';
@@ -34,6 +34,14 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(3),
   },
 
+  backgroundRed:{
+    backgroundColor: '#fff1f0',
+    color: 'red'
+  },
+
+  amountColumn:{
+    marginRight: '10px'
+  },
 
 }));
 const ColorButton = withStyles(theme => ({
@@ -55,39 +63,97 @@ const RemoveButton = withStyles(theme => ({
 }))(Button);
 
 
-const handleMenuClick= key =>{
-  console.log("key",key);
+const handleMenuClick = key => {
+  console.log("key", key);
 }
 
 
 const columns = [
   {
-    title: 'organization',
+    title: '기관/회사',
     dataIndex: 'orgNm',
   },
   {
-    title: 'b2en',
+    title: '담당자',
     dataIndex: 'empNm',
   },
   {
-    title: 'contractdate',
+    title: '수주번호',
+    dataIndex: 'contReportNo',
+    align: 'center',
+    render: (value, record, index) =>{
+      return {
+        children: value,
+        props: {
+          align: 'center',
+        },
+      };
+    }
+  },
+  {
+    title: '계약일자',
     dataIndex: 'contDt',
+    align: 'center',
+    render: (value, record, index) =>{
+      return {
+        children: value,
+        props: {
+          align: 'center',
+        },
+      };
+    }
   },
   {
-    title: 'installDate',
-    dataIndex: 'installDt',
+    title: '계약금액',
+    dataIndex: 'contTotAmt',
+    align: 'right',
+    render: (value, record, index) =>{
+      return {
+        children: (value==null?"-":parseInt(value)/1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 만원 ",
+        props: {
+          align: 'right',
+        },
+      };
+    }
   },
   {
-    title: 'checkDate',
+    title: '검수일자',
     dataIndex: 'checkDt',
+    align: 'center',
+    render: (value, record, index) =>{
+      return {
+        children: value,
+        props: {
+          align: 'center',
+        },
+      };
+    }
   },
   {
-    title: 'maintenanceStart',
+    title: '유지보수개시일자',
     dataIndex: 'mtncStartDt',
+    align: 'center',
+    render: (value, record, index) =>{
+      return {
+        children: value,
+        props: {
+          align: 'center',
+        },
+      };
+    }
   },
   {
-    title: 'maintenanceEnd',
+    title: '유지보수종료일자',
     dataIndex: 'mtncEndDt',
+    align: 'center',
+    render: (value, record, index) =>{
+      return {
+        children: value,
+        props: {
+          align: 'center',
+        },
+      };
+    }
   },
 
   {
@@ -95,17 +161,17 @@ const columns = [
     dataIndex: 'menuTag',
     width: '5%',
     render: (text, record) =>
-      (<Dropdown 
+      (<Dropdown
         overlay={(
-          <Menu onClick={()=>{
+          <Menu onClick={() => {
             handleMenuClick(record.contId)
           }}>
-          <Menu.Item >
-            수정
+            <Menu.Item >
+              수정
           </Menu.Item>
           </Menu>
-        )} 
-        
+        )}
+
         placement="bottomLeft">
 
         <Button size="small"><Icon type="menu" /></Button>
@@ -114,7 +180,7 @@ const columns = [
   },
 ];
 
-function ContractTable({ loadingTable, contractList, showModal,deleteData}) {
+function ContractTable({ loadingTable, contractList, showModal, deleteData }) {
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
@@ -149,7 +215,7 @@ function ContractTable({ loadingTable, contractList, showModal,deleteData}) {
           </ColorButton>
         </span>
         <RemoveButton
-          onClick={()=>{deleteData(selectedRowKeys);setSelectedRowKeys([]);}}
+          onClick={() => { deleteData(selectedRowKeys); setSelectedRowKeys([]); }}
           className={classes.minusbutton}
           size='small'
           variant="outlined"
@@ -165,6 +231,10 @@ function ContractTable({ loadingTable, contractList, showModal,deleteData}) {
         tableLayout='undefined'
         rowSelection={rowSelection}
         columns={columns}
+        rowClassName={(record,index) => {
+          if(contractList[index].tight) 
+            return classes.backgroundRed
+        }}
         dataSource={loadingTable ? null : contractList}
         size="small" />
     </div >

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { LicenseModal } from 'components';
-import { handleOk, handleChangeInput, getHandleCancel } from 'modules/contract/licensemodal';
+import { handleOk, handleChangeInput, getHandleCancel, initializeForm } from 'modules/contract/licensemodal';
 import { inputLicense } from 'modules/contract/contractmodal'
 
 const LicenseContainer = ({
@@ -12,11 +12,17 @@ const LicenseContainer = ({
     handleChangeInput,
     products,
     licCode,
+    licenseForm
 
 }) => {
+    const dispatch = useDispatch();
     const { formData } = useSelector(({ licensemodal }) => ({ formData: licensemodal.licenseForm}));
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(initializeForm("licenseForm"));
+    },[dispatch])
+
+
     const okok = () => {
         handleOk();
         dispatch(inputLicense(formData));
@@ -31,6 +37,7 @@ const LicenseContainer = ({
             handleCancel={getHandleCancel}
             productList={products}
             licenseCodeList={licCode}
+            licenseForm = {licenseForm}
         />
     );
 };
@@ -49,5 +56,6 @@ export default connect(
         handleChangeInput,
         getHandleCancel,
         inputLicense,
+        initializeForm,
     }
 )(LicenseContainer);

@@ -31,7 +31,7 @@ export const deleteLicenses = (licenseId) => {
 }
 
 export const postContracts = (formData) => {
-    console.log("formData야야야야ㅑ",formData.lcns)
+    console.log("formData야야야야ㅑ", formData.lcns)
     const data = {
         prdtId: formData.prdtId,
         checkDt: formData.checkDt,
@@ -49,9 +49,9 @@ export const postContracts = (formData) => {
 }
 //계약 테이블 - 리스트 삭제
 export const getDeleteContracts = (selectedRowKeys) => {
-    for (var i in selectedRowKeys) {
-        return axios.delete(`/cont/${selectedRowKeys[i]}`)
-    }
+    console.log("selected", selectedRowKeys)
+
+    return axios.delete(`/cont`,{data: {idx: selectedRowKeys}})
 }
 
 // 고객 하나씩 가져오기
@@ -67,7 +67,7 @@ export const deleteCustomer = (selectedRowKeys) => {
 }
 
 // 고객 수정
-export const updateCustomer = (custId ,formData) => {
+export const updateCustomer = (custId, formData) => {
     const data = {
         orgId: formData.orgId,
         orgNm: formData.orgNm,
@@ -94,6 +94,10 @@ export const postCustomer = (formData) => {
     }
     return axios.post('/cust/create', data);
 }
+
+export const getContract = (key) =>
+    axios.get(`/cont/${key}`);
+
 //기관 리스트
 export const getOrganization = () =>
     axios.get('/org/aclist');

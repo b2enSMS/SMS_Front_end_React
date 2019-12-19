@@ -1,5 +1,6 @@
 import { handleActions, createAction } from 'redux-actions';
 import * as api from '../../lib/api';
+import produce from 'immer';
 
 const CHANGE_INPUT = 'contractmodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'contractmodal/HANDLE_CANCLE';
@@ -12,12 +13,18 @@ const POST_CONTRACT = 'contractmodal/POST_CONTRACT';
 const POST_CONTRACT_SUCCESS = 'contractmodal/POST_CONTRACT_SUCCESS';
 const POST_CONTRACT_FAILURE = 'contractmodal/POST_CONTRACT_FAILURE';
 
+const UPDATE_CONTRACT = 'contractmodal/UPDATE_CONTRACT'
+const UPDATE_CONTRACT_SUCCESS = 'contractmodal/UPDATE_CONTRACT_SUCCESS'
+const UPDATE_CONTRACT_FAILURE = 'contractmodal/UPDATE_CONTRACT_FAILURE'
+
+
 const INPUT_LICENSE = 'contractmodal/INPUT_LICENSE';
-// const ARRAY_INPUT = 'contractmodal/ARRAY_INPUT'
 
 const REMOVE_LICENSE = 'contractmodal/REMOVE_LICENSE';
+const INITIALIZE_FORM = 'contractmodal/INITIALIZE_FORM'
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 
 
 export const getRemoveLicense = (idx) => dispacth => {
@@ -25,6 +32,25 @@ export const getRemoveLicense = (idx) => dispacth => {
         type: REMOVE_LICENSE,
         payload: idx
     });
+}
+
+export const getUpdateModal = (key) => async dispatch => {
+    dispatch({type: UPDATE_CONTRACT})
+    try{
+        const response = await api.getContract(key)
+        dispatch({
+            type: UPDATE_CONTRACT_SUCCESS,
+            payload: response.data,
+        })
+    }catch(e){
+
+        dispatch({
+            type: UPDATE_CONTRACT_FAILURE,
+            payload: e,
+            error: true
+        })
+        throw(e);
+    }
 }
 
 
@@ -67,6 +93,7 @@ export const getShowModal = () => async dispatch => {
 export const getHandleCancel = () => dispatch => {
     console.log("getHandleCancel")
     dispatch({ type: HANDLE_CANCEL });
+    dispatch({ type: INITIALIZE_FORM, payload: "contractModal"});
 }
 
 export const handleChangeInput = (changeData) => dispatch => {
@@ -82,6 +109,7 @@ export const handleOk = (formData) => async dispatch => {
         dispatch({
             type: POST_CONTRACT_SUCCESS,
         });
+        dispatch({ type: INITIALIZE_FORM, payload: "contractModal"});
     } catch (e) {
         dispatch({
             type: POST_CONTRACT_FAILURE,
@@ -103,6 +131,13 @@ const initialState = {
         mtncStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         mtncEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         lcns: [],
+        orgNm:"",
+        empNm:"",
+        cmmnDetailCdNm:"",
+
+        contTpCd:"",
+        contTpNm:"",
+        contReportNo:"",
     },
     orgList: [],
     orgML: [],
@@ -131,22 +166,11 @@ const contractmodal = handleActions(
         // },
 
 
-        [INPUT_LICENSE]: (state, action) => {
-            // ...state,
-            // licenses: state.licenses.concat(action.payload),
-            // contractModal: {
-            //     licenseList: state.contractModal.licenseList.concat(action.payload)
-            // },
-
-            const newState = Object.assign(
-                {}, state
-            );
-            newState["licenses"]=state.licenses.concat(action.payload)
-            newState["contractModal"]["lcns"] = state.contractModal.lcns.concat(action.payload.licenseForm)
-            
-            return newState
-            
-        },
+        [INPUT_LICENSE]: (state, action) => 
+            produce(state, draft => {
+                draft["contractModal"]["lcns"] = state.contractModal.lcns.concat(action.payload.licenseForm)
+                draft["licenses"] = state.licenses.concat(action.payload)
+        }),
 
         [SHOW_MODAL]: state => ({
             ...state,
@@ -157,18 +181,6 @@ const contractmodal = handleActions(
             orgList: action.payload.org,
             orgML: action.payload.orgML,
             contCdList: action.payload.contCdList,
-
-            contractModal: {
-                orgId: "",
-                empId: "",
-                contReportNo: "",
-                contDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                installDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                checkDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                mtncStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                mtncEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                lcns: [],
-            },
             licenses: [],
         }),
 
@@ -179,28 +191,13 @@ const contractmodal = handleActions(
         [HANDLE_CANCEL]: state => ({
             ...state,
             visible: false,
-
-            contractModal: {
-                orgId: "",
-                empId: "",
-                contReportNo: "",
-                contDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                installDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                checkDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                mtncStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                mtncEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-                lcns: [],
-            },
             licenses: [],
         }),
 
-        [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => {
-            const newState = Object.assign(
-                {}, state
-            );
-            newState[form][key] = value
-            return newState
-        },
+        [CHANGE_INPUT]: (state, { payload: { form, key, value } }) => 
+            produce(state, draft => {
+                draft[form][key] = value
+        }),
         [POST_CONTRACT]: state => ({
             ...state,
             confirmLoading: true,
@@ -214,6 +211,10 @@ const contractmodal = handleActions(
             ...state,
             confirmLoading: false,
         }),
+        [INITIALIZE_FORM]: (state, {payload: form}) => ({
+            ...state,
+            [form]: initialState[form],
+        })
     },
     initialState,
 );
