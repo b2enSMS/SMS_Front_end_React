@@ -19,10 +19,12 @@ export const getShowCustomerModal = () => async dispatch => {
     dispatch({ type: SHOW_MODAL });
     try {
         const response = await api.getOrganization();
+        const res = await api.getcustCD();
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
                 org: response.data,
+                custCdList: res.data,
             }
         })
     } catch(e) {
@@ -64,6 +66,7 @@ const initialState = {
     confirmLoading: false,
     contractCustomerModal: {},
     orgList: [],
+    custCdList: [],
 };
 
 const contractcustomermodal = handleActions(
@@ -75,6 +78,7 @@ const contractcustomermodal = handleActions(
         [SHOW_MODAL_SUCCESS]: (state, action) => ({
             ...state,
             orgList: action.payload.org,
+            custCdList: action.payload.custCdList,
         }),
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,

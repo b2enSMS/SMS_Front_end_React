@@ -38,23 +38,20 @@ const user = [
 const CustomerUpdateModal = ({updateVisible, orgList, HandleCancel, handleChangeInput, updateCust, custInfo}) => {
 
     const classes = useStyles();
-    const [men, setMen] = React.useState('user');
-
-
-    console.log("custInfocustInfo",custInfo);
+    const [men, setMen] = React.useState('manager');
 
     const handleChange2 = ev => {
         setMen(ev.target.value);
-        handleChangeInput({form:"customerupdatemodal", key: ev.target.id, value: ev.target.value});
+        handleChangeInput({form:"updateCustomerModal", key: ev.target.id, value: ev.target.value});
     }
 
     const handleChange = ev => {
-        handleChangeInput({form:"customerupdatemodal", key: ev.target.id, value: ev.target.value});
+        handleChangeInput({form:"updateCustomerModal", key: ev.target.id, value: ev.target.value});
     }
 
     const autoCompleteHandleChange = (ev, value) => {
         for(var key in value) {
-            handleChangeInput({form: "customerupdatemodal", key: key, value: value[key]});
+            handleChangeInput({form: "updateCustomerModal", key: key, value: value[key]});
         }
     }
 

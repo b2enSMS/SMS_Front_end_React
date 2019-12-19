@@ -1,2 +1,6 @@
 export {default as ContractInfoPage} from './ContractInfoPage'
 export {default as ContractCustomerInfoPage } from './ContractCustomerInfoPage'
+export {default as ProductInfoPage } from './ProductInfoPage'
+export {default as ManagerInfoPage } from './ManagerInfoPage'
+export {default as PossibleCustomerInfoPage } from './PossibleCustomerInfoPage'
+export {default as CompanyInfoPage } from './CompanyInfoPage'

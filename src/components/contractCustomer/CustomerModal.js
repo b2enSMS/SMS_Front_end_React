@@ -35,40 +35,20 @@ const code = [
     },
 ];
 
-const user = [
-    {
-        value: 'manager',
-        label: '담당자',
-    },
-    {
-        value: 'user',
-        label: '사용자',
-    },
-];
-
-const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList}) => {
+const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList, custCdList}) => {
 
     const classes = useStyles();
     const [tree, setTree] = React.useState('contract');
-    const [men, setMen] = React.useState('user');
-
-    console.log("orgList",orgList);
 
     const handleChange = ev => {
         setTree(ev.target.value);
         handleChangeInput({form:"contractCustomerModal", key: ev.target.id, value: ev.target.value});
     }
-    const handleChange2 = ev => {
-        setMen(ev.target.value);
-        handleChangeInput({form:"contractCustomerModal", key: ev.target.id, value: ev.target.value});
-    }
-
 
     const autoCompleteHandleChange = (ev, value) => {
-        for(var key in value) {
-            handleChangeInput({form: "contractCustomerModal", key: key, value: value[key]});
-        }
+
     }
+
 
     return(
         <Modal
@@ -161,24 +141,23 @@ const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleC
                             </MenuItem>
                         ))}
                     </TextField>
-                    <TextField
-                        className={classes.textField}
-                        variant="outlined"
-                        margin="normal"
+                    <Autocomplete
                         id="custTpCd"
-                        select
-                        required
-                        label="담당자? 사용자?"
-                        fullWidth
-                        value={men}
-                        onChange={handleChange2}
-                    >
-                        {user.map(option => (
-                            <MenuItem  key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
+                        options={custCdList}
+                        onChange={autoCompleteHandleChange}
+                        getOptionLabel={option => option.cmmnDetailCdNm}
+                        renderInput={params => (
+                            <TextField
+                                {...params}
+                                className={classes.textField}
+                                variant="outlined"
+                                required
+                                margin="normal"
+                                label="customer code"
+                                fullWidth
+                            />
+                        )}
+                    />
                 </form>
             </Container>
         </Modal>

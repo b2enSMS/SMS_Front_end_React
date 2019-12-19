@@ -1,8 +1,13 @@
 import {createAction, handleActions} from 'redux-actions';
 import * as api from '../../lib/api';
+import produce from  'immer';
 
 const HANDLE_CANCEL = 'customerupdatemodal/HANDLE_CANCEL';
 const CHANGE_INPUT = 'customerupdatemodal/CHANGE_INPUT';
+
+/*const GET_CUSTOMER = 'customerupdatemodal/GET_CUSTOMER';
+const GET_CUSTOMER_SUCCESS = 'customerupdatemodal/GET_CUSTOMER_SUCCESS';
+const GET_CUSTOMER_FAILURE = 'customerupdatemodal/GET_CUSTOMER_FAILURE';*/
 
 const UPDATE = 'customerupdatemodal/UPDATE';
 const UPDATE_SUCCESS = 'customerupdatemodal/UPDATE_SUCCESS';
@@ -67,6 +72,7 @@ const initialState = {
     orgList: [],
     custInfo: {},
     updateCustomerModal: {},
+    customerList: null,
 };
 
 const customerupdatemodal = handleActions(
@@ -87,6 +93,10 @@ const customerupdatemodal = handleActions(
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
+        [CHANGE_INPUT]: (state, { payload: { form, key, value}}) =>
+            produce(state, draft => {
+                draft[form][key] =value;
+            }),
         [UPDATE]: state => ({
             ...state,
         }),

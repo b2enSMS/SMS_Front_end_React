@@ -42,6 +42,22 @@ export const deleteCustomer = selectedRowKeys => async dispatch => {
         });
         throw e;
     }
+
+    dispatch({ type: GET_CUSTOMER });
+    try {
+        const response = await api.getManagers();
+        dispatch({
+            type: GET_CUSTOMER_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        dispatch({
+            type: GET_CUSTOMER_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
 };
 
 const initialState = {

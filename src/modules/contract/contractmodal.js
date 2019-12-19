@@ -78,6 +78,7 @@ export const handleOk = (formData) => async dispatch => {
 
     dispatch({ type: POST_CONTRACT });
     try {
+        console.log("contractrconkafkej",formData.contTpCd)
         await api.postContracts(formData);
         dispatch({
             type: POST_CONTRACT_SUCCESS,

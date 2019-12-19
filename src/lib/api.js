@@ -58,6 +58,8 @@ export const getDeleteContracts = (selectedRowKeys) => {
 export const getCust = (custId) =>
     axios.get(`/cust/${custId}`)
 
+export const getcustCD = () =>
+    axios.get('/cmmncd/cust_tp_cd');
 
 //고객 테이블 - 삭제
 export const deleteCustomer = (selectedRowKeys) => {
@@ -77,7 +79,7 @@ export const updateCustomer = (custId ,formData) => {
         telNo: formData.telNo,
         custTpCd: formData.custTpCd,
     }
-    axios.get(`/cust/${custId}`, data);
+    axios.put(`/cust/${custId}`, data);
 }
 
 //고객 등록
@@ -114,10 +116,19 @@ export const getManagers = () =>
 export const getcontCD = () =>
     axios.get('/cmmncd/cont_tp_cd');
 
-
 export const getProducts = () =>
     axios.get('/prdt/aclist');
 
 export const getLicenseCode = () =>
     axios.get('/cmmncd/lcns_tp_cd');
 
+// 제품 리스트
+export const getProductList = () =>
+    axios.get('/prdt/showall');
+
+// b2en 담당자 리스트
+export const getManagerList = () =>
+    axios.get('/b2en/showall');
+
+export const getCompanyList = () =>
+    axios.get('/org/showall');
