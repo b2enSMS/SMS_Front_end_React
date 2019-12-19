@@ -5,6 +5,10 @@ const GET_PRODUCT = 'producttable/GET_PRODUCT';
 const GET_PRODUCT_SUCCESS = 'producttable/GET_PRODUCT_SUCCESS';
 const GET_PRODUCT_FAILURE = 'producttable/GET_PRODUCT_FAILURE';
 
+const DELETE_PRODUCT = 'producttable/DELETE_PRODUCT';
+const DELETE_PRODUCT_SUCCESS = 'producttable/DELETE_PRODUCT_SUCCESS';
+const DELETE_PRODUCT_FAILURE = 'producttable/DELETE_PRODUCT_FAILURE';
+
 export const getProductList = () => async dispatch => {
     dispatch({ type: GET_PRODUCT });
     try {
@@ -22,6 +26,37 @@ export const getProductList = () => async dispatch => {
         throw e;
     }
 };
+
+export const getDeleteProduct = selectedRowKeys => async dispatch => {
+    dispatch({type: DELETE_PRODUCT});
+    try{
+        await api.getDeleteProducts(selectedRowKeys);
+        dispatch({type: DELETE_PRODUCT_SUCCESS});
+    }catch(e){
+        dispatch({
+            type: DELETE_PRODUCT_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+
+    dispatch({ type: GET_PRODUCT });
+    try {
+        const response = await api.getProductList();
+        dispatch({
+            type: GET_PRODUCT_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        dispatch({
+            type: GET_PRODUCT_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+}
 
 const initialState = {
     productList: null,
@@ -42,7 +77,19 @@ const producttable = handleActions(
         [GET_PRODUCT_FAILURE]: state => ({
             ...state,
             loadingTable: false,
-        })
+        }),
+        [DELETE_PRODUCT]: state => ({
+            ...state,
+            loadingTable: true
+        }),
+        [DELETE_PRODUCT_SUCCESS]: state => ({
+            ...state,
+            loadingTable: false
+        }),
+        [DELETE_PRODUCT_FAILURE]: state => ({
+            ...state,
+            loadingTable: false,
+        }),
     },
     initialState,
 );

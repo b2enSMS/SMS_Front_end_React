@@ -50,8 +50,9 @@ const CustomerUpdateModal = ({updateVisible, orgList, HandleCancel, handleChange
     }
 
     const autoCompleteHandleChange = (ev, value) => {
-        for(var key in value) {
-            handleChangeInput({form: "updateCustomerModal", key: key, value: value[key]});
+        console.log("autoCompleteHandleChange", value)
+        for (var key in value) {
+            handleChangeInput({ form: "updateCustomerModal", key: key, value: value[key] });
         }
     }
 

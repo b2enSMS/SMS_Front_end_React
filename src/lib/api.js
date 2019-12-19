@@ -63,9 +63,7 @@ export const getcustCD = () =>
 
 //고객 테이블 - 삭제
 export const deleteCustomer = (selectedRowKeys) => {
-    for (var i in selectedRowKeys) {
-        return axios.delete(`/cust/${selectedRowKeys[i]}`)
-    }
+    return axios.delete(`/cust`,{data: {idx: selectedRowKeys}})
 }
 
 // 고객 수정
@@ -84,6 +82,7 @@ export const updateCustomer = (custId, formData) => {
 
 //고객 등록
 export const postCustomer = (formData) => {
+    console.log("나는",formData.custTpCd)
     const data = {
         orgId: formData.orgId,
         orgNm: formData.orgNm,
@@ -129,6 +128,16 @@ export const getLicenseCode = () =>
 // 제품 리스트
 export const getProductList = () =>
     axios.get('/prdt/showall');
+
+export const getProduct = (prdtId) =>
+    axios.get(`/prdt/${prdtId}`);
+
+// 제품 삭제
+export const getDeleteProducts = (selectedRowKeys) => {
+    console.log("selected", selectedRowKeys)
+
+    return axios.delete(`/prdt`,{data: {idx: selectedRowKeys}})
+}
 
 // b2en 담당자 리스트
 export const getManagerList = () =>

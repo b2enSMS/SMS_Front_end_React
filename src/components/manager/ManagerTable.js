@@ -71,15 +71,15 @@ const ManagerTable = ({ managerList, loadingTable }) => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const columns = [
         {
-            title: 'name',
+            title: '이름',
             dataIndex: 'empNm',
         },
         {
-            title: 'email',
+            title: '이메일',
             dataIndex: 'email',
         },
         {
-            title: 'phoneNum',
+            title: '연락처',
             dataIndex: 'telNo',
         },
         {

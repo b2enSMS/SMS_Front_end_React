@@ -69,6 +69,7 @@ const useStyles = makeStyles(theme => ({
 const CompanyTable = ({ companyList, loadingTable }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
     const columns = [
         {
             title: '이름',
@@ -152,7 +153,7 @@ const CompanyTable = ({ companyList, loadingTable }) => {
                 tableLayout='undefined'
                 rowSelection={rowSelection}
                 columns={columns}
-                dataSource={loadingTable ? null : companyList}
+                dataSource={companyList}
                 size="small" />
         </div>
     );

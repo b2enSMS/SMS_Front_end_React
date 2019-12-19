@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductTable = ({ productList, loadingTable }) => {
+const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateModal }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const columns = [
@@ -76,15 +76,15 @@ const ProductTable = ({ productList, loadingTable }) => {
 
         },
         {
-            title: 'version',
+            title: '버전',
             dataIndex: 'prdtVer',
         },
         {
-            title: 'price',
+            title: '가격',
             dataIndex: 'prdtAmt',
         },
         {
-            title: 'desc',
+            title: '설명',
             dataIndex: 'prdtDesc',
         },
         {
@@ -98,7 +98,7 @@ const ProductTable = ({ productList, loadingTable }) => {
                                 <Menu.Item onClick={()=>{
                                     const index = record.custId;
                                     console.log("recordrecord",record)
-                                    //showUpdateModal(index)
+                                    showUpdateModal(index)
                                 }}>
                                     수정
                                 </Menu.Item>
@@ -150,7 +150,7 @@ const ProductTable = ({ productList, loadingTable }) => {
                     variant="outlined"
                     color="secondary"
                     endIcon={<RemoveIcon />}
-                    //onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
+                    onClick={()=>{getDeleteProduct(selectedRowKeys);setSelectedRowKeys([]);}}
                 > Remove
                 </RemoveButton>
             </div>

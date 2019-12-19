@@ -38,17 +38,23 @@ const code = [
 const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleChangeInput, orgList, custCdList}) => {
 
     const classes = useStyles();
-    const [tree, setTree] = React.useState('contract');
 
     const handleChange = ev => {
-        setTree(ev.target.value);
         handleChangeInput({form:"contractCustomerModal", key: ev.target.id, value: ev.target.value});
     }
 
     const autoCompleteHandleChange = (ev, value) => {
-
+        console.log("autoCompleteHandleChange", value)
+        for (var key in value) {
+            handleChangeInput({ form: "contractCustomerModal", key: key, value: value[key] });
+        }
     }
 
+    const contractCodeHandleChange = (ev, value)=>{
+        handleChangeInput({ form: "contractCustomerModal", key: "custTpCd", value: value["cmmnDetailCd"] });
+        handleChangeInput({ form: "contractCustomerModal", key: "custTpNm", value: value["cmmnDetailCdNm"] });
+
+    }
 
     return(
         <Modal
@@ -123,28 +129,10 @@ const CustomerModal = ({visible, handleOk, confirmLoading, handleCancel, handleC
                         id="telNo"
                         onChange={handleChange}
                     />
-                    <TextField
-                        className={classes.textField}
-                        variant="outlined"
-                        margin="normal"
-                        id="custCode"
-                        select
-                        required
-                        label="고객 유형"
-                        fullWidth
-                        value={tree}
-                        onChange={handleChange}
-                    >
-                        {code.map(option => (
-                            <MenuItem  key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
                     <Autocomplete
                         id="custTpCd"
                         options={custCdList}
-                        onChange={autoCompleteHandleChange}
+                        onChange={contractCodeHandleChange}
                         getOptionLabel={option => option.cmmnDetailCdNm}
                         renderInput={params => (
                             <TextField

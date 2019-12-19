@@ -13,6 +13,7 @@ export const getCustomerList = () => async dispatch => {
     dispatch({ type: GET_CUSTOMER });
     try {
         const response = await api.getManagers();
+        console.log("하하하하ㅏ",response)
         dispatch({
            type: GET_CUSTOMER_SUCCESS,
            payload: response.data

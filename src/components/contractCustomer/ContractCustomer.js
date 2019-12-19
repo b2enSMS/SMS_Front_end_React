@@ -71,28 +71,28 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const columns = [
         {
-            title: 'organization',
+            title: '기관',
             dataIndex: 'orgNm',
         },
         {
-            title: 'name',
+            title: '고객 이름',
             dataIndex: 'custNm',
         },
         {
-            title: 'email',
+            title: '이메일',
             dataIndex: 'email',
         },
         {
-            title: 'phoneNum',
+            title: '연락처',
             dataIndex: 'telNo',
         },
         {
-            title: 'position',
+            title: '직급',
             dataIndex: 'custRankNm',
         },
         {
-            title: '담/사',
-            dataIndex: 'custTpCd',
+            title: '고객 유형',
+            dataIndex: 'custTpNm',
         },
         {
             title: '',

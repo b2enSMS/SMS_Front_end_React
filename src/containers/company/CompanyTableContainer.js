@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getCompanyList } from "modules/company/companytable";
-import { ManagerTable } from "components"
+import CompanyTable from "../../components/company/CompanyTable";
 
 const CompanyTableContainer = ({
         getCompanyList,
@@ -12,8 +12,9 @@ const CompanyTableContainer = ({
         getCompanyList();
     }, [getCompanyList]);
 
+    console.log("compancompany",companyList);
     return (
-        <ManagerTable
+        <CompanyTable
             companyList={companyList}
             loadingTable={loadingTable}
         />
