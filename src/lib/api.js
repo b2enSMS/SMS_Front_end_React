@@ -47,6 +47,24 @@ export const postContracts = (formData) => {
     }
     return axios.post('/cont/create', data);
 }
+
+export const postUpdateContracts = (formData) => {
+    console.log("formData야야야야ㅑ", formData.lcns)
+    const data = {
+        prdtId: formData.prdtId,
+        checkDt: formData.checkDt,
+        lcns: formData.lcns,
+        orgId: formData.orgId,
+        empId: formData.empId,
+        contDt: formData.contDt,
+        installDt: formData.installDt,
+        mtncStartDt: formData.mtncStartDt,
+        mtncEndDt: formData.mtncEndDt,
+        contReportNo: formData.contReportNo,
+        contTpCd: formData.contTpCd,
+    }
+    return axios.put(`/cont/${formData.contId}`, data);
+}
 //계약 테이블 - 리스트 삭제
 export const getDeleteContracts = (selectedRowKeys) => {
     console.log("selected", selectedRowKeys)

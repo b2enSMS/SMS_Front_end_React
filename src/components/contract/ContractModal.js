@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
+const ContractModal = ({handleUpdate, buttonFlag,licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
     const classes = useStyles();
     const handleChange = ev => {
         handleChangeInput({ form: "contractModal", key: ev.target.id, value: ev.target.value })
@@ -92,10 +92,11 @@ const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML,
 
     return (
         <Modal
+            
             title="계약정보 등록"
             visible={visible}
-            onOk={handleOk}
-            okText="등록"
+            onOk={buttonFlag?handleOk:handleUpdate}
+            okText={buttonFlag?"등록":"수정"}
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
             cancelText="취소"
@@ -103,6 +104,7 @@ const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML,
             width="40%"
             maskClosable={false}
         >
+            {console.log("dfjefe",buttonFlag)}
             <Container component="main" fixed>
                 <form className={classes.form} autoComplete="off">
                     <Grid container spacing={1}>
@@ -113,6 +115,8 @@ const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML,
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.orgNm}
                                 inputValue={contractForm.orgNm}
+                                value={{orgNm:contractForm.orgNm}}
+                                disableClearable={true}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -122,6 +126,7 @@ const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML,
                                         margin="normal"
                                         label="기관명"
                                         fullWidth
+                                        value={contractForm.orgNm}
                                     />
                                 )}
                             />
@@ -133,6 +138,8 @@ const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML,
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.empNm}
                                 inputValue={contractForm.empNm}
+                                value={{empNm:contractForm.empNm}}
+                                disableClearable={true}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -142,7 +149,7 @@ const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML,
                                         margin="normal"
                                         label="담당자명"
                                         fullWidth
-                                        autoComplete="off"
+                                        value={contractForm.empNm}
                                     />
                                 )}
                             />
@@ -155,6 +162,8 @@ const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML,
                                 onChange={contractCodeHandleChange}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
                                 inputValue={contractForm.contTpNm}
+                                value={{cmmnDetailCdNm:contractForm.contTpNm}}
+                                disableClearable={true}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -164,6 +173,7 @@ const ContractModal = ({ licenseModalShow, visible, contCdList, orgList, b2enML,
                                         margin="normal"
                                         label="계약 유형"
                                         fullWidth
+                                        value={contractForm.contTpNm}
                                     />
                                 )}
                             />

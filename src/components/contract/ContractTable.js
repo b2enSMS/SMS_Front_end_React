@@ -68,7 +68,7 @@ const RemoveButton = withStyles(theme => ({
 
 
 
-function ContractTable({ loadingTable, contractList, showModal, deleteData,updateModalHandler }) {
+function ContractTable({ loadingTable, contractList, showModal, deleteData,updateModalHandler,modalBtnHandler }) {
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const handleMenuClick = key => {
@@ -172,6 +172,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
           overlay={(
             <Menu onClick={() => {
               handleMenuClick(record.contId)
+              modalBtnHandler()
             }}>
               <Menu.Item >
                 수정
@@ -213,7 +214,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
             variant="outlined"
             color="primary"
             endIcon={<AddIcon />}
-          > Add New
+          > 계약 등록
           </ColorButton>
         </span>
         <RemoveButton
@@ -223,7 +224,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
           variant="outlined"
           color="secondary"
           endIcon={<RemoveIcon />}
-        > Remove
+        > 계약 삭제
           </RemoveButton>
       </div>
 

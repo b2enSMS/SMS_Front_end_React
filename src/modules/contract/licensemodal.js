@@ -73,6 +73,7 @@ const initialState = {
     products: [],
     licCode: [],
     tempLcnsId: null,
+    buttonFlag:true
 }
 
 const licensemodal = handleActions(

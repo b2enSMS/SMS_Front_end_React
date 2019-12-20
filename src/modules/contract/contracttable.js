@@ -2,9 +2,9 @@ import { handleActions } from 'redux-actions';
 import * as api from '../../lib/api';
 
 
-const GET_CONTRACT = 'contracttable/GET_CONTRACT';
-const GET_CONTRACT_SUCCESS = 'contracttable/GET_CONTRACT_SUCCESS';
-const GET_CONTRACT_FAILURE = 'contracttable/GET_CONTRACT_FAILURE';
+export const GET_CONTRACT = 'contracttable/GET_CONTRACT';
+export const GET_CONTRACT_SUCCESS = 'contracttable/GET_CONTRACT_SUCCESS';
+export const GET_CONTRACT_FAILURE = 'contracttable/GET_CONTRACT_FAILURE';
 
 const DELETE_CONTRACT = 'contracttable/DELETE_CONTRACT';
 const DELETE_CONTRACT_SUCCESS = 'contracttable/DELETE_CONTRACT_SUCCESS';

@@ -128,7 +128,6 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                         margin="normal"
                                         label="라이센스 유형"
                                         fullWidth
-                                        autoComplete="off"
                                     />
                                 )}
                             />

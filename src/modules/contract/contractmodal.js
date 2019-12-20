@@ -1,6 +1,7 @@
 import { handleActions, createAction } from 'redux-actions';
 import * as api from '../../lib/api';
 import produce from 'immer';
+import {GET_CONTRACT, GET_CONTRACT_SUCCESS, GET_CONTRACT_FAILURE} from './contracttable'
 
 const CHANGE_INPUT = 'contractmodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'contractmodal/HANDLE_CANCLE';
@@ -23,9 +24,47 @@ const INPUT_LICENSE = 'contractmodal/INPUT_LICENSE';
 const REMOVE_LICENSE = 'contractmodal/REMOVE_LICENSE';
 const INITIALIZE_FORM = 'contractmodal/INITIALIZE_FORM'
 
+const BUTTON_CHANGE = 'contractmodal/BUTTON_CHANGE'
+
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
+export const getButtonChange = createAction(BUTTON_CHANGE);
 
+
+export const gethandleUpdate = (formData) => async dispatch => {
+
+    dispatch({ type: POST_CONTRACT });
+    try {
+        await api.postUpdateContracts(formData);
+        dispatch({
+            type: POST_CONTRACT_SUCCESS,
+        });
+        dispatch({ type: INITIALIZE_FORM, payload: "contractModal" });
+ 
+        dispatch({ type: GET_CONTRACT });
+        try {
+            const response = await api.getContracts();
+            dispatch({
+                type: GET_CONTRACT_SUCCESS,
+                payload: response.data
+            });
+        } catch (e) {
+            dispatch({
+                type: GET_CONTRACT_FAILURE,
+                payload: e,
+                error: true
+            });
+            throw e;
+        }
+    } catch (e) {
+        dispatch({
+            type: POST_CONTRACT_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+};
 
 export const getRemoveLicense = (idx) => dispacth => {
     dispacth({
@@ -95,7 +134,7 @@ export const getShowModal = () => async dispatch => {
         });
         throw e;
     }
-};
+}
 
 export const getHandleCancel = () => dispatch => {
     console.log("getHandleCancel")
@@ -118,6 +157,22 @@ export const handleOk = (formData) => async dispatch => {
             type: POST_CONTRACT_SUCCESS,
         });
         dispatch({ type: INITIALIZE_FORM, payload: "contractModal" });
+ 
+        dispatch({ type: GET_CONTRACT });
+        try {
+            const response = await api.getContracts();
+            dispatch({
+                type: GET_CONTRACT_SUCCESS,
+                payload: response.data
+            });
+        } catch (e) {
+            dispatch({
+                type: GET_CONTRACT_FAILURE,
+                payload: e,
+                error: true
+            });
+            throw e;
+        }
     } catch (e) {
         dispatch({
             type: POST_CONTRACT_FAILURE,
@@ -146,6 +201,7 @@ const initialState = {
         contTpNm: "",
         contReportNo: "",
     },
+    buttonFlag : true,
     orgList: [],
     b2enML: [],
     contCdList: [],
@@ -153,6 +209,10 @@ const initialState = {
 
 const contractmodal = handleActions(
     {
+        [BUTTON_CHANGE]: state => ({
+            ...state,
+            buttonFlag : false
+        }),
 
         [UPDATE_CONTRACT]: state => ({
             ...state,
@@ -207,6 +267,7 @@ const contractmodal = handleActions(
             ...state,
             visible: false,
             licenses: [],
+            buttonFlag: true,
         }),
 
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
