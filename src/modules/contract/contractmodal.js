@@ -1,7 +1,7 @@
 import { handleActions, createAction } from 'redux-actions';
 import * as api from '../../lib/api';
 import produce from 'immer';
-import {GET_CONTRACT, GET_CONTRACT_SUCCESS, GET_CONTRACT_FAILURE} from './contracttable'
+import { GET_CONTRACT, GET_CONTRACT_SUCCESS, GET_CONTRACT_FAILURE } from './contracttable'
 
 const CHANGE_INPUT = 'contractmodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'contractmodal/HANDLE_CANCLE';
@@ -25,11 +25,48 @@ const REMOVE_LICENSE = 'contractmodal/REMOVE_LICENSE';
 const INITIALIZE_FORM = 'contractmodal/INITIALIZE_FORM'
 
 const BUTTON_CHANGE = 'contractmodal/BUTTON_CHANGE'
+const IMAGE_CHANGE = 'contractmodal/IMAGE_CHANGE'
+const IMAGE_CANCEL = 'contractmodal/IMAGE_CANCEL'
+
+const IMAGE_PREVIEW = 'contractmodal/IMAGE_PREVIEW'
+const IMAGE_PREVIEW_SUCCESS = 'contractmodal/IMAGE_PREVIEW_SUCCESS'
+const IMAGE_PREVIEW_FAILURE = 'contractmodal/IMAGE_PREVIEW_FAILURE'
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 export const getButtonChange = createAction(BUTTON_CHANGE);
+export const gethandleImageChange = createAction(IMAGE_CHANGE, ({fileList}) => ({fileList}))
+export const gethandleImageCancel = createAction(IMAGE_CANCEL)
 
+export const gethandlePreview = (file) => async dispatch => {
+    console.log("gethandlePreview", file)
+    dispatch({ type: IMAGE_PREVIEW });
+    try {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        dispatch({
+            type: IMAGE_PREVIEW_SUCCESS,
+            payload: file
+        });
+    } catch (e) {
+        dispatch({
+            type: IMAGE_PREVIEW_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+
+}
+const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        console.log("file",file)
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
 
 export const gethandleUpdate = (formData) => async dispatch => {
 
@@ -40,7 +77,7 @@ export const gethandleUpdate = (formData) => async dispatch => {
             type: POST_CONTRACT_SUCCESS,
         });
         dispatch({ type: INITIALIZE_FORM, payload: "contractModal" });
- 
+
         dispatch({ type: GET_CONTRACT });
         try {
             const response = await api.getContracts();
@@ -151,13 +188,13 @@ export const handleOk = (formData) => async dispatch => {
 
     dispatch({ type: POST_CONTRACT });
     try {
-        console.log("contractrconkafkej",formData.contTpCd)
+        console.log("contractrconkafkej", formData.contTpCd)
         await api.postContracts(formData);
         dispatch({
             type: POST_CONTRACT_SUCCESS,
         });
         dispatch({ type: INITIALIZE_FORM, payload: "contractModal" });
- 
+
         dispatch({ type: GET_CONTRACT });
         try {
             const response = await api.getContracts();
@@ -183,7 +220,6 @@ export const handleOk = (formData) => async dispatch => {
     }
 };
 
-
 const initialState = {
     visible: false,
     confirmLoading: false,
@@ -192,7 +228,7 @@ const initialState = {
         installDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         checkDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         mtncStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-        mtncEndDt: (new Date().getFullYear()+1) + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        mtncEndDt: (new Date().getFullYear() + 1) + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         lcns: [],
         orgNm: "",
         empNm: "",
@@ -200,18 +236,47 @@ const initialState = {
         contTpCd: "",
         contTpNm: "",
         contReportNo: "",
+        fileList: [],
     },
-    buttonFlag : true,
+    buttonFlag: true,
     orgList: [],
     b2enML: [],
     contCdList: [],
+
+    previewVisible: false,
+    previewImage: '',
+
 }
 
 const contractmodal = handleActions(
     {
+        [IMAGE_PREVIEW]: state => ({
+            ...state,
+        }),
+
+        [IMAGE_PREVIEW_SUCCESS]: (state, { payload: { file } }) => ({
+            ...state,
+            previewImage: file.url || file.preview,
+            previewVisible: true,
+        }),
+        [IMAGE_PREVIEW_FAILURE]: state => ({
+            ...state,
+        }),
+
+        [IMAGE_CANCEL]: state => ({
+            ...state,
+            previewVisible: false,
+        }),
+
+        [IMAGE_CHANGE]: (state, { payload: {fileList} }) =>
+            produce(state, draft => {
+                console.log("moduleFileList",fileList)
+                draft["contractModal"]["fileList"] = fileList;
+            }),
+
         [BUTTON_CHANGE]: state => ({
             ...state,
-            buttonFlag : false
+            buttonFlag: false
         }),
 
         [UPDATE_CONTRACT]: state => ({
@@ -220,9 +285,9 @@ const contractmodal = handleActions(
             visible: true,
         }),
 
-        [UPDATE_CONTRACT_SUCCESS]: (state, { payload: {form,orgList, b2enML,contCdList}}) =>
+        [UPDATE_CONTRACT_SUCCESS]: (state, { payload: { form, orgList, b2enML, contCdList } }) =>
             produce(state, draft => {
-                draft["orgList"] =orgList
+                draft["orgList"] = orgList
                 draft["b2enML"] = b2enML
                 draft["contCdList"] = contCdList
                 draft["contractModal"] = form

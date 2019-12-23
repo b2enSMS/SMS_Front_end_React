@@ -69,7 +69,7 @@ export const postUpdateContracts = (formData) => {
 export const getDeleteContracts = (selectedRowKeys) => {
     console.log("selected", selectedRowKeys)
 
-    return axios.delete(`/cont`,{data: {idx: selectedRowKeys}})
+    return axios.delete(`/cont`, { data: { idx: selectedRowKeys } })
 }
 
 // 고객 하나씩 가져오기
@@ -81,7 +81,7 @@ export const getcustCD = () =>
 
 //고객 테이블 - 삭제
 export const deleteCustomer = (selectedRowKeys) => {
-    return axios.delete(`/cust`,{data: {idx: selectedRowKeys}})
+    return axios.delete(`/cust`, { data: { idx: selectedRowKeys } })
 }
 
 // 고객 수정
@@ -100,7 +100,7 @@ export const updateCustomer = (custId, formData) => {
 
 //고객 등록
 export const postCustomer = (formData) => {
-    console.log("나는",formData.custTpCd)
+    console.log("나는", formData.custTpCd)
     const data = {
         orgId: formData.orgId,
         orgNm: formData.orgNm,
@@ -154,7 +154,7 @@ export const getProduct = (prdtId) =>
 export const getDeleteProducts = (selectedRowKeys) => {
     console.log("selected", selectedRowKeys)
 
-    return axios.delete(`/prdt`,{data: {idx: selectedRowKeys}})
+    return axios.delete(`/prdt`, { data: { idx: selectedRowKeys } })
 }
 
 // b2en 담당자 리스트

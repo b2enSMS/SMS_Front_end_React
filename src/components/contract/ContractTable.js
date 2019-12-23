@@ -28,10 +28,12 @@ const useStyles = makeStyles(theme => ({
   plusbutton: {
     paddingRight: theme.spacing(3),
     paddingLeft: theme.spacing(3),
+    fontWeight: 'bold'
   },
   minusbutton: {
     paddingRight: theme.spacing(3),
     paddingLeft: theme.spacing(3),
+    fontWeight: 'bold'
   },
 
   backgroundRed:{
@@ -175,7 +177,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
               modalBtnHandler()
             }}>
               <Menu.Item >
-                수정
+                상세
             </Menu.Item>
             </Menu>
           )}
@@ -202,7 +204,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
   return (
     <div>
       <div style={{ marginLeft: 8, textAlign: 'left' }}>
-        {hasSelected ? `Selected ${selectedRowKeys.length} items` : 'Selected 0 item'}
+        {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
       </div>
       <div className={classes.button}>
         <span style={{ paddingRight: 14 }}>

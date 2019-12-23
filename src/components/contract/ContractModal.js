@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'antd';
+import { Modal, Upload, Icon } from 'antd';
 import { Container, TextField, Grid, Button, Input } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
@@ -40,12 +40,15 @@ const useStyles = makeStyles(theme => ({
     },
     prdtBtn: {
         marginTop: theme.spacing(3.5)
+    },
+    
+    imageStyle: {
+        paddingTop: theme.spacing(3)
     }
 
 }));
 
-
-const ContractModal = ({handleUpdate, buttonFlag,licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
+const ContractModal = ({ handlePreview,handleImageChange,previewVisible, previewImage, handleImageCancel, handleUpdate, buttonFlag, licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
     const classes = useStyles();
     const handleChange = ev => {
         handleChangeInput({ form: "contractModal", key: ev.target.id, value: ev.target.value })
@@ -90,21 +93,22 @@ const ContractModal = ({handleUpdate, buttonFlag,licenseModalShow, visible, cont
         handleChangeInput({ form: "contractModal", key: "mtncEndDt", value: date })
     };
 
+
     return (
         <Modal
-            
-            title="계약정보 등록"
+
+            title="계약정보"
             visible={visible}
-            onOk={buttonFlag?handleOk:handleUpdate}
-            okText={buttonFlag?"등록":"수정"}
+            onOk={buttonFlag ? handleOk : handleUpdate}
+            okText={buttonFlag ? "등록" : "수정"}
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
             cancelText="취소"
-            style={{ top: 50 }}
+            style={{ top: 35 }}
             width="40%"
             maskClosable={false}
         >
-            {console.log("dfjefe",buttonFlag)}
+            {console.log("dfjefe", buttonFlag)}
             <Container component="main" fixed>
                 <form className={classes.form} autoComplete="off">
                     <Grid container spacing={1}>
@@ -115,7 +119,7 @@ const ContractModal = ({handleUpdate, buttonFlag,licenseModalShow, visible, cont
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.orgNm}
                                 inputValue={contractForm.orgNm}
-                                value={{orgNm:contractForm.orgNm}}
+                                value={{ orgNm: contractForm.orgNm }}
                                 disableClearable={true}
                                 renderInput={params => (
                                     <TextField
@@ -138,7 +142,7 @@ const ContractModal = ({handleUpdate, buttonFlag,licenseModalShow, visible, cont
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.empNm}
                                 inputValue={contractForm.empNm}
-                                value={{empNm:contractForm.empNm}}
+                                value={{ empNm: contractForm.empNm }}
                                 disableClearable={true}
                                 renderInput={params => (
                                     <TextField
@@ -162,7 +166,7 @@ const ContractModal = ({handleUpdate, buttonFlag,licenseModalShow, visible, cont
                                 onChange={contractCodeHandleChange}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
                                 inputValue={contractForm.contTpNm}
-                                value={{cmmnDetailCdNm:contractForm.contTpNm}}
+                                value={{ cmmnDetailCdNm: contractForm.contTpNm }}
                                 disableClearable={true}
                                 renderInput={params => (
                                     <TextField
@@ -284,7 +288,6 @@ const ContractModal = ({handleUpdate, buttonFlag,licenseModalShow, visible, cont
                                 />
                             </Grid>
                         </MuiPickersUtilsProvider>
-
                     </Grid>
                 </form>
                 {contractForm.lcns.map((license, index) => (
@@ -301,6 +304,22 @@ const ContractModal = ({handleUpdate, buttonFlag,licenseModalShow, visible, cont
                         {console.log("kwon Index", index)}
                     </LicenseItem>
                 ))}
+
+                    <div className={classes.imageStyle}>
+                        <Upload
+                            action="http://localhost:9000/sms/api/scan/upload"
+                            listType="picture-card"
+                            fileList={contractForm.fileList}
+                            onPreview={handlePreview}
+                            onChange={handleImageChange}
+                        >
+                            {contractForm.fileList.length >= 8 ? null : uploadButton}
+                        </Upload>
+                        <Modal visible={previewVisible} footer={null} onCancel={handleImageCancel}>
+                            <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                        </Modal>
+                    </div>
+
             </Container>
         </Modal>
     );
@@ -334,7 +353,17 @@ const LicenseItem = ({ keyvar, license, removeLicenseHandler, classes }) => {
                 </Button>
             </Grid>
         </Grid>
+
+
     );
 };
+const uploadButton = (
+
+    <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+    </div>
+);
+
 
 export default ContractModal;

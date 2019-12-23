@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector,useDispatch  } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { ContractModal } from 'components';
-import {initializeForm,handleOk, handleChangeInput,getHandleCancel,getRemoveLicense,gethandleUpdate } from 'modules/contract/contractmodal';
+import { gethandlePreview, gethandleImageCancel, initializeForm, handleOk, handleChangeInput, getHandleCancel, getRemoveLicense, gethandleUpdate, gethandleImageChange } from 'modules/contract/contractmodal';
 import { getContractList } from 'modules/contract/contracttable';
 import { getShowModal } from 'modules/contract/licensemodal';
 
@@ -11,25 +11,31 @@ const ContractModalContainer = ({
     b2enML,
     confirmLoading,
     handleOk,
-    getHandleCancel,
-    handleChangeInput,
+    previewVisible,
+    previewImage,
     licenses,
     contCdList,
-    getShowModal,
-    getRemoveLicense,
     contractModal,
     buttonFlag,
+    handleChangeInput,
+    getHandleCancel,
+    getShowModal,
+    getRemoveLicense,
     gethandleUpdate,
+    gethandleImageChange,
+    gethandleImageCancel,
+    gethandlePreview,
+
 }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(initializeForm("contractModal"));
-    },[dispatch])
+    }, [dispatch])
 
-    const {formData} = useSelector(({contractmodal})=>({formData : contractmodal.contractModal}));
-    
-    const okok= ()  =>{
+    const { formData } = useSelector(({ contractmodal }) => ({ formData: contractmodal.contractModal }));
+
+    const okok = () => {
         handleOk(formData);
         // dispatch(getContractList())
     }
@@ -40,7 +46,7 @@ const ContractModalContainer = ({
             handleOk={okok}
             confirmLoading={confirmLoading}
             handleChangeInput={handleChangeInput}
-            handleCancel ={getHandleCancel}
+            handleCancel={getHandleCancel}
             orgList={orgList}
             b2enML={b2enML}
             licenses={licenses}
@@ -49,13 +55,20 @@ const ContractModalContainer = ({
             contCdList={contCdList}
             contractForm={contractModal}
             buttonFlag={buttonFlag}
-            handleUpdate={()=>gethandleUpdate(formData)}
+            handleUpdate={() => gethandleUpdate(formData)}
+            handleImageChange={gethandleImageChange}
+            handleImageCancel={gethandleImageCancel}
+            handlePreview={gethandlePreview}
+            previewVisible= {previewVisible}
+            previewImage= {previewImage}
         />
     );
 };
 
 export default connect(
     ({ contractmodal }) => ({
+        previewImage: contractmodal.previewImage,
+        previewVisible: contractmodal.previewVisible,
         visible: contractmodal.visible,
         licenses: contractmodal.licenses,
         confirmLoading: contractmodal.confirmLoading,
@@ -66,13 +79,16 @@ export default connect(
         buttonFlag: contractmodal.buttonFlag
     }),
     {
+        gethandleImageCancel,
+        gethandleImageChange,
         handleOk,
         handleChangeInput,
         getHandleCancel,
         getContractList,
         getShowModal,
         getRemoveLicense,
-        gethandleUpdate
-       
+        gethandleUpdate,
+        gethandlePreview,
+
     }
 )(ContractModalContainer);
