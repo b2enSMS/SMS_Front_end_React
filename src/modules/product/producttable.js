@@ -1,9 +1,9 @@
 import { handleActions } from 'redux-actions';
 import * as api from '../../lib/api';
 
-const GET_PRODUCT = 'producttable/GET_PRODUCT';
-const GET_PRODUCT_SUCCESS = 'producttable/GET_PRODUCT_SUCCESS';
-const GET_PRODUCT_FAILURE = 'producttable/GET_PRODUCT_FAILURE';
+export const GET_PRODUCT = 'producttable/GET_PRODUCT';
+export const GET_PRODUCT_SUCCESS = 'producttable/GET_PRODUCT_SUCCESS';
+export const GET_PRODUCT_FAILURE = 'producttable/GET_PRODUCT_FAILURE';
 
 const DELETE_PRODUCT = 'producttable/DELETE_PRODUCT';
 const DELETE_PRODUCT_SUCCESS = 'producttable/DELETE_PRODUCT_SUCCESS';
@@ -30,6 +30,7 @@ export const getProductList = () => async dispatch => {
 export const getDeleteProduct = selectedRowKeys => async dispatch => {
     dispatch({type: DELETE_PRODUCT});
     try{
+        console.log("selectedRowKeysselectedRowKeys",selectedRowKeys);
         await api.getDeleteProducts(selectedRowKeys);
         dispatch({type: DELETE_PRODUCT_SUCCESS});
     }catch(e){

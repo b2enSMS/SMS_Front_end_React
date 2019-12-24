@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {MainItemList} from "components";
-import { ContractCustomerInfoPage, ProductInfoPage, ManagerInfoPage  } from "pages";
+import { ContractCustomerInfoPage, ProductInfoPage, ManagerInfoPage, PossibleContractInfoPage  } from "pages";
 
 import Image from 'images/Logo.png';
 
@@ -143,6 +143,7 @@ const useStyles = makeStyles(theme => ({
             <Route exact path="/manager" component={ManagerInfoPage} />
             <Route exact path="/possiblecustomer" component={PossibleCustomerInfoPage} />
             <Route exact path="/company" component={CompanyInfoPage} />
+            <Route exact path="/possiblecontract" component={PossibleContractInfoPage} />
           </main>
         </div>
 

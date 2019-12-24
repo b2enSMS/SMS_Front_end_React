@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, TextField } from '@material-ui/core/';
-//import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import {Modal} from "antd";
 import { makeStyles } from '@material-ui/core/styles';
 //import MenuItem from '@material-ui/core/MenuItem';
@@ -24,19 +23,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductUpdateModal = ({updateVisible, HandleCancel, handleChangeInput}) => {
+const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChangeInput, productInfo, buttonFlag, handleOk}) => {
 
     const classes = useStyles();
 
     const handleChange = ev => {
-        handleChangeInput({form:"updateProductModal", key: ev.target.id, value: ev.target.value});
+        handleChangeInput({ form: "productModal", key: ev.target.id, value: ev.target.value })
     }
 
     return(
         <Modal
-            title="제품 정보 수정"
+            title="제품 정보"
             visible={updateVisible}
-            //onOk={updateCust}
+            okText={buttonFlag?"등록":"수정"}
+            onOk={buttonFlag?handleOk:handleUpdateOk}
             onCancel={HandleCancel}
             style={{ top: 25 }}
         >
@@ -51,19 +51,8 @@ const ProductUpdateModal = ({updateVisible, HandleCancel, handleChangeInput}) =>
                         fullWidth
                         id="prdtNm"
                         label="제품명"
-                        name="custNm"
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        className={classes.textField}
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="prdtVer"
-                        label="버전"
-                        name="custRankNm"
-                        //value={custInfo.custRankNm}
+                        name="prdtNm"
+                        value={productInfo.prdtNm}
                         onChange={handleChange}
                     />
                     <TextField
@@ -74,8 +63,8 @@ const ProductUpdateModal = ({updateVisible, HandleCancel, handleChangeInput}) =>
                         fullWidth
                         id="prdtAmt"
                         label="가격"
-                        name="email"
-                        //value={custInfo.email}
+                        name="prdtAmt"
+                        value={productInfo.prdtAmt}
                         onChange={handleChange}
                     />
                     <TextField
@@ -86,8 +75,8 @@ const ProductUpdateModal = ({updateVisible, HandleCancel, handleChangeInput}) =>
                         fullWidth
                         name="prdtDesc"
                         label="설명"
-                        id="telNo"
-                        //value={custInfo.telNo}
+                        id="prdtDesc"
+                        value={productInfo.prdtDesc}
                         onChange={handleChange}
                     />
                 </form>
@@ -96,4 +85,4 @@ const ProductUpdateModal = ({updateVisible, HandleCancel, handleChangeInput}) =>
     );
 }
 
-export default ProductUpdateModal
+export default ProductModal

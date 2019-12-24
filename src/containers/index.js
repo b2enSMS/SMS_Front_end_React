@@ -7,3 +7,5 @@ export {default as CustomerUpdateModalContainer} from './contractCustomer/Custom
 export {default as ProductTableContainer} from './product/ProductTableContainer'
 export {default as ManagerTableContainer} from './manager/ManagerTableContainer'
 export {default as CompanyTableContainer} from './company/CompanyTableContainer'
+export {default as PossibleContractModalContainer} from './possible/PossibleContractModalContainer'
+export {default as PossibleContractTableContainer} from './possible/PossibleContractTableContainer'
