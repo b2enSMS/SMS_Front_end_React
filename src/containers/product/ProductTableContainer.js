@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getProductList, getDeleteProduct } from "modules/product/producttable";
-import { getShowUpdateModal } from "modules/product/productupdatemodal";
+import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/product/productupdatemodal";
 import { ProductTable } from "components"
 
 const ProductTableContainer = ({
@@ -10,6 +10,8 @@ const ProductTableContainer = ({
     getDeleteProduct,
     productList,
     loadingTable,
+    getShowModal,
+    getButtonChange,
 }) => {
     useEffect(()=> {
         getProductList();
@@ -21,6 +23,8 @@ const ProductTableContainer = ({
             loadingTable={loadingTable}
             getDeleteProduct={getDeleteProduct}
             showUpdateModal={getShowUpdateModal}
+            showModal={getShowModal}
+            changeButton={getButtonChange}
         />
     );
 };
@@ -34,5 +38,7 @@ export default connect(
         getProductList,
         getDeleteProduct,
         getShowUpdateModal,
+        getButtonChange,
+        getShowModal,
     }
 )(ProductTableContainer);

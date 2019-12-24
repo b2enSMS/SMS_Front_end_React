@@ -1,40 +1,59 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import { getShowUpdateModal, getHandleCancel, handleChangeInput } from "../../modules/product/productupdatemodal";
-import ProductUpdateModal from "../../components/product/ProductUpdateModal";
+import React, {useEffect} from 'react';
+import {connect, useDispatch, useSelector} from 'react-redux';
+import {
+    getShowUpdateModal,
+    getHandleCancel,
+    handleChangeInput,
+    handleOk,
+    handleUpdateOk
+} from "../../modules/product/productupdatemodal";
+import ProductModal from "../../components/product/ProductModal";
 
 const ProductUpdateModalContainer = ({
         updateVisible,
         prdtInfo,
         getHandleCancel,
         handleChangeInput,
+        productModal,
+        buttonFlag,
+        handleOk,
+        handleUpdateOk
     }) => {
 
-    /*const dispatch = useDispatch();
-    //const {formData} = useSelector(({productupdatemodal})=>({formData : productupdatemodal.updateCustomerModal}))
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+    },[dispatch])
+
+    const {formData} = useSelector(({productupdatemodal})=>({formData : productupdatemodal.productModal}))
     const UpdateOk = () =>{
-        //updateCustomer(custInfo.custId, formData);
-        //dispatch(getCustomerList());
-    }*/
+        handleOk(formData);
+    }
     return (
-        <ProductUpdateModal
+        <ProductModal
             updateVisible={updateVisible}
+            handleOk={UpdateOk}
             prdtInfo={prdtInfo}
             HandleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
+            productInfo={productModal}
+            buttonFlag={buttonFlag}
+            handleUpdateOk={()=>handleUpdateOk(formData)}
         />
     );
 };
 
 export default connect(
     ({ productupdatemodal }) => ({
-        prdtInfo: productupdatemodal.prdtInfo,
+        buttonFlag: productupdatemodal.buttonFlag,
         updateVisible: productupdatemodal.updateVisible,
-        updateProductModal: productupdatemodal.updateProductModal,
+        productModal: productupdatemodal.productModal,
     }),
     {
         getShowUpdateModal,
         getHandleCancel,
-        handleChangeInput
+        handleChangeInput,
+        handleOk,
+        handleUpdateOk,
     }
 )(ProductUpdateModalContainer);

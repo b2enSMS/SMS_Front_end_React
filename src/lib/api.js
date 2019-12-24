@@ -114,8 +114,30 @@ export const postCustomer = (formData) => {
     return axios.post('/cust/create', data);
 }
 
+export const postProduct = (formData) => {
+    const data = {
+        prdtId: formData.prdtId,
+        prdtNm: formData.prdtNm,
+        prdtAmt: formData.prdtAmt,
+        prdtDesc: formData.prdtDesc,
+    }
+    return axios.post('/prdt/create', data);
+}
+
+export const updateProduct = (formData) => {
+    const data = {
+        prdtNm: formData.prdtNm,
+        prdtAmt: formData.prdtAmt,
+        prdtDesc: formData.prdtDesc,
+    }
+    return axios.put(`/prdt/${formData.prdtId}`, data);
+}
+
 export const getContract = (key) =>
     axios.get(`/cont/${key}`);
+
+export const getPossibleContract = () =>
+    axios.get('/temp/showall');
 
 //기관 리스트
 export const getOrganization = () =>
@@ -155,6 +177,10 @@ export const getDeleteProducts = (selectedRowKeys) => {
     console.log("selected", selectedRowKeys)
 
     return axios.delete(`/prdt`,{data: {idx: selectedRowKeys}})
+}
+
+export const deletePossibleContract = (selectedRowKeys) => {
+    return axios.delete(`/temp`, {data: {idx: selectedRowKeys}})
 }
 
 // b2en 담당자 리스트

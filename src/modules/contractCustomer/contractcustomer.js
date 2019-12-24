@@ -44,6 +44,7 @@ export const deleteCustomer = selectedRowKeys => async dispatch => {
         throw e;
     }
 
+
     dispatch({ type: GET_CUSTOMER });
     try {
         const response = await api.getManagers();
