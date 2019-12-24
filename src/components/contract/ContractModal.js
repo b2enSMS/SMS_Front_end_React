@@ -1,11 +1,12 @@
 import React from 'react';
-import { Modal, Upload, Icon } from 'antd';
+import { Modal } from 'antd';
 import { Container, TextField, Grid, Button, Input } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import 'date-fns';
+import 'lib/css/ant.css';
 
 const useStyles = makeStyles(theme => ({
 
@@ -31,6 +32,11 @@ const useStyles = makeStyles(theme => ({
     },
     inputButton: {
         marginTop: theme.spacing(1),
+        marginLeft: theme.spacing(-6)
+    },
+    delButton: {
+        marginTop: theme.spacing(1),
+        marginLeft: theme.spacing(-2)
     },
     dynamicSpan: {
         width: '100%',
@@ -41,14 +47,11 @@ const useStyles = makeStyles(theme => ({
     prdtBtn: {
         marginTop: theme.spacing(3.5)
     },
-    
-    imageStyle: {
-        paddingTop: theme.spacing(3)
-    }
+
 
 }));
 
-const ContractModal = ({ handlePreview,handleImageChange,previewVisible, previewImage, handleImageCancel, handleUpdate, buttonFlag, licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
+const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
     const classes = useStyles();
     const handleChange = ev => {
         handleChangeInput({ form: "contractModal", key: ev.target.id, value: ev.target.value })
@@ -92,6 +95,8 @@ const ContractModal = ({ handlePreview,handleImageChange,previewVisible, preview
     const handlemtncEndDtChange = (id, date) => {
         handleChangeInput({ form: "contractModal", key: "mtncEndDt", value: date })
     };
+
+
 
 
     return (
@@ -182,7 +187,19 @@ const ContractModal = ({ handlePreview,handleImageChange,previewVisible, preview
                                 )}
                             />
                         </Grid>
-
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                disabled
+                                className={classes.textField}
+                                id="headContId"
+                                label="모계약"
+                                variant="outlined"
+                                margin="normal"
+                                name="headContId"
+                                onChange={handleChange}
+                                value={contractForm.headContId}
+                            />
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 className={classes.textField}
@@ -190,7 +207,7 @@ const ContractModal = ({ handlePreview,handleImageChange,previewVisible, preview
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="expire"
+                                name="contReportNo"
                                 label="수주보고서 번호"
                                 id="contReportNo"
                                 onChange={handleChange}
@@ -265,11 +282,7 @@ const ContractModal = ({ handlePreview,handleImageChange,previewVisible, preview
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Button size="large" className={classes.prdtBtn} onClick={licenseModalShow} variant="outlined">제품 등록</Button>
-                            </Grid>
-                            <Grid item xs={12} sm={2}>
-                            </Grid>
+
                             <Grid item xs={12} sm={6}>
                                 <KeyboardDatePicker
                                     disableToolbar
@@ -288,8 +301,18 @@ const ContractModal = ({ handlePreview,handleImageChange,previewVisible, preview
                                 />
                             </Grid>
                         </MuiPickersUtilsProvider>
+
+                        <Grid item xs={12}>
+                            <Button size="large"
+                                className={classes.prdtBtn}
+                                onClick={licenseModalShow}
+                                variant="outlined">제품 등록
+                                </Button>
+                        </Grid>
+
                     </Grid>
                 </form>
+
                 {contractForm.lcns.map((license, index) => (
 
                     <LicenseItem
@@ -298,6 +321,7 @@ const ContractModal = ({ handlePreview,handleImageChange,previewVisible, preview
                         key={index}
                         id={index.toString()}
                         keyvar={index}
+                        modifyLicenseHandler={modifyLicenseHandler}
                         removeLicenseHandler={removeLicenseHandler}
                         classes={classes}
                     >
@@ -305,26 +329,11 @@ const ContractModal = ({ handlePreview,handleImageChange,previewVisible, preview
                     </LicenseItem>
                 ))}
 
-                    <div className={classes.imageStyle}>
-                        <Upload
-                            action="http://localhost:9000/sms/api/scan/upload"
-                            listType="picture-card"
-                            fileList={contractForm.fileList}
-                            onPreview={handlePreview}
-                            onChange={handleImageChange}
-                        >
-                            {contractForm.fileList.length >= 8 ? null : uploadButton}
-                        </Upload>
-                        <Modal visible={previewVisible} footer={null} onCancel={handleImageCancel}>
-                            <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                        </Modal>
-                    </div>
-
             </Container>
         </Modal>
     );
 }
-const LicenseItem = ({ keyvar, license, removeLicenseHandler, classes }) => {
+const LicenseItem = ({ keyvar, license, removeLicenseHandler, classes, modifyLicenseHandler }) => {
     return (
         <Grid container spacing={2} >
             {console.log("indexLicense", keyvar, license)}
@@ -343,9 +352,18 @@ const LicenseItem = ({ keyvar, license, removeLicenseHandler, classes }) => {
                 />
 
             </Grid>
-            <Grid item xs={12} sm={2}>
+            <Grid item xs={12} sm={1}>
                 <Button
                     className={classes.inputButton}
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => modifyLicenseHandler(keyvar)}
+                >수정
+                </Button>
+            </Grid>
+            <Grid item xs={12} sm={1}>
+                <Button
+                    className={classes.delButton}
                     variant="outlined"
                     color="secondary"
                     onClick={() => removeLicenseHandler(keyvar)}
@@ -357,13 +375,6 @@ const LicenseItem = ({ keyvar, license, removeLicenseHandler, classes }) => {
 
     );
 };
-const uploadButton = (
-
-    <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
-    </div>
-);
 
 
 export default ContractModal;

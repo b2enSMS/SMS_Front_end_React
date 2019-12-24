@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Table, Menu, Dropdown, Icon } from 'antd';
 import { withStyles, Button } from '@material-ui/core/';
 import 'antd/dist/antd.css';
-import RemoveIcon from '@material-ui/icons/Remove';
+//import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -55,14 +55,14 @@ const ColorButton = withStyles(theme => ({
   },
 }))(Button);
 
-const RemoveButton = withStyles(theme => ({
-  root: {
-    borderColor: '#0062cc',
-    '&:hover': {
-      borderColor: '#0062cc',
-    },
-  },
-}))(Button);
+// const RemoveButton = withStyles(theme => ({
+//   root: {
+//     borderColor: '#0062cc',
+//     '&:hover': {
+//       borderColor: '#0062cc',
+//     },
+//   },
+// }))(Button);
 
 
 
@@ -219,7 +219,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
           > 계약 등록
           </ColorButton>
         </span>
-        <RemoveButton
+        {/* <RemoveButton
           onClick={() => { deleteData(selectedRowKeys); setSelectedRowKeys([]); }}
           className={classes.minusbutton}
           size='small'
@@ -227,7 +227,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
           color="secondary"
           endIcon={<RemoveIcon />}
         > 계약 삭제
-          </RemoveButton>
+          </RemoveButton> */}
       </div>
 
       <Table

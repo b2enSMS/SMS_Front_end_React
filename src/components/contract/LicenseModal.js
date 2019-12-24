@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal } from 'antd';
-import { Container, TextField, Grid } from '@material-ui/core/';
+import { Modal, Upload, Icon, message } from 'antd';
+import { Container, TextField, Grid, Button } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -25,11 +25,21 @@ const useStyles = makeStyles(theme => ({
             padding: '4px !important', // override inline-style
 
         },
+
+    },
+    imageStyle: {
+        paddingTop: theme.spacing(3)
+    },
+    iconStyle: {
+        marginLeft: theme.spacing(1)
+    },
+    inline: {
+        display: "inline-block"
     },
 
 }));
 
-const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleChangeInput,licenseCodeList,productList,licenseForm}) => {
+const LicenseModal = ({ imageRemoveFlag,handleImageRemove, handleImageChange, visible, confirmLoading, handleOk, handleCancel, handleChangeInput, licenseCodeList, productList, licenseForm }) => {
     const classes = useStyles();
     const handleChange = ev => {
         handleChangeInput({ form: "licenseForm", key: ev.target.id, value: ev.target.value })
@@ -41,22 +51,55 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
             handleChangeInput({ form: "licenseForm", key: key, value: value[key] });
         }
     }
-    const licenseCodeHandleChange=(ev,value)=>{
+    const licenseCodeHandleChange = (ev, value) => {
         handleChangeInput({ form: "licenseForm", key: "lcnsTpCd", value: value["cmmnDetailCd"] });
         handleChangeInput({ form: "licenseForm", key: "lcnsTpNm", value: value["cmmnDetailCdNm"] });
     }
-     //발행일 변경
-     const handlelcnsIssuDtChange = (id, date) => {
-         handleChangeInput({ form: "licenseForm", key: "lcnsIssuDt", value: date })
-     };
-     //개시일자 변경
-     const handlelcnsStartDtChange = (id, date) => {
-         handleChangeInput({ form: "licenseForm", key: "lcnsStartDt", value: date })
-     };
-     //종료일자 변경
-     const handlelcnsEndDtChange = (id, date) => {
-         handleChangeInput({ form: "licenseForm", key: "lcnsEndDt", value: date })
-     };
+    //발행일 변경
+    const handlelcnsIssuDtChange = (id, date) => {
+        handleChangeInput({ form: "licenseForm", key: "lcnsIssuDt", value: date })
+    };
+    //개시일자 변경
+    const handlelcnsStartDtChange = (id, date) => {
+        handleChangeInput({ form: "licenseForm", key: "lcnsStartDt", value: date })
+    };
+    //종료일자 변경
+    const handlelcnsEndDtChange = (id, date) => {
+        handleChangeInput({ form: "licenseForm", key: "lcnsEndDt", value: date })
+    };
+
+    const props2 = {
+        action: 'http://localhost:9000/sms/api/scan/upload',
+        listType: 'picture',
+        className: 'upload-list-inline',
+        
+        onChange(info) {
+            
+            const { status } = info.file;
+            if (status !== 'uploading') {
+                console.log("업로딩 중...", info.fileList);
+            }
+            if (status === 'done') {
+                handleImageChange(info.file)
+                message.success(`${info.file.name} 등록 성공!`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} 등록 실패...`);
+            }
+
+        },
+        onRemove(file) {
+            console.log("onRemove",file,imageRemoveFlag)
+            const arr = []
+            arr.push(file)
+            handleImageRemove(arr)
+            if(imageRemoveFlag){
+                return true;
+            }
+            else{
+                return false;
+            }
+        },
+    };
 
     return (
         <Modal
@@ -67,20 +110,21 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
             cancelText="취소"
-            style={{ top: 25 }}
-            width="30%"
+            style={{ top: 80 }}
+            width="35%"
             maskClosable={false}
         >
             <Container component="main" fixed>
                 <form className={classes.form} >
-                    <Grid container >
-                        <Grid item xs={12}>
+                    <Grid container spacing={1} >
+                        <Grid item xs={12} sm={6}>
                             <Autocomplete
                                 id="prdtId"
                                 options={productList}
                                 onChange={autoCompleteHandleChange}
                                 getOptionLabel={option => option.prdtNm}
                                 inputValue={licenseForm.prdtNm}
+                                value={{ prdtNm: licenseForm.prdtNm }}
                                 disableClearable={true}
                                 renderInput={params => (
                                     <TextField
@@ -95,7 +139,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
@@ -104,20 +148,21 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 fullWidth
                                 type="number"
                                 name="contAmt"
-                                label="제품 가격"
+                                label="납품 가격"
                                 id="contAmt"
                                 onChange={handleChange}
                                 autoComplete="off"
                                 value={licenseForm.contAmt}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={6}>
                             <Autocomplete
                                 id="lcnsTpCd"
                                 options={licenseCodeList}
                                 onChange={licenseCodeHandleChange}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
                                 inputValue={licenseForm.lcnsTpNm}
+                                value={{ cmmnDetailCdNm: licenseForm.lcnsTpNm }}
                                 disableClearable={true}
                                 renderInput={params => (
                                     <TextField
@@ -128,11 +173,12 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                         margin="normal"
                                         label="라이센스 유형"
                                         fullWidth
+                                        value={licenseForm.lcnsTpNm}
                                     />
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
@@ -147,7 +193,7 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 value={licenseForm.lcnsNo}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
@@ -162,10 +208,23 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                 value={licenseForm.certNo}
                             />
                         </Grid>
-
-
-
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <Grid item xs={12} sm={6}>
+                                <KeyboardDatePicker
+                                    disableToolbar
+                                    variant="inline"
+                                    format="yyyy-MM-dd"
+                                    margin="normal"
+                                    id="lcnsIssuDt"
+                                    label="발행일"
+                                    fullWidth
+                                    value={licenseForm.lcnsIssuDt}
+                                    onChange={handlelcnsIssuDtChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
                             <Grid item xs={12} sm={6}>
                                 <KeyboardDatePicker
                                     disableToolbar
@@ -198,25 +257,21 @@ const LicenseModal = ({ visible, confirmLoading, handleOk, handleCancel, handleC
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <KeyboardDatePicker
-                                    disableToolbar
-                                    variant="inline"
-                                    format="yyyy-MM-dd"
-                                    margin="normal"
-                                    id="lcnsIssuDt"
-                                    label="발행일"
-                                    fullWidth
-                                    value={licenseForm.lcnsIssuDt}
-                                    onChange={handlelcnsIssuDtChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
-                            </Grid>
+
                         </MuiPickersUtilsProvider>
                     </Grid>
                 </form>
+
+                <div className={classes.imageStyle}>
+                    <Upload {...props2}>
+                        <Button size="large" variant="outlined">
+                            스캔본 <Icon className={classes.iconStyle} type="upload" />
+                        </Button>
+                        {/* {licenseForm.imageFile === {} ?
+                             : ""} */}
+
+                    </Upload>
+                </div>
             </Container>
         </Modal>
     );

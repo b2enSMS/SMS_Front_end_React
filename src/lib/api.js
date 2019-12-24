@@ -29,6 +29,10 @@ export const deleteLicenses = (licenseId) => {
         return axios.delete(`/lcns/${licenseId[i]}`)
     }
 }
+export const getRemoveImage = (fileList) => {
+    console.log('api: getRemoveImage',fileList,{ idx: fileList})
+    return axios.delete(`/scan`, { data: { idx: fileList} })
+}
 
 export const postContracts = (formData) => {
     console.log("formData야야야야ㅑ", formData.lcns)

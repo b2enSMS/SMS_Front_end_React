@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { LicenseModal } from 'components';
-import { handleOk, handleChangeInput, getHandleCancel, initializeForm } from 'modules/contract/licensemodal';
+import { gethandleImageRemove,gethandleImageChange,handleOk, handleChangeInput, getHandleCancel, initializeForm } from 'modules/contract/licensemodal';
 import { inputLicense } from 'modules/contract/contractmodal'
 
 const LicenseContainer = ({
@@ -12,8 +12,10 @@ const LicenseContainer = ({
     handleChangeInput,
     products,
     licCode,
-    licenseForm
-
+    licenseForm,
+    imageRemoveFlag,
+    gethandleImageChange,
+    gethandleImageRemove,
 }) => {
     const dispatch = useDispatch();
     const { formData } = useSelector(({ licensemodal }) => ({ formData: licensemodal.licenseForm}));
@@ -34,10 +36,13 @@ const LicenseContainer = ({
             handleOk={okok}
             confirmLoading={confirmLoading}
             handleChangeInput={handleChangeInput}
-            handleCancel={getHandleCancel}
+            handleCancel={()=>getHandleCancel(licenseForm.fileList)}
             productList={products}
             licenseCodeList={licCode}
             licenseForm = {licenseForm}
+            handleImageRemove = {gethandleImageRemove}
+            handleImageChange = {gethandleImageChange}
+            imageRemoveFlag={imageRemoveFlag}
         />
     );
 };
@@ -50,8 +55,11 @@ export default connect(
         licenseForm: licensemodal.licenseForm,
         products: licensemodal.products,
         licCode: licensemodal.licCode,
+        imageRemoveFlag: licensemodal.imageRemoveFlag
     }),
     {
+        gethandleImageChange,
+        gethandleImageRemove,
         handleOk,
         handleChangeInput,
         getHandleCancel,
