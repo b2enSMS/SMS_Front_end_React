@@ -66,18 +66,18 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateModal }) => {
+const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateModal, showModal, changeButton }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const handleMenuClick = key => {
+        console.log("key", key);
+        showUpdateModal(key)
+    }
     const columns = [
         {
             title: '이름',
             dataIndex: 'prdtNm',
 
-        },
-        {
-            title: '버전',
-            dataIndex: 'prdtVer',
         },
         {
             title: '가격',
@@ -94,12 +94,11 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
             render: (text, record) =>
                 (<Dropdown
                         overlay={(
-                            <Menu>
-                                <Menu.Item onClick={()=>{
-                                    const index = record.custId;
-                                    console.log("recordrecord",record)
-                                    showUpdateModal(index)
-                                }}>
+                            <Menu onClick={() => {
+                                handleMenuClick(record.prdtId)
+                                changeButton()
+                            }}>
+                                <Menu.Item >
                                     수정
                                 </Menu.Item>
                             </Menu>
@@ -135,7 +134,7 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
                 <span style={{ paddingRight: 14 }}>
 
               <ColorButton
-                  //onClick={showModal}
+                  onClick={showModal}
                   className={classes.plusbutton}
                   size='small'
                   variant="outlined"

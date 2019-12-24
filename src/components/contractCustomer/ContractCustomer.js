@@ -130,6 +130,7 @@ const ContractCustomer = ({loadingTable, customerList, showModal, deleteCustomer
         onChange: onSelectChange,
     };
 
+
     const hasSelected = selectedRowKeys.length > 0;
 
     return(
