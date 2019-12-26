@@ -7,33 +7,16 @@ if (process.env.NODE_ENV === "development") {
     axios.defaults.baseURL = "http://localhost:9000/sms/api";
 }
 
-export const postLicense = (formData) => {
-    const data = {
-        prdtId: formData.prdtId,
-        lcnsTpCd: formData.lcnsTpCd,
-        lcnsNo: formData.lcnsNo,
-        lcnslssuDt: formData.lcnslssuDt,
-        certNo: formData.certNo,
-        lcnsStartDt: formData.lcnsStartDt,
-        lcnsEndDt: formData.lcnsEndDt,
-    }
-    return axios.post('/lcns/create', data);
-}
 
-export const getLicense = () =>
-    axios.get('/lcns/newest');
-
-
-export const deleteLicenses = (licenseId) => {
-    for (var i in licenseId) {
-        return axios.delete(`/lcns/${licenseId[i]}`)
-    }
-}
+//이미지 삭제
 export const getRemoveImage = (fileList) => {
-    console.log('api: getRemoveImage',fileList,{ idx: fileList})
-    return axios.delete(`/scan`, { data: { idx: fileList} })
+    if(fileList && fileList.length>0){
+        console.log('api: getRemoveImage',fileList,{ idx: fileList})
+        return axios.delete(`/scan`, { data: { idx: fileList} })
+    }
 }
 
+//계약 등록
 export const postContracts = (formData) => {
     console.log("formData야야야야ㅑ", formData.lcns)
     const data = {
@@ -48,10 +31,15 @@ export const postContracts = (formData) => {
         mtncEndDt: formData.mtncEndDt,
         contReportNo: formData.contReportNo,
         contTpCd: formData.contTpCd,
+        custId: formData.custId,
+        HeadContIdAC: formData.HeadContIdAC,
+        contNm: formData.contNm,
+
     }
     return axios.post('/cont/create', data);
 }
 
+//계약 수정
 export const postUpdateContracts = (formData) => {
     console.log("formData야야야야ㅑ", formData.lcns)
     const data = {
@@ -66,9 +54,13 @@ export const postUpdateContracts = (formData) => {
         mtncEndDt: formData.mtncEndDt,
         contReportNo: formData.contReportNo,
         contTpCd: formData.contTpCd,
+        custId: formData.custId,
+        HeadContIdAC: formData.HeadContIdAC,
+        contNm: formData.contNm,
     }
     return axios.put(`/cont/${formData.contId}`, data);
 }
+
 //계약 테이블 - 리스트 삭제
 export const getDeleteContracts = (selectedRowKeys) => {
     console.log("selected", selectedRowKeys)
@@ -80,6 +72,7 @@ export const getDeleteContracts = (selectedRowKeys) => {
 export const getCust = (custId) =>
     axios.get(`/cust/${custId}`)
 
+//고객 코드
 export const getcustCD = () =>
     axios.get('/cmmncd/cust_tp_cd');
 
@@ -137,13 +130,21 @@ export const updateProduct = (formData) => {
     return axios.put(`/prdt/${formData.prdtId}`, data);
 }
 
+//모계약 리스트
+export const getheadConts = () =>
+    axios.get('/cont/aclist')
+
+//계약
 export const getContract = (key) =>
     axios.get(`/cont/${key}`);
 
 export const getPossibleContract = () =>
     axios.get('/temp/showall');
 
-//기관 리스트
+export const getHistoryList = (contId) =>
+    axios.get(`cont/hist/${contId}`);
+
+//기관 이름 리스트
 export const getOrganization = () =>
     axios.get('/org/aclist');
 
@@ -151,7 +152,7 @@ export const getOrganization = () =>
 export const getContracts = () =>
     axios.get('/cont/showall');
 
-//비투엔 담당자 리스트
+//비투엔 담당자 이름 리스트
 export const getB2enManager = () =>
     axios.get('/b2en/aclist');
 
@@ -159,6 +160,10 @@ export const getB2enManager = () =>
 export const getManagers = () =>
     axios.get('/cust/showall');
 
+//기관 담당자 이름 리스트
+export const getorgML = () =>
+    axios.get('/cust/aclist');
+    
 //계약 코드 리스트
 export const getcontCD = () =>
     axios.get('/cmmncd/cont_tp_cd');
@@ -166,6 +171,7 @@ export const getcontCD = () =>
 export const getProducts = () =>
     axios.get('/prdt/aclist');
 
+//라이센스 코드
 export const getLicenseCode = () =>
     axios.get('/cmmncd/lcns_tp_cd');
 

@@ -1,27 +1,27 @@
 import { handleActions, createAction } from 'redux-actions';
-import * as api from '../../lib/api';
-import produce from 'immer';
-import {GET_CONTRACT, GET_CONTRACT_SUCCESS, GET_CONTRACT_FAILURE} from '../contract/contracttable'
+//import * as api from '../../lib/api';
+//import produce from 'immer';
+//import {GET_CONTRACT, GET_CONTRACT_SUCCESS, GET_CONTRACT_FAILURE} from '../contract/contracttable'
 
 const CHANGE_INPUT = 'possiblecontractmodal/CHANGE_INPUT';
-const HANDLE_CANCEL = 'possiblecontractmodal/HANDLE_CANCLE';
+//const HANDLE_CANCEL = 'possiblecontractmodal/HANDLE_CANCLE';
 
 const SHOW_MODAL = 'possiblecontractmodal/SHOW_MODAL';
 const SHOW_MODAL_SUCCESS = 'possiblecontractmodal/SHOW_MODAL_SUCCESS';
 const SHOW_MODAL_FAILURE = 'possiblecontractmodal/SHOW_MODAL_FAILURE';
 
-const POST_POSSIBLE = 'possiblecontractmodal/POST_POSSIBLE';
-const POST_POSSIBLE_SUCCESS = 'possiblecontractmodal/POST_CONTRACT_SUCCESS';
-const POST_POSSIBLE_FAILURE = 'possiblecontractmodal/POST_CONTRACT_FAILURE';
+// const POST_POSSIBLE = 'possiblecontractmodal/POST_POSSIBLE';
+// const POST_POSSIBLE_SUCCESS = 'possiblecontractmodal/POST_CONTRACT_SUCCESS';
+// const POST_POSSIBLE_FAILURE = 'possiblecontractmodal/POST_CONTRACT_FAILURE';
 
-const UPDATE_CONTRACT = 'possiblecontractmodal/UPDATE_CONTRACT'
-const UPDATE_CONTRACT_SUCCESS = 'possiblecontractmodal/UPDATE_CONTRACT_SUCCESS'
-const UPDATE_CONTRACT_FAILURE = 'possiblecontractmodal/UPDATE_CONTRACT_FAILURE'
+// const UPDATE_CONTRACT = 'possiblecontractmodal/UPDATE_CONTRACT'
+// const UPDATE_CONTRACT_SUCCESS = 'possiblecontractmodal/UPDATE_CONTRACT_SUCCESS'
+// const UPDATE_CONTRACT_FAILURE = 'possiblecontractmodal/UPDATE_CONTRACT_FAILURE'
 
 
-const INPUT_LICENSE = 'possiblecontractmodal/INPUT_LICENSE';
+// const INPUT_LICENSE = 'possiblecontractmodal/INPUT_LICENSE';
 
-const REMOVE_LICENSE = 'possiblecontractmodal/REMOVE_LICENSE';
+// const REMOVE_LICENSE = 'possiblecontractmodal/REMOVE_LICENSE';
 const INITIALIZE_FORM = 'possiblecontractmodal/INITIALIZE_FORM'
 
 const BUTTON_CHANGE = 'possiblecontractmodal/BUTTON_CHANGE'

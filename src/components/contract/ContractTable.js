@@ -36,12 +36,12 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold'
   },
 
-  backgroundRed:{
+  backgroundRed: {
     backgroundColor: '#fff1f0',
     color: 'red'
   },
 
-  amountColumn:{
+  amountColumn: {
     marginRight: '10px'
   },
 
@@ -70,7 +70,7 @@ const ColorButton = withStyles(theme => ({
 
 
 
-function ContractTable({ loadingTable, contractList, showModal, deleteData,updateModalHandler,modalBtnHandler }) {
+function ContractTable({ handleHistoryModal,loadingTable, contractList, showModal, deleteData, updateModalHandler, modalBtnHandler }) {
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const handleMenuClick = key => {
@@ -83,27 +83,32 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
       dataIndex: 'orgNm',
     },
     {
+      title: '사업명',
+      width: '15%',
+      dataIndex: 'contNm',
+    },
+    {
       title: '담당자',
       dataIndex: 'empNm',
     },
-    {
-      title: '수주번호',
-      dataIndex: 'contReportNo',
-      align: 'center',
-      render: (value, record, index) =>{
-        return {
-          children: value,
-          props: {
-            align: 'center',
-          },
-        };
-      }
-    },
+    // {
+    //   title: '수주번호',
+    //   dataIndex: 'contReportNo',
+    //   align: 'center',
+    //   render: (value, record, index) =>{
+    //     return {
+    //       children: value,
+    //       props: {
+    //         align: 'center',
+    //       },
+    //     };
+    //   }
+    // },
     {
       title: '계약일자',
       dataIndex: 'contDt',
       align: 'center',
-      render: (value, record, index) =>{
+      render: (value, record, index) => {
         return {
           children: value,
           props: {
@@ -116,9 +121,9 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
       title: '계약금액',
       dataIndex: 'contTotAmt',
       align: 'right',
-      render: (value, record, index) =>{
+      render: (value, record, index) => {
         return {
-          children: (value==null?"-":parseInt(value)/1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" 만원 ",
+          children: (value == null ? "-" : parseInt(value) / 1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 만원 ",
           props: {
             align: 'right',
           },
@@ -129,7 +134,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
       title: '검수일자',
       dataIndex: 'checkDt',
       align: 'center',
-      render: (value, record, index) =>{
+      render: (value, record, index) => {
         return {
           children: value,
           props: {
@@ -142,7 +147,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
       title: '유지보수개시일자',
       dataIndex: 'mtncStartDt',
       align: 'center',
-      render: (value, record, index) =>{
+      render: (value, record, index) => {
         return {
           children: value,
           props: {
@@ -155,7 +160,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
       title: '유지보수종료일자',
       dataIndex: 'mtncEndDt',
       align: 'center',
-      render: (value, record, index) =>{
+      render: (value, record, index) => {
         return {
           children: value,
           props: {
@@ -164,7 +169,7 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
         };
       }
     },
-  
+
     {
       title: '',
       dataIndex: 'menuTag',
@@ -172,18 +177,26 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
       render: (text, record) =>
         (<Dropdown
           overlay={(
-            <Menu onClick={() => {
+            <Menu onClick={(e) => {
+              if(e.key==="1"){
               handleMenuClick(record.contId)
               modalBtnHandler()
+              }else{
+                handleHistoryModal(record.contId)
+              }
             }}>
-              <Menu.Item >
+              <Menu.Item key="1">
                 상세
+            </Menu.Item>
+
+            <Menu.Item key="2">
+                히스토리
             </Menu.Item>
             </Menu>
           )}
-  
+
           placement="bottomLeft">
-  
+
           <Button size="small"><Icon type="menu" /></Button>
         </Dropdown>
         )
@@ -236,8 +249,8 @@ function ContractTable({ loadingTable, contractList, showModal, deleteData,updat
         tableLayout='undefined'
         rowSelection={rowSelection}
         columns={columns}
-        rowClassName={(record,index) => {
-          if(contractList[index].tight) 
+        rowClassName={(record, index) => {
+          if (contractList[index].tight)
             return classes.backgroundRed
         }}
         dataSource={loadingTable ? null : contractList}

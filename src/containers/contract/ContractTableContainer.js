@@ -3,7 +3,7 @@ import { connect} from 'react-redux';
 import { ContractTable } from 'components';
 import { getContractList,getDeleteData } from 'modules/contract/contracttable';
 import { getShowModal,getUpdateModal,getButtonChange } from 'modules/contract/contractmodal';
-
+import { gethandleHistoryModal } from 'modules/contract/contracthistory';
 const ContractTableContainer = ({
     contractList,
     getContractList,
@@ -12,6 +12,7 @@ const ContractTableContainer = ({
     getDeleteData,
     getUpdateModal,
     getButtonChange,
+    gethandleHistoryModal,
  }) => {
 
     useEffect(() => {
@@ -26,6 +27,7 @@ const ContractTableContainer = ({
             deleteData={getDeleteData}
             updateModalHandler={getUpdateModal}
             modalBtnHandler = {getButtonChange}
+            handleHistoryModal = {gethandleHistoryModal}
         />
     );
 };
@@ -41,5 +43,6 @@ export default connect(
         getShowModal,
         getDeleteData,
         getButtonChange,
+        gethandleHistoryModal,
     }
 )(ContractTableContainer);

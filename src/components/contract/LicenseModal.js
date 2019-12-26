@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const LicenseModal = ({ imageRemoveFlag,handleImageRemove, handleImageChange, visible, confirmLoading, handleOk, handleCancel, handleChangeInput, licenseCodeList, productList, licenseForm }) => {
+const LicenseModal = ({ handleUpdate,buttonFlag,imageRemoveFlag,handleImageRemove, handleImageChange, visible, confirmLoading, handleOk, handleCancel, handleChangeInput, licenseCodeList, productList, licenseForm }) => {
     const classes = useStyles();
     const handleChange = ev => {
         handleChangeInput({ form: "licenseForm", key: ev.target.id, value: ev.target.value })
@@ -72,7 +72,7 @@ const LicenseModal = ({ imageRemoveFlag,handleImageRemove, handleImageChange, vi
         action: 'http://localhost:9000/sms/api/scan/upload',
         listType: 'picture',
         className: 'upload-list-inline',
-        
+        //fileList:licenseForm.fileList,
         onChange(info) {
             
             const { status } = info.file;
@@ -105,12 +105,12 @@ const LicenseModal = ({ imageRemoveFlag,handleImageRemove, handleImageChange, vi
         <Modal
             title="제품 등록"
             visible={visible}
-            onOk={handleOk}
-            okText="등록"
+            onOk={buttonFlag ? handleOk : handleUpdate}
+            okText={buttonFlag ? "등록" : "수정"}
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
             cancelText="취소"
-            style={{ top: 80 }}
+            style={{ top: 65 }}
             width="35%"
             maskClosable={false}
         >

@@ -79,13 +79,18 @@ export const getUpdateModal = (key) => async dispatch => {
         const responseOrg = await api.getOrganization();
         const responseML = await api.getB2enManager();
         const responseCD = await api.getcontCD();
+        const reaponseHC = await api.getheadConts();
+        const responseOML = await api.getorgML();
+
         dispatch({
             type: UPDATE_CONTRACT_SUCCESS,
             payload: {
                 form: response.data,
                 orgList: responseOrg.data,
                 b2enML: responseML.data,
-                contCdList: responseCD.data
+                contCdList: responseCD.data,
+                headCont:reaponseHC.data,
+                custML:responseOML.data,
             }
         })
     } catch (e) {
@@ -115,14 +120,19 @@ export const getShowModal = () => async dispatch => {
     dispatch({ type: SHOW_MODAL });
     try {
         const response = await api.getOrganization();
+        const responseOML = await api.getorgML();
         const responseML = await api.getB2enManager();
         const responseCD = await api.getcontCD();
+        const responseHC = await api.getheadConts();
+        console.log("reaponseHC",responseHC.data)
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
                 org: response.data,
                 b2enML: responseML.data,
-                contCdList: responseCD.data
+                contCdList: responseCD.data,
+                headCont:responseHC.data,
+                custML:responseOML.data,
             }
         });
     } catch (e) {
@@ -198,12 +208,18 @@ const initialState = {
         contTpCd: "",
         contTpNm: "",
         contReportNo: "",
+        headContId: "",
+        headContNm: "",
+        custId: "",
+        custNm: "",
+        contNm: "",
     },
     buttonFlag: true,
     orgList: [],
     b2enML: [],
     contCdList: [],
-
+    headCont: [],
+    custML: [],
 }
 
 const contractmodal = handleActions(
@@ -219,7 +235,7 @@ const contractmodal = handleActions(
             visible: true,
         }),
 
-        [UPDATE_CONTRACT_SUCCESS]: (state, { payload: { form, orgList, b2enML, contCdList } }) =>
+        [UPDATE_CONTRACT_SUCCESS]: (state, { payload: { form, orgList, b2enML, contCdList,headCont,contNL,custML } }) =>
             produce(state, draft => {
                 console.log("UPDATE_CONTRACT_SUCCESS",form)
                 draft["orgList"] = orgList
@@ -227,6 +243,8 @@ const contractmodal = handleActions(
                 draft["contCdList"] = contCdList
                 draft["contractModal"] = form
                 draft["confirmLoading"] = false
+                draft["headCont"] = headCont
+                draft["custML"]= custML
             }),
 
         [UPDATE_CONTRACT_FAILURE]: (state, action) => ({
@@ -254,6 +272,8 @@ const contractmodal = handleActions(
             orgList: action.payload.org,
             b2enML: action.payload.b2enML,
             contCdList: action.payload.contCdList,
+            headCont: action.payload.headCont,
+            custML: action.payload.custML,
             licenses: [],
         }),
 

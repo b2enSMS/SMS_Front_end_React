@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector,useDispatch  } from 'react-redux';
-import {initializeForm,handleOk, handleChangeInput,getHandleCancel,getRemoveLicense,gethandleUpdate } from 'modules/possible/possiblecontractmodal';
-import { getPossibleContract } from 'modules/possible/possiblecontracttable'
-import { getShowModal } from 'modules/possible/licensemodal';
+import { connect,useDispatch  } from 'react-redux';
+// import {initializeForm,handleOk, handleChangeInput,getHandleCancel,getRemoveLicense,gethandleUpdate } from 'modules/possible/possiblecontractmodal';
+// import { getPossibleContract } from 'modules/possible/possiblecontracttable'
+// import { getShowModal } from 'modules/possible/licensemodal';
 import PossibleContractModal from "../../components/possible/PossibleContractModal";
 
 const PossibleContractModalContainer = ({
@@ -13,7 +13,7 @@ const PossibleContractModalContainer = ({
     useEffect(() => {
     },[dispatch])
 
-    const {formData} = useSelector(({possiblecontractmodal})=>({formData : possiblecontractmodal.contractModal}));
+    //const {formData} = useSelector(({possiblecontractmodal})=>({formData : possiblecontractmodal.contractModal}));
 
 
     return (

@@ -21,6 +21,8 @@ const ContractModalContainer = ({
     getRemoveLicense,
     gethandleUpdate,
     getmodifyLicenseHandler,
+    headCont,
+    custML,
 
 }) => {
     const dispatch = useDispatch();
@@ -53,7 +55,9 @@ const ContractModalContainer = ({
             contCdList={contCdList}
             contractForm={contractModal}
             buttonFlag={buttonFlag}
+            headCont={headCont}
             modifyLicenseHandler={modifyLicense}
+            custML={custML}
             handleUpdate={() => gethandleUpdate(formData)}
         />
     );
@@ -61,12 +65,14 @@ const ContractModalContainer = ({
 
 export default connect(
     ({ contractmodal }) => ({
+        custML: contractmodal.custML,
         visible: contractmodal.visible,
         licenses: contractmodal.licenses,
         confirmLoading: contractmodal.confirmLoading,
         contractModal: contractmodal.contractModal,
         orgList: contractmodal.orgList,
         b2enML: contractmodal.b2enML,
+        headCont: contractmodal.headCont,
         contCdList: contractmodal.contCdList,
         buttonFlag: contractmodal.buttonFlag
     }),

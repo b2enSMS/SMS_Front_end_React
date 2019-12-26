@@ -170,14 +170,12 @@ const licensemodal = handleActions(
             imageRemoveFlag: true
         }),
         [MODAL_IMAGE_REMOVE_SUCCESS]: (state, { payload: fileList }) => {
-
             produce(state, draft => {
                 for (let i in fileList) {
                     draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.url !== fileList[i].url)
                     console.log("REMOVE", fileList[i])
                 }
             })
-
         },
         [MODAL_IMAGE_REMOVE_FAILURE]: state => ({
             ...state,

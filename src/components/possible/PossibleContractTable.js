@@ -65,10 +65,10 @@ const RemoveButton = withStyles(theme => ({
 function PossibleContractTable({ loadingTable, possibleContractList, getDeleteData, getShowModal }) {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const handleMenuClick = key => {
-        console.log("key", key);
-        //updateModalHandler(key)
-    }
+    // const handleMenuClick = key => {
+    //     console.log("key", key);
+    //     //updateModalHandler(key)
+    // }
     const columns = [
         {
             title: '고객',

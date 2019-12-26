@@ -45,13 +45,13 @@ const useStyles = makeStyles(theme => ({
 
     },
     prdtBtn: {
-        marginTop: theme.spacing(3.5)
+        //marginTop: theme.spacing(3.5)
     },
 
 
 }));
 
-const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
+const ContractModal = ({ custML, headCont, modifyLicenseHandler, handleUpdate, buttonFlag, licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
     const classes = useStyles();
     const handleChange = ev => {
         handleChangeInput({ form: "contractModal", key: ev.target.id, value: ev.target.value })
@@ -101,7 +101,6 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
 
     return (
         <Modal
-
             title="계약정보"
             visible={visible}
             onOk={buttonFlag ? handleOk : handleUpdate}
@@ -109,14 +108,14 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
             cancelText="취소"
-            style={{ top: 35 }}
+            style={{ top: 15 }}
             width="40%"
             maskClosable={false}
         >
             {console.log("dfjefe", buttonFlag)}
             <Container component="main" fixed>
                 <form className={classes.form} autoComplete="off">
-                    <Grid container spacing={1}>
+                    <Grid container spacing={3}>
                         <Grid item xs={12} sm={6}>
                             <Autocomplete
                                 id="orgId"
@@ -132,7 +131,7 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                         className={classes.textField}
                                         variant="outlined"
                                         required
-                                        margin="normal"
+                                        //margin="normal"
                                         label="기관명"
                                         fullWidth
                                         value={contractForm.orgNm}
@@ -140,6 +139,46 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                 )}
                             />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Autocomplete
+                                id="custId"
+                                options={custML}
+                                onChange={autoCompleteHandleChange}
+                                getOptionLabel={option => option.custNm}
+                                inputValue={contractForm.custNm}
+                                value={{ custNm: contractForm.custNm }}
+                                disableClearable={true}
+                                renderInput={params => (
+                                    <TextField
+                                        {...params}
+                                        className={classes.textField}
+                                        variant="outlined"
+                                        required
+                                        //margin="normal"
+                                        label="기관 담당자명"
+                                        fullWidth
+                                        value={contractForm.empNm}
+                                    />
+                                )}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                className={classes.textField}
+                                variant="outlined"
+                                //margin="normal"
+                                required
+                                fullWidth
+                                name="contNm"
+                                label="사업명"
+                                id="contNm"
+                                onChange={handleChange}
+                                autoComplete="off"
+                                value={contractForm.contNm}
+                            />
+                        </Grid>
+
                         <Grid item xs={12} sm={6}>
                             <Autocomplete
                                 id="empId"
@@ -155,7 +194,7 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                         className={classes.textField}
                                         variant="outlined"
                                         required
-                                        margin="normal"
+                                        //margin="normal"
                                         label="담당자명"
                                         fullWidth
                                         value={contractForm.empNm}
@@ -179,32 +218,43 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                         className={classes.textField}
                                         variant="outlined"
                                         required
-                                        margin="normal"
+                                        //margin="normal"
                                         label="계약 유형"
                                         fullWidth
-                                        value={contractForm.contTpNm}
+                                    //value={contractForm.contTpNm}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Autocomplete
+                                id="headContId"
+                                disabled={contractForm.contTpCd === "" ? false : contractForm.contTpCd === "cont02" ? false : true}
+                                options={headCont}
+                                onChange={autoCompleteHandleChange}
+                                getOptionLabel={option => option.headContNm}
+                                inputValue={contractForm.headContNm}
+                                value={{ headContNm: contractForm.headContNm }}
+                                disableClearable={true}
+                                renderInput={params => (
+                                    <TextField
+                                        {...params}
+                                        className={classes.textField}
+                                        variant="outlined"
+                                        required
+                                        //margin="normal"
+                                        label={contractForm.contTpCd === "" ? "모계약" : contractForm.contTpCd === "cont02" ? "모계약" : "모계약 정보 필요 없음"}
+                                        fullWidth
+                                        value={contractForm.headContNm}
                                     />
                                 )}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                disabled
-                                className={classes.textField}
-                                id="headContId"
-                                label="모계약"
-                                variant="outlined"
-                                margin="normal"
-                                name="headContId"
-                                onChange={handleChange}
-                                value={contractForm.headContId}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                margin="normal"
+                                //margin="normal"
                                 required
                                 fullWidth
                                 name="contReportNo"
@@ -223,7 +273,7 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                     disableToolbar
                                     variant="inline"
                                     format="yyyy-MM-dd"
-                                    margin="normal"
+                                    //margin="normal"
                                     id="installDt"
                                     label="설치일자"
                                     fullWidth
@@ -239,7 +289,7 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                     disableToolbar
                                     variant="inline"
                                     format="yyyy-MM-dd"
-                                    margin="normal"
+                                    //margin="normal"
                                     id="checkDt"
                                     label="검수일자"
                                     fullWidth
@@ -255,7 +305,7 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                     disableToolbar
                                     variant="inline"
                                     format="yyyy-MM-dd"
-                                    margin="normal"
+                                    //margin="normal"
                                     id="mtncStartDt"
                                     label="유지보수 개시일"
                                     fullWidth
@@ -271,7 +321,7 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                     disableToolbar
                                     variant="inline"
                                     format="yyyy-MM-dd"
-                                    margin="normal"
+                                    //margin="normal"
                                     id="mtncEndDt"
                                     label="유지보수 종료일"
                                     fullWidth
@@ -289,7 +339,7 @@ const ContractModal = ({ modifyLicenseHandler, handleUpdate, buttonFlag, license
                                     className={classes.textDate}
                                     variant="inline"
                                     format="yyyy-MM-dd"
-                                    margin="normal"
+                                    //margin="normal"
                                     id="contDt"
                                     label="계약일자"
                                     fullWidth

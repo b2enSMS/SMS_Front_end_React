@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { LicenseModal } from 'components';
 import { gethandleImageRemove,gethandleImageChange,handleOk, handleChangeInput, getHandleCancel, initializeForm } from 'modules/contract/licensemodal';
@@ -18,11 +18,12 @@ const LicenseContainer = ({
     gethandleImageRemove,
 }) => {
     const dispatch = useDispatch();
-    const { formData } = useSelector(({ licensemodal }) => ({ formData: licensemodal.licenseForm}));
 
-    useEffect(() => {
-        dispatch(initializeForm("licenseForm"));
-    },[dispatch])
+    const { formData } = useSelector(({ licensemodal }) => ({ formData: licensemodal.licenseForm}));
+    const { buttonFlag } = useSelector(({ contractmodal }) => ({ buttonFlag: contractmodal.buttonFlag }));
+    // useEffect(() => {
+    //     dispatch(initializeForm("licenseForm"));
+    // },[dispatch])
 
 
     const okok = () => {
@@ -43,6 +44,7 @@ const LicenseContainer = ({
             handleImageRemove = {gethandleImageRemove}
             handleImageChange = {gethandleImageChange}
             imageRemoveFlag={imageRemoveFlag}
+            buttonFlag={buttonFlag}
         />
     );
 };
