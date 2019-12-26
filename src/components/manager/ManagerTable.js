@@ -66,20 +66,25 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ManagerTable = ({ managerList, loadingTable }) => {
+const ManagerTable = ({ managerList, loadingTable, deleteManager, showUpdateModal, showModal, changeButton }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const handleMenuClick = key => {
+        console.log("key", key);
+        showUpdateModal(key)
+    }
     const columns = [
         {
             title: '이름',
             dataIndex: 'empNm',
+
         },
         {
-            title: '이메일',
+            title: 'email',
             dataIndex: 'email',
         },
         {
-            title: '연락처',
+            title: '번호',
             dataIndex: 'telNo',
         },
         {
@@ -90,8 +95,8 @@ const ManagerTable = ({ managerList, loadingTable }) => {
                 (<Dropdown
                         overlay={(
                             <Menu onClick={() => {
-                                //handleMenuClick(record.contId)
-                                //modalBtnHandler()
+                                handleMenuClick(record.empId)
+                                changeButton()
                             }}>
                                 <Menu.Item >
                                     수정
@@ -129,7 +134,7 @@ const ManagerTable = ({ managerList, loadingTable }) => {
                 <span style={{ paddingRight: 14 }}>
 
               <ColorButton
-                  //onClick={showModal}
+                  onClick={showModal}
                   className={classes.plusbutton}
                   size='small'
                   variant="outlined"
@@ -144,7 +149,7 @@ const ManagerTable = ({ managerList, loadingTable }) => {
                     variant="outlined"
                     color="secondary"
                     endIcon={<RemoveIcon />}
-                    //onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
+                    onClick={()=>{deleteManager(selectedRowKeys);setSelectedRowKeys([]);}}
                 > Remove
                 </RemoveButton>
             </div>

@@ -11,7 +11,6 @@ import ProductModal from "../../components/product/ProductModal";
 
 const ProductUpdateModalContainer = ({
         updateVisible,
-        prdtInfo,
         getHandleCancel,
         handleChangeInput,
         productModal,
@@ -33,7 +32,6 @@ const ProductUpdateModalContainer = ({
         <ProductModal
             updateVisible={updateVisible}
             handleOk={UpdateOk}
-            prdtInfo={prdtInfo}
             HandleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
             productInfo={productModal}

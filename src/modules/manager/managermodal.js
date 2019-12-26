@@ -1,29 +1,29 @@
 import {createAction, handleActions} from 'redux-actions';
 import * as api from '../../lib/api';
 import produce from "immer";
-import { GET_PRODUCT, GET_PRODUCT_SUCCESS, GET_PRODUCT_FAILURE } from './producttable';
+import { GET_MANAGER, GET_MANAGER_SUCCESS, GET_MANAGER_FAILURE } from './managertable';
 
-const PRODUCT_INIT = 'productupdatemodal/PRODUCT_INIT';
-const BUTTON_CHANGE = 'productupdatemodal/BUTTON_CHANGE';
+const MANAGER_INIT = 'managermodal/PRODUCT_INIT';
+const BUTTON_CHANGE = 'managermodal/BUTTON_CHANGE';
 
-const HANDLE_CANCEL = "productupdatemodal/HANDLE_CANCEL";
-const CHANGE_INPUT = "productupdatemodal/CHANGE_INPUT";
+const HANDLE_CANCEL = "managermodal/HANDLE_CANCEL";
+const CHANGE_INPUT = "managermodal/CHANGE_INPUT";
 
-const UPDATE_PRODUCT = 'productupdatemodal/UPDATE_PRODUCT';
-const UPDATE_PRODUCT_SUCCESS = 'productupdatemodal/UPDATE_PRODUCT_SUCCESS';
-const UPDATE_PRODUCT_FAILURE = 'productupdatemodal/UPDATE_PRODUCT_FAILURE';
+const UPDATE_MANAGER = 'managermodal/UPDATE_MANAGER';
+const UPDATE_MANAGER_SUCCESS = 'managermodal/UPDATE_MANAGER_SUCCESS';
+const UPDATE_MANAGER_FAILURE = 'managermodal/UPDATE_MANAGER_FAILURE';
 
-const SHOW_MODAL = 'productupdatemodal/SHOW_MODAL';
-const SHOW_MODAL_SUCCESS = 'productupdatemodal/SHOW_MODAL_SUCCESS';
-const SHOW_MODAL_FAILURE = 'productupdatemodal/SHOW_MODAL_FAILURE';
+const SHOW_MODAL = 'managermodal/SHOW_MODAL';
+const SHOW_MODAL_SUCCESS = 'managermodal/SHOW_MODAL_SUCCESS';
+const SHOW_MODAL_FAILURE = 'managermodal/SHOW_MODAL_FAILURE';
 
-const POST_PRODUCT = 'productupdatemodal/POST_PRODUCT';
-const POST_PRODUCT_SUCCESS = 'productupdatemodal/POST_PRODUCT_SUCCESS';
-const POST_PRODUCT_FAILURE = 'productupdatemodal/POST_PRODUCT_FAILURE';
+const POST_MANAGER = 'managermodal/POST_MANAGER';
+const POST_MANAGER_SUCCESS = 'managermodal/POST_PRODUCT_SUCCESS';
+const POST_MANAGER_FAILURE = 'managermodal/POST_PRODUCT_FAILURE';
 
 export const getButtonChange = createAction(BUTTON_CHANGE);
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
-export const initialForm = createAction(PRODUCT_INIT, form => form);
+export const initialForm = createAction(MANAGER_INIT, form => form);
 
 export const getShowModal = () => dispatch => {
     dispatch({ type: SHOW_MODAL});
@@ -41,7 +41,7 @@ export const getShowModal = () => dispatch => {
 export const getShowUpdateModal = product => async dispatch => {
     dispatch({ type: SHOW_MODAL });
     try {
-        const res = await api.getProduct(product);
+        const res = await api.getManager(product);
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
@@ -60,28 +60,28 @@ export const getShowUpdateModal = product => async dispatch => {
 };
 
 export const handleUpdateOk = (formData) => async dispatch => {
-    dispatch({ type: UPDATE_PRODUCT });
+    dispatch({ type: UPDATE_MANAGER });
     try {
-        await api.updateProduct(formData);
+        await api.updateManager(formData);
         dispatch({
-            type: UPDATE_PRODUCT_SUCCESS
+            type: UPDATE_MANAGER_SUCCESS
         });
         dispatch({
-            type: PRODUCT_INIT,
-            payload: "productModal"
+            type: MANAGER_INIT,
+            payload: "managerModal"
         });
         dispatch({
-            type: GET_PRODUCT
+            type: GET_MANAGER
         });
         try {
-            const response = await api.getProductList();
+            const response = await api.getManagerList();
             dispatch({
-                type: GET_PRODUCT_SUCCESS,
+                type: GET_MANAGER_SUCCESS,
                 payload: response.data
             });
         } catch (e) {
             dispatch({
-                type: GET_PRODUCT_FAILURE,
+                type: GET_MANAGER_FAILURE,
                 payload: e,
                 error: true
             });
@@ -89,7 +89,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
         }
     } catch (e) {
         dispatch({
-            type: UPDATE_PRODUCT_FAILURE,
+            type: UPDATE_MANAGER_FAILURE,
             payload: e,
             error: true
         });
@@ -99,32 +99,32 @@ export const handleUpdateOk = (formData) => async dispatch => {
 
 export const getHandleCancel = () => dispatch => {
     dispatch({ type: HANDLE_CANCEL });
-    dispatch({ type: PRODUCT_INIT, payload: "productModal" });
+    dispatch({ type: MANAGER_INIT, payload: "managerModal" });
 };
 
 export const handleOk = (formData) => async dispatch => {
-    dispatch({ type: POST_PRODUCT });
+    dispatch({ type: POST_MANAGER });
     try {
-        await api.postProduct(formData);
+        await api.postManager(formData);
         dispatch({
-            type: POST_PRODUCT_SUCCESS
+            type: POST_MANAGER_SUCCESS
         })
         dispatch({
-            type: PRODUCT_INIT,
-            payload: "productModal"
+            type: MANAGER_INIT,
+            payload: "managerModal"
         });
         dispatch({
-            type: GET_PRODUCT
+            type: GET_MANAGER
         });
         try {
-            const response = await api.getProductList();
+            const response = await api.getManagerList();
             dispatch({
-                type: GET_PRODUCT_SUCCESS,
+                type: GET_MANAGER_SUCCESS,
                 payload: response.data
             });
         } catch (e) {
             dispatch({
-                type: GET_PRODUCT_FAILURE,
+                type: GET_MANAGER_FAILURE,
                 payload: e,
                 error: true
             });
@@ -132,7 +132,7 @@ export const handleOk = (formData) => async dispatch => {
         }
     } catch(e) {
         dispatch({
-            type: POST_PRODUCT_FAILURE,
+            type: POST_MANAGER_FAILURE,
             payload: e,
             error: true,
         });
@@ -147,15 +147,14 @@ export const handleChangeInput = (changeData) => dispatch => {
 const initialState = {
     updateVisible: false,
     buttonFlag: true,
-    productModal: {
-        prdtNm: "",
-        prdtDesc: "",
-        prdtAmt: "",
-        prdtTpCd: "",
+    managerModal : {
+        empNm: '',
+        email: '',
+        telNo: '',
     },
 };
 
-const productupdatemodal = handleActions(
+const managermodal = handleActions(
     {
         [BUTTON_CHANGE]: state => ({
             ...state,
@@ -170,7 +169,7 @@ const productupdatemodal = handleActions(
         }),
         [SHOW_MODAL_SUCCESS]: (state, { payload: {form}}) =>
             produce(state, draft => {
-                draft["productModal"] = form
+                draft["managerModal"] = form
             }),
         [HANDLE_CANCEL]: state => ({
             ...state,
@@ -180,31 +179,31 @@ const productupdatemodal = handleActions(
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
             produce(state, draft => {
                 draft[form][key] = value
-        }),
-        [PRODUCT_INIT]: (state, { payload: form }) => ({
+            }),
+        [MANAGER_INIT]: (state, { payload: form }) => ({
             ...state,
             [form]: initialState[form],
         }),
-        [POST_PRODUCT]: state => ({
+        [POST_MANAGER]: state => ({
             ...state,
         }),
-        [POST_PRODUCT_SUCCESS]: state => ({
-            ...state,
-            updateVisible: false,
-        }),
-        [POST_PRODUCT_FAILURE]: state => ({
+        [POST_MANAGER_SUCCESS]: state => ({
             ...state,
             updateVisible: false,
         }),
-        [UPDATE_PRODUCT]: state => ({
+        [POST_MANAGER_FAILURE]: state => ({
+            ...state,
+            updateVisible: false,
+        }),
+        [UPDATE_MANAGER]: state => ({
             ...state,
             updateVisible: true,
         }),
-        [UPDATE_PRODUCT_SUCCESS]: state => ({
+        [UPDATE_MANAGER_SUCCESS]: state => ({
             ...state,
             updateVisible: false,
         }),
-        [UPDATE_PRODUCT_FAILURE]: state => ({
+        [UPDATE_MANAGER_FAILURE]: state => ({
             ...state,
             updateVisible: false,
         }),
@@ -212,4 +211,4 @@ const productupdatemodal = handleActions(
     initialState,
 );
 
-export default productupdatemodal
+export default managermodal
