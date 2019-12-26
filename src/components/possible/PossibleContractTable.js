@@ -28,10 +28,12 @@ const useStyles = makeStyles(theme => ({
     plusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
     minusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
 
     backgroundRed:{
@@ -53,37 +55,38 @@ const ColorButton = withStyles(theme => ({
     },
 }))(Button);
 
-const RemoveButton = withStyles(theme => ({
-    root: {
-        borderColor: '#0062cc',
-        '&:hover': {
-            borderColor: '#0062cc',
-        },
-    },
-}))(Button);
+ const RemoveButton = withStyles(theme => ({
+   root: {
+     borderColor: '#0062cc',
+     '&:hover': {
+       borderColor: '#0062cc',
+     },
+   },
+ }))(Button);
 
-function PossibleContractTable({ loadingTable, possibleContractList, getDeleteData, getShowModal }) {
+
+function PossibleContractTable({ loadingTable, possibleList, showModal, deleteData ,updateModalHandler,modalBtnHandler }) {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const handleMenuClick = key => {
         console.log("key", key);
-        //updateModalHandler(key)
+        updateModalHandler(key)
     }
     const columns = [
         {
-            title: '고객',
+            title: '고객 이름',
             dataIndex: 'custNm',
-        },
-        {
-            title: '라이선스 번호',
-            dataIndex: 'lcnsNo',
         },
         {
             title: '담당자',
             dataIndex: 'empNm',
         },
         {
-            title: 'Mac 주소',
+            title: '라이선스 번호',
+            dataIndex: 'lcnsNo',
+        },
+        {
+            title: 'mac 주소',
             dataIndex: 'macAddr',
         },
         {
@@ -94,8 +97,8 @@ function PossibleContractTable({ loadingTable, possibleContractList, getDeleteDa
                 (<Dropdown
                         overlay={(
                             <Menu onClick={() => {
-                                //handleMenuClick(record.contId)
-                                //modalBtnHandler()
+                                handleMenuClick(record.tempVerId)
+                                modalBtnHandler()
                             }}>
                                 <Menu.Item >
                                     수정
@@ -125,13 +128,13 @@ function PossibleContractTable({ loadingTable, possibleContractList, getDeleteDa
     return (
         <div>
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
-                {hasSelected ? `Selected ${selectedRowKeys.length} items` : 'Selected 0 item'}
+                {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
             </div>
             <div className={classes.button}>
         <span style={{ paddingRight: 14 }}>
 
           <ColorButton
-              onClick={getShowModal}
+              onClick={showModal}
               className={classes.plusbutton}
               size='small'
               variant="outlined"
@@ -141,14 +144,14 @@ function PossibleContractTable({ loadingTable, possibleContractList, getDeleteDa
           </ColorButton>
         </span>
                 <RemoveButton
-                    onClick={() => { getDeleteData(selectedRowKeys); setSelectedRowKeys([]); }}
-                    className={classes.minusbutton}
-                    size='small'
-                    variant="outlined"
-                    color="secondary"
-                    endIcon={<RemoveIcon />}
-                > 계약 삭제
-                </RemoveButton>
+          onClick={() => { deleteData(selectedRowKeys); setSelectedRowKeys([]); }}
+          className={classes.minusbutton}
+          size='small'
+          variant="outlined"
+          color="secondary"
+          endIcon={<RemoveIcon />}
+        > 계약 삭제
+          </RemoveButton>
             </div>
 
             <Table
@@ -157,7 +160,11 @@ function PossibleContractTable({ loadingTable, possibleContractList, getDeleteDa
                 tableLayout='undefined'
                 rowSelection={rowSelection}
                 columns={columns}
-                dataSource={loadingTable ? null : possibleContractList}
+                rowClassName={(record,index) => {
+                    if(possibleList[index].tight)
+                        return classes.backgroundRed
+                }}
+                dataSource={loadingTable ? null : possibleList}
                 size="small" />
         </div >
 

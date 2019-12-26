@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
 import {ManagerTableContainer} from "../containers";
+import ManagerModalContainer from "../containers/manager/ManagerModalContainer";
 
 const textcolor = '#174A84';
 
@@ -44,6 +45,7 @@ const ProductInfoPage = () => {
                     <Container maxWidth="lg" className={classes.container}>
                         <div >
                             <ManagerTableContainer />
+                            <ManagerModalContainer />
                         </div>
                     </Container>
                 </Paper>

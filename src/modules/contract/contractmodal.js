@@ -18,7 +18,6 @@ const UPDATE_CONTRACT = 'contractmodal/UPDATE_CONTRACT'
 const UPDATE_CONTRACT_SUCCESS = 'contractmodal/UPDATE_CONTRACT_SUCCESS'
 const UPDATE_CONTRACT_FAILURE = 'contractmodal/UPDATE_CONTRACT_FAILURE'
 
-
 const INPUT_LICENSE = 'contractmodal/INPUT_LICENSE';
 
 const REMOVE_LICENSE = 'contractmodal/REMOVE_LICENSE';

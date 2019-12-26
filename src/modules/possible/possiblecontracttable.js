@@ -27,7 +27,7 @@ export const getDeleteData = selectedRowKeys => async dispatch => {
 
     dispatch({ type: GET_POSSIBLE });
     try {
-        const response = await api.getPossibleContract();
+        const response = await api.getPossibleContractList();
         dispatch({
             type: GET_POSSIBLE_SUCCESS,
             payload: response.data
@@ -42,10 +42,10 @@ export const getDeleteData = selectedRowKeys => async dispatch => {
     }
 }
 
-export const getPossibleContract = () => async dispatch => {
+export const getPossibleList = () => async dispatch => {
     dispatch({ type: GET_POSSIBLE });
     try {
-        const response = await api.getPossibleContract();
+        const response = await api.getPossibleContractList();
         dispatch({
             type: GET_POSSIBLE_SUCCESS,
             payload: response.data
@@ -62,7 +62,7 @@ export const getPossibleContract = () => async dispatch => {
 
 const initialState = {
     visible: false,
-    possibleContractList: null,
+    possibleList: null,
     loadingTable: false,
 }
 
@@ -92,7 +92,7 @@ const possiblecontracttable = handleActions(
         [GET_POSSIBLE_SUCCESS]: (state, action) => ({
             ...state,
             loadingTable: false,
-            possibleContractList: action.payload,
+            possibleList: action.payload,
         }),
         [GET_POSSIBLE_FAILURE]: (state, action) => ({
             ...state,

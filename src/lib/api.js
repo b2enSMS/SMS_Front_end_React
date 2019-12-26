@@ -52,6 +52,13 @@ export const postContracts = (formData) => {
     return axios.post('/cont/create', data);
 }
 
+export const updatePossible = (formData) => {
+    const data = {
+
+    }
+    axios.put(`/temp/${formData.tempVerId}`, data);
+}
+
 export const postUpdateContracts = (formData) => {
     console.log("formData야야야야ㅑ", formData.lcns)
     const data = {
@@ -118,6 +125,31 @@ export const postCustomer = (formData) => {
     return axios.post('/cust/create', data);
 }
 
+export const postManager = (formData) => {
+    const data = {
+        empNm: formData.empNm,
+        email: formData.email,
+        telNo: formData.telNo,
+    }
+    return axios.post('/b2en/create', data);
+}
+
+export const updateManager = (formData) => {
+    const data = {
+        empNm: formData.empNm,
+        email: formData.email,
+        telNo: formData.telNo,
+    }
+    return axios.put(`/b2en/${formData.empId}`, data);
+}
+
+export const postPossible = (formData) => {
+    const data = {
+
+    }
+    return axios.post('temp/create,', data);
+}
+
 export const postProduct = (formData) => {
     const data = {
         prdtId: formData.prdtId,
@@ -140,8 +172,11 @@ export const updateProduct = (formData) => {
 export const getContract = (key) =>
     axios.get(`/cont/${key}`);
 
-export const getPossibleContract = () =>
+export const getPossibleContractList = () =>
     axios.get('/temp/showall');
+
+export const getPossibleContract = (key) =>
+    axios.get(`/temp/${key}`);
 
 //기관 리스트
 export const getOrganization = () =>
@@ -187,9 +222,15 @@ export const deletePossibleContract = (selectedRowKeys) => {
     return axios.delete(`/temp`, {data: {idx: selectedRowKeys}})
 }
 
+export const deleteB2enManager = (selectedRowKeys) =>
+    axios.delete(`/b2en`,{data: {idx: selectedRowKeys}})
+
 // b2en 담당자 리스트
 export const getManagerList = () =>
     axios.get('/b2en/showall');
+
+export const getManager = (empNo) =>
+    axios.get(`/b2en/${empNo}`)
 
 export const getCompanyList = () =>
     axios.get('/org/showall');
