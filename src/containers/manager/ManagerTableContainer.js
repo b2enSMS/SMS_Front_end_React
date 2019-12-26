@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getManagerList } from "modules/manager/managertable";
-import { ManagerTable } from "components"
+import { getManagerList, deleteManager } from "modules/manager/managertable";
+import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/manager/managermodal";
+import {ManagerTable} from "../../components";
 
 const ManagerTableContainer = ({
-       getManagerList,
-       managerList,
-       loadingTable,
+                                   getShowUpdateModal,
+                                   getManagerList,
+                                   deleteManager,
+                                   managerList,
+                                   loadingTable,
+                                   getShowModal,
+                                   getButtonChange,
                                }) => {
     useEffect(()=> {
         getManagerList();
@@ -16,6 +21,10 @@ const ManagerTableContainer = ({
         <ManagerTable
             managerList={managerList}
             loadingTable={loadingTable}
+            deleteManager={deleteManager}
+            showUpdateModal={getShowUpdateModal}
+            showModal={getShowModal}
+            changeButton={getButtonChange}
         />
     );
 };
@@ -27,5 +36,9 @@ export default connect(
     }),
     {
         getManagerList,
+        deleteManager,
+        getShowUpdateModal,
+        getButtonChange,
+        getShowModal,
     }
 )(ManagerTableContainer);

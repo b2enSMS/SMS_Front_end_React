@@ -8,3 +8,4 @@ export {default as CustomerUpdateModal} from './contractCustomer/CustomerUpdateM
 export {default as ProductTable} from './product/ProductTable'
 export {default as ManagerTable} from './manager/ManagerTable'
 export {default as ContractHistory} from './contract/ContractHistory'
+export {default as PossibleContractModal} from './possible/PossibleContractModal'

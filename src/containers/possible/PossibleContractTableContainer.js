@@ -1,39 +1,45 @@
 import React, { useEffect } from 'react';
 import { connect} from 'react-redux';
-import { getDeleteData, getPossibleContract } from 'modules/possible/possiblecontracttable';
-import { getShowModal } from 'modules/possible/possiblecontractmodal';
+import { getPossibleList,getDeleteData } from 'modules/possible/possiblecontracttable';
+import { getShowModal,getUpdateModal,getButtonChange } from 'modules/possible/possiblecontractmodal';
 import PossibleContractTable from "../../components/possible/PossibleContractTable";
 
 const PossibleContractTableContainer = ({
-                                    possibleContractList,
-                                    getPossibleContract,
+                                    possibleList,
+                                    getPossibleList,
                                     loadingTable,
+                                    getShowModal,
                                     getDeleteData,
-                                            getShowModal,
+                                    getUpdateModal,
+                                    getButtonChange,
                                 }) => {
 
     useEffect(() => {
-        getPossibleContract();
-    }, [getPossibleContract]);
+        getPossibleList();
+    }, [getPossibleList]);
 
     return (
         <PossibleContractTable
-            possibleContractList={possibleContractList}
+            possibleList={possibleList}
             loadingTable={loadingTable}
-            getDeleteData={getDeleteData}
-            getShowModal={getShowModal}
+            showModal={getShowModal}
+            deleteData={getDeleteData}
+            updateModalHandler={getUpdateModal}
+            modalBtnHandler = {getButtonChange}
         />
     );
 };
 
 export default connect(
     ({ possiblecontracttable }) => ({
-        possibleContractList: possiblecontracttable.possibleContractList,
+        possibleList: possiblecontracttable.possibleList,
         loadingTable: possiblecontracttable.loadingTable,
     }),
     {
-        getPossibleContract,
-        getDeleteData,
+        getPossibleList,
+        getUpdateModal,
         getShowModal,
+        getDeleteData,
+        getButtonChange,
     }
 )(PossibleContractTableContainer);

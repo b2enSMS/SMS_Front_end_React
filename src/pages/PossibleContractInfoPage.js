@@ -1,7 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
-import {PossibleContractTableContainer} from "containers";
+
+import {PossibleContractTableContainer, PossibleContractModalContainer} from "containers";
+import LicenseContainer from "../containers/contract/LicenseContainer";
 
 const textcolor = '#174A84';
 
@@ -45,6 +47,8 @@ const PossibleContractInfoPage = () => {
                     <Container maxWidth="lg" className={classes.container}>
                         <div >
                             <PossibleContractTableContainer />
+                            <PossibleContractModalContainer />
+                            <LicenseContainer/>
                         </div>
                     </Container>
                 </Paper>

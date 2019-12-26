@@ -18,6 +18,7 @@ import possiblecontractmodal from "./possible/possiblecontractmodal";
 const rootReducer = combineReducers({
     contractmodal,contracttable,contractcustomer,contractcustomermodal,licensemodal,customerupdatemodal,producttable
     ,managertable,companytable,productupdatemodal,possiblecontracttable,possiblecontractmodal,contracthistory
+
 });
 
 export default rootReducer;
