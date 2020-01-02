@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import {CompanyInfoPage, ContractInfoPage, PossibleCustomerInfoPage} from 'pages';
+import {CompanyInfoPage, ContractInfoPage, MeetingInfoPage, PossibleCustomerInfoPage} from 'pages';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -144,6 +144,7 @@ const useStyles = makeStyles(theme => ({
             <Route exact path="/possiblecustomer" component={PossibleCustomerInfoPage} />
             <Route exact path="/company" component={CompanyInfoPage} />
             <Route exact path="/possiblecontract" component={PossibleContractInfoPage} />
+            <Route exact path="/meeting" component={MeetingInfoPage} />
           </main>
         </div>
 

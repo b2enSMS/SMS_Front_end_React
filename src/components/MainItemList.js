@@ -57,7 +57,7 @@ class MainItemList extends React.Component {
           >
             <Menu.Item key="5"><Link to="/possiblecontract"><Icon type="reconciliation"/>임시 라이선스</Link></Menu.Item>
             <Menu.Item key="6"><Link to="/possiblecustomer"><Icon type="user" />가망 고객 관리</Link></Menu.Item>
-            <Menu.Item key="7"><Icon type="team" />미팅이력 관리</Menu.Item>
+            <Menu.Item key="7"><Link to="/meeting"><Icon type="team" />미팅이력 관리</Link></Menu.Item>
           </SubMenu>
           <SubMenu
               key="sub3"
