@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, TextField, Grid } from '@material-ui/core/';
 import {Modal} from "antd";
 import { makeStyles } from '@material-ui/core/styles';
-import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from "@date-io/date-fns";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
@@ -30,30 +29,11 @@ const MeetingModal = ({handleUpdateOk, orgList, b2enList, updateVisible, HandleC
 
     const classes = useStyles();
 
-    const handleChange = ev => {
-        handleChangeInput({ form: "meetingModal", key: ev.target.id, value: ev.target.value })
-    }
 
     const handleinstallDtChange = (id, date) => {
         handleChangeInput({ form: "meetingModal", key: "meetDt", value: date })
     };
 
-    const handleChangeTime = (id, date) => {
-        handleChangeInput({ form: "meetingModal", key: "meetStartTime", value: date })
-    }
-
-    const autoCompleteHandleChange = (ev, value) => {
-        console.log("autoCompleteHandleChange", value)
-        for (var key in value) {
-            handleChangeInput({ form: "meetingModal", key: key, value: value[key] });
-        }
-    }
-
-    const contractCodeHandleChange = (ev, value)=>{
-        handleChangeInput({ form: "meetingModal", key: "custTpCd", value: value["cmmnDetailCd"] });
-        handleChangeInput({ form: "meetingModal", key: "custTpCdNm", value: value["cmmnDetailCdNm"] });
-
-    }
 
     return(
         <Modal

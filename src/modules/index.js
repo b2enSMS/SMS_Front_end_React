@@ -21,9 +21,10 @@ import possiblehistory from './possible/possiblehistory';
 import meetingmodal from "./meeting/meetingmodal"
 import meetingtable from "./meeting/meetingtable"
 
+
 const rootReducer = combineReducers({
     contractmodal,contracttable,contractcustomermodal,licensemodal,producttable
-    ,managertable,companytable,productupdatemodal,possiblecontracttable,possiblecontractmodal,contracthistory,possiblecustomermodal,
+    ,managertable,companytable,productupdatemodal,contracthistory,possiblecustomermodal,
     possiblecustomertable,managermodal,companymodal,contractcustomertable,customertable,meetingmodal,meetingtable,possibletable,possiblemodal,possiblelicense,possiblehistory,
 });
 
