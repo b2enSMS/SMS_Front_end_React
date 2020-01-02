@@ -110,7 +110,7 @@ const ContractHistory = ({ visible, handleCancel, loadingTable, historyList }) =
                     {historyList.length>0? historyList[0]['orgNm'] +" - "+ historyList[0]['contNm']: "히스토리 목록이 없습니다."}
                 </div>
                 <Table
-                    rowKey="hist_seq"
+                    rowKey="histSeq"
                     loading={loadingTable}
                     tableLayout='undefined'
                     columns={columns}

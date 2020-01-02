@@ -10,15 +10,15 @@ if (process.env.NODE_ENV === "development") {
 
 //이미지 삭제
 export const getRemoveImage = (fileList) => {
-    if(fileList && fileList.length>0){
-        console.log('api: getRemoveImage',fileList,{ idx: fileList})
-        return axios.delete(`/scan`, { data: { idx: fileList} })
+    if (fileList && fileList.length > 0) {
+        console.log('api: getRemoveImage', fileList, { idx: fileList })
+        return axios.delete(`/scan`, { data: { idx: fileList } })
     }
 }
 
 //계약 등록
 export const postContracts = (formData) => {
-    console.log("formData야야야야ㅑ", formData.lcns)
+    console.log("postContracts", formData)
     const data = {
         prdtId: formData.prdtId,
         checkDt: formData.checkDt,
@@ -34,7 +34,6 @@ export const postContracts = (formData) => {
         custId: formData.custId,
         HeadContIdAC: formData.HeadContIdAC,
         contNm: formData.contNm,
-
     }
     return axios.post('/cont/create', data);
 }
@@ -169,13 +168,13 @@ export const getheadConts = () =>
 export const getContract = (key) =>
     axios.get(`/cont/${key}`);
 
-export const getPossibleContractList = () =>
-    axios.get('/temp/showall');
 
 
+//계약 상세
 export const getHistoryList = (contId) =>
     axios.get(`cont/hist/${contId}`);
 
+//임시 계약
 export const getPossibleContract = (key) =>
     axios.get(`/temp/${key}`);
 
@@ -198,7 +197,7 @@ export const getManagers = () =>
 //기관 담당자 이름 리스트
 export const getorgML = () =>
     axios.get('/cust/aclist');
-    
+
 //계약 코드 리스트
 export const getcontCD = () =>
     axios.get('/cmmncd/cont_tp_cd');
@@ -225,11 +224,11 @@ export const getDeleteProducts = (selectedRowKeys) => {
 }
 
 export const deletePossibleContract = (selectedRowKeys) => {
-    return axios.delete(`/temp`, {data: {idx: selectedRowKeys}})
+    return axios.delete(`/temp`, { data: { idx: selectedRowKeys } })
 }
 
 export const deleteB2enManager = (selectedRowKeys) =>
-    axios.delete(`/b2en`,{data: {idx: selectedRowKeys}})
+    axios.delete(`/b2en`, { data: { idx: selectedRowKeys } })
 
 // b2en 담당자 리스트
 export const getManagerList = () =>
@@ -240,3 +239,6 @@ export const getManager = (empNo) =>
 
 export const getCompanyList = () =>
     axios.get('/org/showall');
+
+export const getPossibleContractList = () =>
+    axios.get('/temp/showall');

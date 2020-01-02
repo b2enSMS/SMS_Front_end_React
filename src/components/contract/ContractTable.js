@@ -68,7 +68,7 @@ const ColorButton = withStyles(theme => ({
 
 
 
-
+const pageInfo = {pageNumber:1};
 
 function ContractTable({ handleHistoryModal,loadingTable, contractList, showModal, deleteData, updateModalHandler, modalBtnHandler }) {
   const classes = useStyles();
@@ -81,15 +81,20 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
     {
       title: '기관/회사',
       dataIndex: 'orgNm',
+      ellipsis:true,
+      width: '12%'
     },
     {
       title: '사업명',
-      width: '15%',
       dataIndex: 'contNm',
+      ellipsis:true,
+      width: '20%'
     },
     {
       title: '담당자',
       dataIndex: 'empNm',
+      align: 'center',
+      // width: '5%',
     },
     // {
     //   title: '수주번호',
@@ -108,6 +113,7 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
       title: '계약일자',
       dataIndex: 'contDt',
       align: 'center',
+      // width: '8%',
       render: (value, record, index) => {
         return {
           children: value,
@@ -121,6 +127,7 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
       title: '계약금액',
       dataIndex: 'contTotAmt',
       align: 'right',
+      // width: '9%',
       render: (value, record, index) => {
         return {
           children: (value == null ? "-" : parseInt(value) / 1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 만원 ",
@@ -134,6 +141,7 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
       title: '검수일자',
       dataIndex: 'checkDt',
       align: 'center',
+      // width: '8%',
       render: (value, record, index) => {
         return {
           children: value,
@@ -144,9 +152,10 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
       }
     },
     {
-      title: '유지보수개시일자',
+      title: '유지보수개시',
       dataIndex: 'mtncStartDt',
       align: 'center',
+      // width: '8%',
       render: (value, record, index) => {
         return {
           children: value,
@@ -157,9 +166,10 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
       }
     },
     {
-      title: '유지보수종료일자',
+      title: '유지보수종료',
       dataIndex: 'mtncEndDt',
       align: 'center',
+      // width: '8%',
       render: (value, record, index) => {
         return {
           children: value,
@@ -210,10 +220,9 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
-  };
+  }; 
 
   const hasSelected = selectedRowKeys.length > 0;
-
   return (
     <div>
       <div style={{ marginLeft: 8, textAlign: 'left' }}>
@@ -246,12 +255,18 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
       <Table
         rowKey="contId"
         loading={loadingTable}
-        tableLayout='undefined'
+        tableLayout='fixed'
         rowSelection={rowSelection}
         columns={columns}
         rowClassName={(record, index) => {
-          if (contractList[index].tight)
+          console.log("pageNumber",pageInfo.pageNumber,index,index+(10*(pageInfo.pageNumber-1)));
+          if (contractList[index+(10*(pageInfo.pageNumber-1))].tight){
             return classes.backgroundRed
+        }
+        }}
+        onChange={(pageData) => {
+          pageInfo.pageNumber=pageData.current
+          console.log("pageData",pageData);
         }}
         dataSource={loadingTable ? null : contractList}
         size="small" />

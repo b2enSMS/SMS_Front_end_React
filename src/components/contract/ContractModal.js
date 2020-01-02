@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const ContractModal = ({ custML, headCont, modifyLicenseHandler, handleUpdate, buttonFlag, licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
+const ContractModal = ({ licenseupdatebtn,custML, headCont, modifyLicenseHandler, handleUpdate, buttonFlag, licenseModalShow, visible, contCdList, orgList, b2enML, confirmLoading, handleOk, handleCancel, handleChangeInput, licenses, removeLicenseHandler, contractForm }) => {
     const classes = useStyles();
     const handleChange = ev => {
         handleChangeInput({ form: "contractModal", key: ev.target.id, value: ev.target.value })
@@ -357,7 +357,7 @@ const ContractModal = ({ custML, headCont, modifyLicenseHandler, handleUpdate, b
                                 className={classes.prdtBtn}
                                 onClick={licenseModalShow}
                                 variant="outlined">제품 등록
-                                </Button>
+                            </Button>
                         </Grid>
 
                     </Grid>
@@ -374,6 +374,7 @@ const ContractModal = ({ custML, headCont, modifyLicenseHandler, handleUpdate, b
                         modifyLicenseHandler={modifyLicenseHandler}
                         removeLicenseHandler={removeLicenseHandler}
                         classes={classes}
+                        licenseupdatebtn={licenseupdatebtn}
                     >
                         {console.log("kwon Index", index)}
                     </LicenseItem>
@@ -383,31 +384,32 @@ const ContractModal = ({ custML, headCont, modifyLicenseHandler, handleUpdate, b
         </Modal>
     );
 }
-const LicenseItem = ({ keyvar, license, removeLicenseHandler, classes, modifyLicenseHandler }) => {
+const LicenseItem = ({ licenseupdatebtn,keyvar, license, removeLicenseHandler, classes, modifyLicenseHandler }) => {
     return (
         <Grid container spacing={2} >
             {console.log("indexLicense", keyvar, license)}
             <Grid item xs={12} sm={4}>
                 <Input
                     className={classes.textInput}
-                    defaultValue={"제품명: " + license.prdtNm}
+                    value={"제품명: " + license.prdtNm}
                     disabled inputProps={{ 'aria-label': 'description' }}
                 />
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Input
                     className={classes.textInput}
-                    defaultValue={"납품 단가: " + license.contAmt + "원"}
+                    value={"납품 단가: " + (parseInt(license.contAmt) / 1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 만원 "}
                     disabled inputProps={{ 'aria-label': 'description' }}
                 />
-
             </Grid>
             <Grid item xs={12} sm={1}>
                 <Button
                     className={classes.inputButton}
                     variant="outlined"
                     color="primary"
-                    onClick={() => modifyLicenseHandler(keyvar)}
+                    onClick={() => {modifyLicenseHandler(keyvar)
+                        licenseupdatebtn()}
+                    }
                 >수정
                 </Button>
             </Grid>

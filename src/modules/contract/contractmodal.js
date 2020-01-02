@@ -19,6 +19,7 @@ const UPDATE_CONTRACT_SUCCESS = 'contractmodal/UPDATE_CONTRACT_SUCCESS'
 const UPDATE_CONTRACT_FAILURE = 'contractmodal/UPDATE_CONTRACT_FAILURE'
 
 const INPUT_LICENSE = 'contractmodal/INPUT_LICENSE';
+const UPDATE_LICENSE = 'contractmodal/UPDATE_LICENSE'
 
 const REMOVE_LICENSE = 'contractmodal/REMOVE_LICENSE';
 const INITIALIZE_FORM = 'contractmodal/INITIALIZE_FORM'
@@ -88,8 +89,8 @@ export const getUpdateModal = (key) => async dispatch => {
                 orgList: responseOrg.data,
                 b2enML: responseML.data,
                 contCdList: responseCD.data,
-                headCont:reaponseHC.data,
-                custML:responseOML.data,
+                headCont: reaponseHC.data,
+                custML: responseOML.data,
             }
         })
     } catch (e) {
@@ -103,10 +104,16 @@ export const getUpdateModal = (key) => async dispatch => {
 }
 
 
-export const inputLicense = (licenseForm) => dispatch => {
+export const inputLicense = (licenseForm, fileList) => dispatch => {
     dispatch({
         type: INPUT_LICENSE,
-        payload: { licenseForm }
+        payload: { licenseForm, fileList }
+    })
+}
+export const updateLicense = (licenseForm, fileList, keyIndex) => dispatch => {
+    dispatch({
+        type: UPDATE_LICENSE,
+        payload: { licenseForm, fileList, keyIndex }
     })
 }
 
@@ -123,15 +130,15 @@ export const getShowModal = () => async dispatch => {
         const responseML = await api.getB2enManager();
         const responseCD = await api.getcontCD();
         const responseHC = await api.getheadConts();
-        console.log("reaponseHC",responseHC.data)
+        console.log("reaponseHC", responseHC.data)
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
                 org: response.data,
                 b2enML: responseML.data,
                 contCdList: responseCD.data,
-                headCont:responseHC.data,
-                custML:responseOML.data,
+                headCont: responseHC.data,
+                custML: responseOML.data,
             }
         });
     } catch (e) {
@@ -159,7 +166,7 @@ export const handleOk = (formData) => async dispatch => {
 
     dispatch({ type: POST_CONTRACT });
     try {
-        console.log("contractrconkafkej", formData.contTpCd)
+        console.log("handleOk", formData)
         await api.postContracts(formData);
         dispatch({
             type: POST_CONTRACT_SUCCESS,
@@ -234,16 +241,15 @@ const contractmodal = handleActions(
             visible: true,
         }),
 
-        [UPDATE_CONTRACT_SUCCESS]: (state, { payload: { form, orgList, b2enML, contCdList,headCont,contNL,custML } }) =>
+        [UPDATE_CONTRACT_SUCCESS]: (state, { payload: { form, orgList, b2enML, contCdList, headCont, custML } }) =>
             produce(state, draft => {
-                console.log("UPDATE_CONTRACT_SUCCESS",form)
                 draft["orgList"] = orgList
                 draft["b2enML"] = b2enML
                 draft["contCdList"] = contCdList
                 draft["contractModal"] = form
                 draft["confirmLoading"] = false
                 draft["headCont"] = headCont
-                draft["custML"]= custML
+                draft["custML"] = custML
             }),
 
         [UPDATE_CONTRACT_FAILURE]: (state, action) => ({
@@ -259,7 +265,16 @@ const contractmodal = handleActions(
 
         [INPUT_LICENSE]: (state, action) =>
             produce(state, draft => {
-                draft["contractModal"]["lcns"] = state.contractModal.lcns.concat(action.payload.licenseForm)
+                let lcns = Object.assign({}, action.payload.licenseForm);
+                lcns.fileList = action.payload.fileList;
+                draft["contractModal"]["lcns"] = state.contractModal.lcns.concat(lcns)
+            }),
+
+        [UPDATE_LICENSE]: (state, {payload: {licenseForm,fileList,keyIndex}}) =>
+            produce(state, draft => {
+                let lcns = Object.assign({}, licenseForm);//action.payload.licenseForm);
+                lcns.fileList = fileList;//action.payload.fileList;
+                draft["contractModal"]["lcns"][keyIndex] = lcns;
             }),
 
         [SHOW_MODAL]: state => ({
@@ -298,7 +313,8 @@ const contractmodal = handleActions(
         [POST_CONTRACT_SUCCESS]: (state, action) => ({
             ...state,
             confirmLoading: false,
-            visible: false
+            visible: false,
+            buttonFlag: true,
         }),
         [POST_CONTRACT_FAILURE]: (state, action) => ({
             ...state,
