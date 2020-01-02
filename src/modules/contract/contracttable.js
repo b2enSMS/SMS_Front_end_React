@@ -63,7 +63,7 @@ export const getContractList = () => async dispatch => {
 const initialState = {
     visible: false,
     contractList: null,
-    loadingTable: false,
+    loadingTable: false
 }
 
 const contracttable = handleActions(

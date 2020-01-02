@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {CompanyTableContainer, ContractCustomerContainer, ContractModalContainer} from "../containers";
+import {CompanyTableContainer} from "../containers";
 import {Container, Paper} from "@material-ui/core";
 import CompanyModalContainer from "../containers/company/CompanyModalContainer";
 import PossibleCustomerModalContainer from "../containers/possibleCustomer/PossibleCustomerModalContainer";

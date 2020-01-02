@@ -21,12 +21,16 @@ const MODAL_IMAGE_REMOVE = 'licensemodal/MODAL_IMAGE_REMOVE'
 const MODAL_IMAGE_REMOVE_SUCCESS = 'licensemodal/MODAL_IMAGE_REMOVE_SUCCESS'
 const MODAL_IMAGE_REMOVE_FAILURE = 'licensemodal/MODAL_IMAGE_REMOVE_FAILURE'
 
+const BUTTON_CHANGE = 'licensemodal/BUTTON_CHANGE'
+
+export const getlicenseupdatebtn = createAction(BUTTON_CHANGE);
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
-export const gethandleImageChange = createAction(IMAGE_CHANGE, (file) => ({ file }))
+export const gethandleImageChange = createAction(IMAGE_CHANGE, (fileList) => ( {fileList} ))
 
-export const getmodifyLicenseHandler = (formData) => async dispatch => {
+
+export const getmodifyLicenseHandler = (formData,key) => async dispatch => {
     dispatch({ type: MODIFY_LICENSE })
     try {
         const responseProduct = await api.getProducts();
@@ -37,6 +41,7 @@ export const getmodifyLicenseHandler = (formData) => async dispatch => {
                 form: formData,
                 products: responseProduct.data,
                 licCode: responseLicenseCode.data,
+                key: key,
             }
         })
     } catch (e) {
@@ -56,7 +61,7 @@ export const gethandleImageRemove = (fileList) => async dispatch => {
         await api.getRemoveImage(fileList);
         dispatch({
             type: MODAL_IMAGE_REMOVE_SUCCESS,
-            payload: { fileList }
+            payload: fileList 
         });
     } catch (e) {
         dispatch({ type: MODAL_IMAGE_REMOVE_FAILURE })
@@ -105,7 +110,10 @@ export const getHandleCancel = (fileList) => async dispatch => {
     }
 
 }
-
+export const gethandleUpdateCancel = () => dispatch =>{
+    dispatch({ type: HANDLE_CANCEL });
+        dispatch({ type: INITIALIZE_FORM, payload: "licenseForm" });
+}
 
 export const handleChangeInput = (changeData) => dispatch => {
     console.log(changeData)
@@ -137,12 +145,17 @@ const initialState = {
     products: [],
     licCode: [],
     tempLcnsId: null,
-    buttonFlag: true,
-    imageRemoveFlag: true
+    imageRemoveFlag: true,
+    btnFlag: true,
+    keyIndex: 0,
 }
 
 const licensemodal = handleActions(
     {
+        [BUTTON_CHANGE]: state => ({
+            ...state,
+            btnFlag: false,
+        }),
 
         [MODIFY_LICENSE]: state => ({
             ...state,
@@ -150,14 +163,15 @@ const licensemodal = handleActions(
             visible: true,
         }),
 
-        [MODIFY_LICENSE_SUCCESS]: (state, { payload: { form, products, licCode} }) =>
-        produce(state, draft => {
-            console.log("MODIFY_LICENSE_SUCCESS",form)
-            draft["licCode"] = licCode
-            draft["products"] = products
-            draft["licenseForm"] = form
-            draft["confirmLoading"] = false
-        }),
+        [MODIFY_LICENSE_SUCCESS]: (state, { payload: { form, products, licCode,key } }) =>
+            produce(state, draft => {
+                console.log("MODIFY_LICENSE_SUCCESS", form)
+                draft["licCode"] = licCode
+                draft["products"] = products
+                draft["licenseForm"] = form
+                draft["confirmLoading"] = false
+                draft["keyIndex"] = key
+            }),
 
         [MODIFY_LICENSE_FAILURE]: (state, action) => ({
             ...state,
@@ -169,31 +183,28 @@ const licensemodal = handleActions(
             ...state,
             imageRemoveFlag: true
         }),
-        [MODAL_IMAGE_REMOVE_SUCCESS]: (state, { payload: fileList }) => {
+        [MODAL_IMAGE_REMOVE_SUCCESS]: (state, { payload: fileList }) => 
+
             produce(state, draft => {
-                for (let i in fileList) {
-                    draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.url !== fileList[i].url)
-                    console.log("REMOVE", fileList[i])
+                console.log("form remove before", fileList)
+                if (fileList && fileList.length > 0) {
+                    for (let i in fileList) {
+                        draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.url !== fileList[i].url)
+                        console.log("REMOVE", fileList[i])
+                    }
                 }
-            })
-        },
+        }),
         [MODAL_IMAGE_REMOVE_FAILURE]: state => ({
             ...state,
             imageRemoveFlag: false
         }),
 
-        // [IMAGE_REMOVE]: (state, { payload: file }) => {
-        //     for (let i in file) {
-        //         produce(state, draft => {
-        //             draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.url !== file[i].url)
-        //             console.log("REMOVE", file[i])
-        //         })
-        //     }
-        // },
-        [IMAGE_CHANGE]: (state, { payload: { file } }) =>
+        [IMAGE_CHANGE]: (state, { payload:  {fileList}  }) => 
             produce(state, draft => {
-                console.log("moduleFile", file)
-                draft["licenseForm"]["fileList"] = state.licenseForm.fileList.concat(file)
+                console.log("moduleFile", fileList)
+                draft["licenseForm"]["fileList"] =fileList
+                // draft["licenseForm"]["fileList"] = state.licenseForm.fileList.concat(file)
+                // draft["licenseForm"]["fileList"] = [...fileList]
             }),
 
         [OFF_MODAL]: state => ({
@@ -202,6 +213,7 @@ const licensemodal = handleActions(
             confirmLoading: true,
             products: [],
             licCode: [],
+            btnFlag: true,
         }),
         [SHOW_LIMO]: state => ({
             ...state,
@@ -219,6 +231,7 @@ const licensemodal = handleActions(
         [HANDLE_CANCEL]: state => ({
             ...state,
             visible: false,
+            btnFlag: true,
         }),
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
             produce(state, draft => {

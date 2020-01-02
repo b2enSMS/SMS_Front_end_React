@@ -3,7 +3,7 @@ import { connect, useSelector, useDispatch } from 'react-redux';
 import { ContractModal } from 'components';
 import { initializeForm, handleOk, handleChangeInput, getHandleCancel, getRemoveLicense, gethandleUpdate } from 'modules/contract/contractmodal';
 import { getContractList } from 'modules/contract/contracttable';
-import { getShowModal,getmodifyLicenseHandler } from 'modules/contract/licensemodal';
+import { getlicenseupdatebtn,getShowModal,getmodifyLicenseHandler } from 'modules/contract/licensemodal';
 
 const ContractModalContainer = ({
     visible,
@@ -23,6 +23,7 @@ const ContractModalContainer = ({
     getmodifyLicenseHandler,
     headCont,
     custML,
+    getlicenseupdatebtn,
 
 }) => {
     const dispatch = useDispatch();
@@ -37,13 +38,13 @@ const ContractModalContainer = ({
     //     handleOk(formData);
     // }
     const modifyLicense= (key) =>{
-        getmodifyLicenseHandler(formData.lcns[key]);
+        getmodifyLicenseHandler(formData.lcns[key],key);
     }
 
     return (
         <ContractModal
             visible={visible}
-            handleOk={(formData)=>handleOk(formData)}
+            handleOk={()=>handleOk(formData)}
             confirmLoading={confirmLoading}
             handleChangeInput={handleChangeInput}
             handleCancel={getHandleCancel}
@@ -59,6 +60,7 @@ const ContractModalContainer = ({
             modifyLicenseHandler={modifyLicense}
             custML={custML}
             handleUpdate={() => gethandleUpdate(formData)}
+            licenseupdatebtn={getlicenseupdatebtn}
         />
     );
 };
@@ -85,5 +87,6 @@ export default connect(
         getShowModal,
         getRemoveLicense,
         gethandleUpdate,
+        getlicenseupdatebtn,
     }
 )(ContractModalContainer);

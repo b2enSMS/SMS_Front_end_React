@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
+import MeetingTableContainer from "../containers/meeting/MeetingTableContainer";
+import MeetingModalContainer from "../containers/meeting/MeetingModalContainer";
 
 const textcolor = '#174A84';
 
@@ -42,7 +44,8 @@ const MeetingInfoPage = () => {
                 <Paper >
                     <Container maxWidth="lg" className={classes.container}>
                         <div >
-
+                            <MeetingTableContainer/>
+                            <MeetingModalContainer/>
                         </div>
                     </Container>
                 </Paper>

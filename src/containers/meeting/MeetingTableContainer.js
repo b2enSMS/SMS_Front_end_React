@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getMeetingList , deleteMeeting } from "modules/meeting/meetingtable";
-import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/manager/managermodal";
-import {ManagerTable} from "../../components";
+import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/meeting/meetingmodal";
+import MeetingTable from "../../components/meeting/MeetingTable";
 
 const MeetingTableContainer = ({
                                    getShowUpdateModal,
@@ -18,7 +18,7 @@ const MeetingTableContainer = ({
     }, [getMeetingList]);
 
     return (
-        <ManagerTable
+        <MeetingTable
             meetingList={meetingList}
             loadingTable={loadingTable}
             deleteMeeting={deleteMeeting}

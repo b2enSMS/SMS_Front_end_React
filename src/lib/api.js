@@ -282,11 +282,3 @@ export const postOrg = (formData) => {
     }
     axios.post(`/org/create`, data);
 }
-
-export const getMeetingList = () => {
-    return axios.get('/meet/showall');
-}
-
-export const deleteMeeting = (selectedRowKeys) => {
-    axios.delete(`/meet`, {data: {idx: selectedRowKeys}});
-}

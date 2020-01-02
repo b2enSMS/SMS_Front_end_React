@@ -16,13 +16,12 @@ import possiblecustomertable from "./possibleCustomer/possiblecustomertable";
 import managermodal from "./manager/managermodal";
 import companymodal from "./company/companymodal";
 import customertable from "./customer/customertable";
-import meetingtable from "./meeting/meetingtable";
 
 
 const rootReducer = combineReducers({
     contractmodal,contracttable,contractcustomermodal,licensemodal,producttable
     ,managertable,companytable,productupdatemodal,possiblecontracttable,possiblecontractmodal,contracthistory,possiblecustomermodal,
-    possiblecustomertable,managermodal,companymodal,contractcustomertable,customertable,meetingtable
+    possiblecustomertable,managermodal,companymodal,contractcustomertable,customertable
 
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Upload, Icon, message } from 'antd';
 import { Container, TextField, Grid, Button } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -39,7 +39,21 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const LicenseModal = ({ handleUpdate,buttonFlag,imageRemoveFlag,handleImageRemove, handleImageChange, visible, confirmLoading, handleOk, handleCancel, handleChangeInput, licenseCodeList, productList, licenseForm }) => {
+const LicenseModal = ({ handleUpdateCancel,
+    updateOk,
+    btnFlag, 
+    imageRemoveFlag, 
+    handleImageRemove, 
+    handleImageChange,
+    visible, 
+    confirmLoading, 
+    handleOk, 
+    handleCancel, 
+    handleChangeInput, 
+    licenseCodeList, 
+    productList, 
+    licenseForm }) => {
+
     const classes = useStyles();
     const handleChange = ev => {
         handleChangeInput({ form: "licenseForm", key: ev.target.id, value: ev.target.value })
@@ -66,36 +80,65 @@ const LicenseModal = ({ handleUpdate,buttonFlag,imageRemoveFlag,handleImageRemov
     //종료일자 변경
     const handlelcnsEndDtChange = (id, date) => {
         handleChangeInput({ form: "licenseForm", key: "lcnsEndDt", value: date })
-    };
+    };   
+
+    const [fileList, setFileList] = useState([]);
+
+    useEffect(()=>{
+        console.log("useEffect", licenseForm.fileList);
+        setFileList(licenseForm.fileList.concat());
+    }, [licenseForm.fileList])
+
+    console.log("fileList::", fileList);
 
     const props2 = {
         action: 'http://localhost:9000/sms/api/scan/upload',
         listType: 'picture',
         className: 'upload-list-inline',
-        //fileList:licenseForm.fileList,
+        fileList: fileList,
         onChange(info) {
-            
+
+            // console.log("onChange()()()", info.file,licenseForm.fileList)
+            // let fileList = [...info.fileList];
+
+            // // 1. Limit the number of uploaded files
+            // // Only to show two recent uploaded files, and old ones will be replaced by the new
+            // fileList = fileList.slice(-2);
+
+            // // 2. Read from response and show file link
+            // fileList = fileList.map(file => {
+            //     console.log("response", file.response)
+            //     if (file.response) {
+            //         // Component will show file.url as link
+            //         file.url = file.response.url;
+            //         file.thumbUrl = file.response.thumbUrl;
+            //     }
+            //     return file;
+            // });
+            // console.log("info.file", info.file)
+            // handleImageChange(info.file)
+
+            let newFileList = [...info.fileList];
             const { status } = info.file;
-            if (status !== 'uploading') {
-                console.log("업로딩 중...", info.fileList);
-            }
+            console.log("status::", status);
+            console.log("licenseForm.fileList::", JSON.stringify(info.file));
             if (status === 'done') {
-                handleImageChange(info.file)
                 message.success(`${info.file.name} 등록 성공!`);
             } else if (status === 'error') {
                 message.error(`${info.file.name} 등록 실패...`);
             }
-
+            setFileList(newFileList)
+            // handleImageChange(newFileList)
         },
         onRemove(file) {
-            console.log("onRemove",file,imageRemoveFlag)
+            console.log("onRemove", file, imageRemoveFlag)
             const arr = []
             arr.push(file)
             handleImageRemove(arr)
-            if(imageRemoveFlag){
+            if (imageRemoveFlag) {
                 return true;
             }
-            else{
+            else {
                 return false;
             }
         },
@@ -105,15 +148,16 @@ const LicenseModal = ({ handleUpdate,buttonFlag,imageRemoveFlag,handleImageRemov
         <Modal
             title="제품 등록"
             visible={visible}
-            onOk={buttonFlag ? handleOk : handleUpdate}
-            okText={buttonFlag ? "등록" : "수정"}
+            onOk={() => {btnFlag? handleOk(fileList) : updateOk(fileList)}}
+            okText={btnFlag ? "등록" : "수정"}
             confirmLoading={confirmLoading}
-            onCancel={handleCancel}
+            onCancel={() => {setFileList([]); btnFlag? handleCancel(licenseForm.fileList) : handleUpdateCancel()}}
             cancelText="취소"
             style={{ top: 65 }}
             width="35%"
             maskClosable={false}
         >
+
             <Container component="main" fixed>
                 <form className={classes.form} >
                     <Grid container spacing={1} >
@@ -263,7 +307,8 @@ const LicenseModal = ({ handleUpdate,buttonFlag,imageRemoveFlag,handleImageRemov
                 </form>
 
                 <div className={classes.imageStyle}>
-                    <Upload {...props2}>
+                    <Upload {...props2}
+                    >
                         <Button size="large" variant="outlined">
                             스캔본 <Icon className={classes.iconStyle} type="upload" />
                         </Button>
@@ -273,7 +318,8 @@ const LicenseModal = ({ handleUpdate,buttonFlag,imageRemoveFlag,handleImageRemov
                     </Upload>
                 </div>
             </Container>
-        </Modal>
+        </Modal >
     );
 }
 export default LicenseModal;
+  

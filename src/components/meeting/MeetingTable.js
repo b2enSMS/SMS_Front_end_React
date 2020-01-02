@@ -78,7 +78,7 @@ const MeetingTable = ({ meetingList, loadingTable, deleteMeeting, showUpdateModa
     const columns = [
         {
             title: '참석 기관',
-            dataIndex: 'orgId',
+            dataIndex: 'orgNm',
 
         },
         {
@@ -86,8 +86,16 @@ const MeetingTable = ({ meetingList, loadingTable, deleteMeeting, showUpdateModa
             dataIndex: 'meetDt',
         },
         {
-            title: '번호',
-            dataIndex: 'telNo',
+            title: '시작 시간',
+            dataIndex: 'meetStartTime',
+        },
+        {
+            title: '미팅 총 시간',
+            dataIndex: 'meetTotTime',
+        },
+        {
+            title: '내용',
+            dataIndex: 'meetCnt',
         },
         {
             title: '',
@@ -97,7 +105,7 @@ const MeetingTable = ({ meetingList, loadingTable, deleteMeeting, showUpdateModa
                 (<Dropdown
                         overlay={(
                             <Menu onClick={() => {
-                                handleMenuClick(record.empId)
+                                handleMenuClick(record.meetId)
                                 changeButton()
                             }}>
                                 <Menu.Item >
