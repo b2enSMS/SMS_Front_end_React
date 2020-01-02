@@ -1,9 +1,8 @@
 import React from 'react';
 import { Container, TextField } from '@material-ui/core/';
-import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import {Modal} from "antd";
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 
 const useStyles = makeStyles(theme => ({
     form: {
@@ -24,67 +23,60 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const user = [
-    {
-        value: 'manager',
-        label: '담당자',
-    },
-    {
-        value: 'user',
-        label: '사용자',
-    },
-];
-
-const CustomerUpdateModal = ({updateVisible, orgList, HandleCancel, handleChangeInput, updateCust, custInfo}) => {
+const PossibleCustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, HandleCancel, handleChangeInput, possibleCustomerModal, buttonFlag, handleOk}) => {
 
     const classes = useStyles();
-    const [men, setMen] = React.useState('manager');
-
-    const handleChange2 = ev => {
-        setMen(ev.target.value);
-        handleChangeInput({form:"updateCustomerModal", key: ev.target.id, value: ev.target.value});
-    }
 
     const handleChange = ev => {
-        handleChangeInput({form:"updateCustomerModal", key: ev.target.id, value: ev.target.value});
+        handleChangeInput({ form: "possibleCustomerModal", key: ev.target.id, value: ev.target.value })
     }
 
     const autoCompleteHandleChange = (ev, value) => {
         console.log("autoCompleteHandleChange", value)
         for (var key in value) {
-            handleChangeInput({ form: "updateCustomerModal", key: key, value: value[key] });
+            handleChangeInput({ form: "possibleCustomerModal", key: key, value: value[key] });
         }
+    }
+
+    const contractCodeHandleChange = (ev, value)=>{
+        handleChangeInput({ form: "possibleCustomerModal", key: "custTpCd", value: value["cmmnDetailCd"] });
+        handleChangeInput({ form: "possibleCustomerModal", key: "custTpCdNm", value: value["cmmnDetailCdNm"] });
+
     }
 
     return(
         <Modal
-            title="고객정보 수정"
+            title="고객 정보"
             visible={updateVisible}
-            onOk={updateCust}
+            okText={buttonFlag?"등록":"수정"}
+            onOk={buttonFlag?handleOk:handleUpdateOk}
             onCancel={HandleCancel}
             style={{ top: 25 }}
         >
             <Container component="main" maxWidth="xs">
                 <form className={classes.form}>
-
                     <Autocomplete
                         id="orgId"
                         options={orgList}
                         onChange={autoCompleteHandleChange}
-                        getOptionLabel={options => options.orgNm}
+                        getOptionLabel={option => option.orgNm}
+                        inputValue={possibleCustomerModal.orgNm}
+                        value={{ orgNm: possibleCustomerModal.orgNm }}
+                        disableClearable={true}
                         renderInput={params => (
                             <TextField
                                 {...params}
                                 className={classes.textField}
                                 variant="outlined"
                                 required
-                                margin="normal"
+                                //margin="normal"
                                 label="기관명"
-                                //defaultValue={custInfo.orgNm}
                                 fullWidth
+                                value={possibleCustomerModal.orgNm}
                             />
                         )}
                     />
+
                     <TextField
                         className={classes.textField}
                         variant="outlined"
@@ -94,6 +86,7 @@ const CustomerUpdateModal = ({updateVisible, orgList, HandleCancel, handleChange
                         id="custNm"
                         label="고객명"
                         name="custNm"
+                        value={possibleCustomerModal.custNm}
                         onChange={handleChange}
                     />
                     <TextField
@@ -105,7 +98,7 @@ const CustomerUpdateModal = ({updateVisible, orgList, HandleCancel, handleChange
                         id="custRankNm"
                         label="직책"
                         name="custRankNm"
-                        //value={custInfo.custRankNm}
+                        value={possibleCustomerModal.custRankNm}
                         onChange={handleChange}
                     />
                     <TextField
@@ -117,7 +110,7 @@ const CustomerUpdateModal = ({updateVisible, orgList, HandleCancel, handleChange
                         id="email"
                         label="이메일"
                         name="email"
-                        //value={custInfo.email}
+                        value={possibleCustomerModal.email}
                         onChange={handleChange}
                     />
                     <TextField
@@ -127,33 +120,35 @@ const CustomerUpdateModal = ({updateVisible, orgList, HandleCancel, handleChange
                         required
                         fullWidth
                         name="telNo"
-                        label="전화번호"
+                        label="연락처"
                         id="telNo"
-                        //value={custInfo.telNo}
+                        value={possibleCustomerModal.telNo}
                         onChange={handleChange}
                     />
-                    <TextField
-                        className={classes.textField}
-                        variant="outlined"
-                        margin="normal"
-                        id="custCode"
-                        select
-                        required
-                        label="담당자? 사용자?"
-                        fullWidth
-                        value={men}
-                        onChange={handleChange2}
-                    >
-                        {user.map(option => (
-                            <MenuItem  key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
+                    <Autocomplete
+                        id="custTpCd"
+                        options={custCdList}
+                        onChange={contractCodeHandleChange}
+                        inputValue={possibleCustomerModal.custTpCdNm}
+                        value={{ cmmnDetailCdNm: possibleCustomerModal.custTpCdNm }}
+                        getOptionLabel={option => option.cmmnDetailCdNm}
+                        renderInput={params => (
+                            <TextField
+                                {...params}
+                                className={classes.textField}
+                                variant="outlined"
+                                required
+                                margin="normal"
+                                label="고객 코드"
+                                fullWidth
+                                //value={possibleCustomerModal.custTpCdNm}
+                            />
+                        )}
+                    />
                 </form>
             </Container>
         </Modal>
     );
 }
 
-export default CustomerUpdateModal
+export default PossibleCustomerModal

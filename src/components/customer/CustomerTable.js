@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ContractCustomer = ({ contractCustomerList, loadingTable, deleteCustomer, showUpdateModal, showModal, changeButton }) => {
+const CustomerTable = ({ customerList, loadingTable, deleteCustomer, showUpdateModal, showModal, changeButton }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const handleMenuClick = key => {
@@ -172,9 +172,9 @@ const ContractCustomer = ({ contractCustomerList, loadingTable, deleteCustomer, 
                 tableLayout='undefined'
                 rowSelection={rowSelection}
                 columns={columns}
-                dataSource={loadingTable ? null : contractCustomerList}
+                dataSource={loadingTable ? null : customerList}
                 size="small" />
         </div>
     );
 }
-export default ContractCustomer;
+export default CustomerTable;

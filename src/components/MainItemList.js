@@ -70,7 +70,7 @@ class MainItemList extends React.Component {
           >
               <Menu.Item key="8"><Link to="/product"><Icon type="reconciliation"/>제품관리</Link></Menu.Item>
               <Menu.Item key="9"><Link to="/manager"><Icon type="user" />b2en 담당자 관리</Link></Menu.Item>
-              <Menu.Item key="10"><Link to="/company"><Icon type="team" />고객사 관리</Link></Menu.Item>
+              <Menu.Item key="10"><Link to="/company"><Icon type="team" />고객 관리</Link></Menu.Item>
           </SubMenu>
         </Menu>
       </div>

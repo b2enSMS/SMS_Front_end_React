@@ -1,14 +1,18 @@
 import { handleActions } from 'redux-actions';
 import * as api from '../../lib/api';
 
-const GET_COMPANY = 'producttable/GET_COMPANY';
-const GET_COMPANY_SUCCESS = 'producttable/GET_COMPANY_SUCCESS';
-const GET_COMPANY_FAILURE = 'producttable/GET_COMPANY_FAILURE';
+export const GET_COMPANY = 'companytable/GET_COMPANY';
+export const GET_COMPANY_SUCCESS = 'companytable/GET_MANAGER_SUCCESS';
+export const GET_COMPANY_FAILURE = 'companytable/GET_MANAGER_FAILURE';
+
+const DELETE_COMPANY = 'companytable/DELETE_COMPANY';
+const DELETE_COMPANY_SUCCESS = 'companytable/DELETE_MANAGER_SUCCESS';
+const DELETE_COMPANY_FAILURE = 'companytable/DELETE_MANAGER_FAILURE';
 
 export const getCompanyList = () => async dispatch => {
     dispatch({ type: GET_COMPANY });
     try {
-        const res = await api.getCompanyList();
+        const res = await api.getOrgList();
         dispatch({
             type: GET_COMPANY_SUCCESS,
             payload: res.data
@@ -23,6 +27,38 @@ export const getCompanyList = () => async dispatch => {
     }
 };
 
+export const deleteCompany = selectedRowKeys => async dispatch => {
+    dispatch({type: DELETE_COMPANY});
+    try{
+        console.log("selectedRowKeysselectedRowKeys",selectedRowKeys);
+        await api.deleteCompany(selectedRowKeys);
+        dispatch({type: DELETE_COMPANY_SUCCESS});
+    }catch(e){
+        dispatch({
+            type: DELETE_COMPANY_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+
+    dispatch({ type: GET_COMPANY });
+    try {
+        const response = await api.getOrgList();
+        dispatch({
+            type: GET_COMPANY_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        dispatch({
+            type: GET_COMPANY_FAILURE,
+            payload: e,
+            error: true
+        });
+        throw e;
+    }
+}
+
 const initialState = {
     companyList: null,
     loadingTable: false
@@ -36,13 +72,25 @@ const companytable = handleActions(
         }),
         [GET_COMPANY_SUCCESS]: ( state, action ) => ({
             ...state,
-            productList: action.payload,
+            companyList: action.payload,
             loadingTable: false
         }),
         [GET_COMPANY_FAILURE]: state => ({
             ...state,
             loadingTable: false,
-        })
+        }),
+        [DELETE_COMPANY]: state => ({
+            ...state,
+            loadingTable: true
+        }),
+        [DELETE_COMPANY_SUCCESS]: state => ({
+            ...state,
+            loadingTable: false
+        }),
+        [DELETE_COMPANY_FAILURE]: state => ({
+            ...state,
+            loadingTable: false,
+        }),
     },
     initialState,
 );
