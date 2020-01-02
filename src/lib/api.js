@@ -40,12 +40,7 @@ export const postContracts = (formData) => {
 }
 
 
-export const updatePossible = (formData) => {
-    const data = {
 
-    }
-    axios.put(`/temp/${formData.tempVerId}`, data);
-}
 export const postUpdateContracts = (formData) => {
     console.log("formData야야야야ㅑ", formData.lcns)
     const data = {
@@ -124,7 +119,7 @@ export const getCustList = () => {
 
 // 계약고객 리스트
 export const getContractCustomerList = () => {
-     return axios.get('/cust/cont');
+    return axios.get('/cust/cont');
 }
 
 export const getPresaleCustomerList = () => {
@@ -147,13 +142,6 @@ export const updateManager = (formData) => {
         telNo: formData.telNo,
     }
     return axios.put(`/b2en/${formData.empId}`, data);
-}
-
-export const postPossible = (formData) => {
-    const data = {
-
-    }
-    return axios.post('temp/create,', data);
 }
 
 export const postProduct = (formData) => {
@@ -183,15 +171,9 @@ export const getheadConts = () =>
 export const getContract = (key) =>
     axios.get(`/cont/${key}`);
 
-export const getPossibleContractList = () =>
-    axios.get('/temp/showall');
-
 
 export const getHistoryList = (contId) =>
     axios.get(`cont/hist/${contId}`);
-
-export const getPossibleContract = (key) =>
-    axios.get(`/temp/${key}`);
 
 //기관 리스트
 export const getOrganization = () =>
@@ -238,9 +220,6 @@ export const getDeleteProducts = (selectedRowKeys) => {
     return axios.delete(`/prdt`, { data: { idx: selectedRowKeys } })
 }
 
-export const deletePossibleContract = (selectedRowKeys) => {
-    return axios.delete(`/temp`, {data: {idx: selectedRowKeys}})
-}
 
 export const deleteB2enManager = (selectedRowKeys) =>
     axios.delete(`/b2en`,{data: {idx: selectedRowKeys}})
@@ -255,8 +234,9 @@ export const getManager = (empNo) =>
 export const getCompanyList = () =>
     axios.get('/org/showall');
 
+
 export const deleteCompany = (selectedRowKeys) => {
-    axios.delete('/org',{data: {idx: selectedRowKeys}})
+    axios.delete('/org', { data: { idx: selectedRowKeys } })
 }
 
 export const getOrgList = () => {
@@ -290,3 +270,32 @@ export const getMeetingList = () =>
 
 export const getMeeting = (meetId) =>
     axios.get(`/temp/${meetId}`);
+export const getTempContract = (key) =>
+    axios.get(`/temp/${key}`);
+
+export const getTempContracts = () =>
+    axios.get('/temp/showall');
+
+export const updatePossible = (formData) => {
+    const data = {
+        lcns: formData.lcns,
+        custId: formData.custid,
+        empId: formData.empId,
+        requestDt: formData.requestDt,
+        macAdrr: formData.macAdrr,
+        issueReason: formData.issueReason,
+    }
+    axios.put(`/temp/${formData.tempVerId}`, data);
+}
+//임시 계약 등록
+export const postPossible = (formData) => {
+    const data = {
+        lcns: formData.lcns,
+        custId: formData.custid,
+        empId: formData.empId,
+        requestDt: formData.requestDt,
+        macAdrr: formData.macAdrr,
+        issueReason: formData.issueReason,
+    }
+    return axios.post('/temp/create', data);
+}
