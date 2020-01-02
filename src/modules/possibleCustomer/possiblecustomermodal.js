@@ -1,30 +1,29 @@
-/*
 import {createAction, handleActions} from 'redux-actions';
 import * as api from '../../lib/api';
 import produce from "immer";
-import { GET_CUSTOMER, GET_CUSTOMER_SUCCESS, GET_CUSTOMER_FAILURE } from './contractcustomertable';
+import { GET_POSSIBLE_CUSTOMER, GET_POSSIBLE_CUSTOMER_SUCCESS, GET_POSSIBLE_CUSTOMER_FAILURE } from './possiblecustomertable';
 
-const CUSTOMER_INIT = 'contractcustomermodal/CUSTOMER_INIT';
-const BUTTON_CHANGE = 'contractcustomermodal/BUTTON_CHANGE';
+const POSSIBLE_CUSTOMER_INIT = 'possiblecustomermodal/POSSIBLE_CUSTOMER_INIT';
+const BUTTON_CHANGE = 'possiblecustomermodal/BUTTON_CHANGE';
 
-const HANDLE_CANCEL = "contractcustomermodal/HANDLE_CANCEL";
-const CHANGE_INPUT = "contractcustomermodal/CHANGE_INPUT";
+const HANDLE_CANCEL = "possiblecustomermodal/HANDLE_CANCEL";
+const CHANGE_INPUT = "possiblecustomermodal/CHANGE_INPUT";
 
-const UPDATE_CUSTOMER = 'contractcustomermodal/UPDATE_CUSTOMER';
-const UPDATE_CUSTOMER_SUCCESS = 'contractcustomermodal/UPDATE_CUSTOMER_SUCCESS';
-const UPDATE_CUSTOMER_FAILURE = 'contractcustomermodal/UPDATE_CUSTOMER_FAILURE';
+const UPDATE_POSSIBLE_CUSTOMER = 'possiblecustomermodal/UPDATE_POSSIBLE_CUSTOMER';
+const UPDATE_POSSIBLE_CUSTOMER_SUCCESS = 'possiblecustomermodal/UPDATE_POSSIBLE_CUSTOMER_SUCCESS';
+const UPDATE_POSSIBLE_CUSTOMER_FAILURE = 'possiblecustomermodal/UPDATE_POSSIBLE_CUSTOMER_FAILURE';
 
-const SHOW_MODAL = 'contractcustomermodal/SHOW_MODAL';
-const SHOW_MODAL_SUCCESS = 'contractcustomermodal/SHOW_MODAL_SUCCESS';
-const SHOW_MODAL_FAILURE = 'contractcustomermodal/SHOW_MODAL_FAILURE';
+const SHOW_MODAL = 'possiblecustomermodal/SHOW_MODAL';
+const SHOW_MODAL_SUCCESS = 'possiblecustomermodal/SHOW_MODAL_SUCCESS';
+const SHOW_MODAL_FAILURE = 'possiblecustomermodal/SHOW_MODAL_FAILURE';
 
-const SHOW_UPDATE_MODAL = 'contractcustomermodal/SHOW_UPDATE_MODAL';
-const SHOW_UPDATE_MODAL_SUCCESS = 'contractcustomermodal/SHOW_UPDATE_MODAL_SUCCESS';
-const SHOW_UPDATE_MODAL_FAILURE = 'contractcustomermodal/SHOW_UPDATE_MODAL_FAILURE';
+const SHOW_UPDATE_MODAL = 'possiblecustomermodal/SHOW_UPDATE_MODAL';
+const SHOW_UPDATE_MODAL_SUCCESS = 'possiblecustomermodal/SHOW_UPDATE_MODAL_SUCCESS';
+const SHOW_UPDATE_MODAL_FAILURE = 'possiblecustomermodal/SHOW_UPDATE_MODAL_FAILURE';
 
-const POST_CUSTOMER = 'contractcustomermodal/POST_CUSTOMER';
-const POST_CUSTOMER_SUCCESS = 'contractcustomermodal/POST_CUSTOMER_SUCCESS';
-const POST_CUSTOMER_FAILURE = 'contractcustomermodal/POST_CUSTOMER_FAILURE';
+const POST_POSSIBLE_CUSTOMER = 'possiblecustomermodal/POST_POSSIBLE_CUSTOMER';
+const POST_POSSIBLE_CUSTOMER_SUCCESS = 'possiblecustomermodal/POST_POSSIBLE_CUSTOMER_SUCCESS';
+const POST_POSSIBLE_CUSTOMER_FAILURE = 'possiblecustomermodal/POST_POSSIBLE_CUSTOMER_FAILURE';
 
 export const getButtonChange = createAction(BUTTON_CHANGE);
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
@@ -193,7 +192,7 @@ const possiblecustomermodal = handleActions(
             produce(state, draft => {
                 draft["orgList"] = orgList;
                 draft['custCdList'] = custCdList;
-            }),
+        }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
             updateVisible: true,
@@ -206,7 +205,7 @@ const possiblecustomermodal = handleActions(
                 draft["orgList"] = orgList;
                 draft["possibleCustomerModal"] = form;
                 draft['custCdList'] = custCdList;
-            }),
+        }),
         [HANDLE_CANCEL]: state => ({
             ...state,
             updateVisible: false,
@@ -248,4 +247,4 @@ const possiblecustomermodal = handleActions(
     initialState,
 );
 
-export default possiblecustomermodal*/
+export default possiblecustomermodal

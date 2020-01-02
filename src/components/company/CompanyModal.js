@@ -23,23 +23,22 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChangeInput, productInfo, buttonFlag, handleOk}) => {
+const CompanyModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChangeInput, companyModal, buttonFlag, handleOk}) => {
 
     const classes = useStyles();
 
     const handleChange = ev => {
-        handleChangeInput({ form: "productModal", key: ev.target.id, value: ev.target.value })
+        handleChangeInput({ form: "companyModal", key: ev.target.id, value: ev.target.value })
     }
 
     return(
         <Modal
-            title="제품 정보"
+            title="기관 정보"
             visible={updateVisible}
             okText={buttonFlag?"등록":"수정"}
             onOk={buttonFlag?handleOk:handleUpdateOk}
             onCancel={HandleCancel}
             style={{ top: 25 }}
-
         >
             <Container component="main" maxWidth="xs">
                 <form className={classes.form}>
@@ -50,10 +49,10 @@ const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         margin="normal"
                         required
                         fullWidth
-                        id="prdtNm"
-                        label="제품명"
-                        name="prdtNm"
-                        value={productInfo.prdtNm}
+                        id="orgNm"
+                        label="기관이름"
+                        name="orgNm"
+                        value={companyModal.orgNm}
                         onChange={handleChange}
                     />
                     <TextField
@@ -62,22 +61,10 @@ const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         margin="normal"
                         required
                         fullWidth
-                        id="prdtAmt"
-                        label="가격"
-                        name="prdtAmt"
-                        value={productInfo.prdtAmt}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        className={classes.textField}
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="prdtDesc"
-                        label="설명"
-                        id="prdtDesc"
-                        value={productInfo.prdtDesc}
+                        name="orgAddr"
+                        label="주소"
+                        id="orgAddr"
+                        value={companyModal.orgAddr}
                         onChange={handleChange}
                     />
                 </form>
@@ -86,4 +73,4 @@ const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
     );
 }
 
-export default ProductModal
+export default CompanyModal

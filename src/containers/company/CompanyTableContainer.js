@@ -1,22 +1,30 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getCompanyList } from "modules/company/companytable";
+import { getCompanyList, deleteCompany } from "modules/company/companytable";
+import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/company/companymodal";
 import CompanyTable from "../../components/company/CompanyTable";
 
 const CompanyTableContainer = ({
-        getCompanyList,
-        companyList,
-        loadingTable,
-    }) => {
+                                   getShowUpdateModal,
+                                   getCompanyList,
+                                   deleteCompany,
+                                   companyList,
+                                   loadingTable,
+                                   getShowModal,
+                                   getButtonChange,
+                               }) => {
     useEffect(()=> {
         getCompanyList();
     }, [getCompanyList]);
 
-    console.log("compancompany",companyList);
     return (
         <CompanyTable
             companyList={companyList}
             loadingTable={loadingTable}
+            deleteCompany={deleteCompany}
+            showUpdateModal={getShowUpdateModal}
+            showModal={getShowModal}
+            changeButton={getButtonChange}
         />
     );
 };
@@ -28,5 +36,9 @@ export default connect(
     }),
     {
         getCompanyList,
+        deleteCompany,
+        getShowUpdateModal,
+        getButtonChange,
+        getShowModal,
     }
 )(CompanyTableContainer);

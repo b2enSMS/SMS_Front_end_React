@@ -59,10 +59,12 @@ const useStyles = makeStyles(theme => ({
     plusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
     minusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
 }));
 
@@ -127,9 +129,8 @@ const ManagerTable = ({ managerList, loadingTable, deleteManager, showUpdateModa
     return(
         <div>
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
-                {hasSelected ? `Selected ${selectedRowKeys.length} items` : 'Selected 0 item'}
+                {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
             </div>
-
             <div className={classes.button}>
                 <span style={{ paddingRight: 14 }}>
 
@@ -140,7 +141,7 @@ const ManagerTable = ({ managerList, loadingTable, deleteManager, showUpdateModa
                   variant="outlined"
                   color="primary"
                   endIcon={<AddIcon />}
-              > Add New
+              > 담당자 등록
               </ColorButton>
             </span>
                 <RemoveButton
@@ -150,7 +151,7 @@ const ManagerTable = ({ managerList, loadingTable, deleteManager, showUpdateModa
                     color="secondary"
                     endIcon={<RemoveIcon />}
                     onClick={()=>{deleteManager(selectedRowKeys);setSelectedRowKeys([]);}}
-                > Remove
+                > 담당자 삭제
                 </RemoveButton>
             </div>
             <Table

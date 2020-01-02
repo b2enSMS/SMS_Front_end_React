@@ -1,29 +1,29 @@
 import {createAction, handleActions} from 'redux-actions';
 import * as api from '../../lib/api';
 import produce from "immer";
-import { GET_PRODUCT, GET_PRODUCT_SUCCESS, GET_PRODUCT_FAILURE } from './producttable';
+import { GET_COMPANY, GET_COMPANY_SUCCESS, GET_COMPANY_FAILURE } from './companytable';
 
-const PRODUCT_INIT = 'productupdatemodal/PRODUCT_INIT';
-const BUTTON_CHANGE = 'productupdatemodal/BUTTON_CHANGE';
+const COMPANY_INIT = 'companymodal/COMPANY_INIT';
+const BUTTON_CHANGE = 'companymodal/BUTTON_CHANGE';
 
-const HANDLE_CANCEL = "productupdatemodal/HANDLE_CANCEL";
-const CHANGE_INPUT = "productupdatemodal/CHANGE_INPUT";
+const HANDLE_CANCEL = "companymodal/HANDLE_CANCEL";
+const CHANGE_INPUT = "companymodal/CHANGE_INPUT";
 
-const UPDATE_PRODUCT = 'productupdatemodal/UPDATE_PRODUCT';
-const UPDATE_PRODUCT_SUCCESS = 'productupdatemodal/UPDATE_PRODUCT_SUCCESS';
-const UPDATE_PRODUCT_FAILURE = 'productupdatemodal/UPDATE_PRODUCT_FAILURE';
+const UPDATE_COMPANY = 'companymodal/UPDATE_COMPANY';
+const UPDATE_COMPANY_SUCCESS = 'companymodal/UPDATE_COMPANY_SUCCESS';
+const UPDATE_COMPANY_FAILURE = 'companymodal/UPDATE_COMPANY_FAILURE';
 
-const SHOW_MODAL = 'productupdatemodal/SHOW_MODAL';
-const SHOW_MODAL_SUCCESS = 'productupdatemodal/SHOW_MODAL_SUCCESS';
-const SHOW_MODAL_FAILURE = 'productupdatemodal/SHOW_MODAL_FAILURE';
+const SHOW_MODAL = 'companymodal/SHOW_MODAL';
+const SHOW_MODAL_SUCCESS = 'companymodal/SHOW_MODAL_SUCCESS';
+const SHOW_MODAL_FAILURE = 'companymodal/SHOW_MODAL_FAILURE';
 
-const POST_PRODUCT = 'productupdatemodal/POST_PRODUCT';
-const POST_PRODUCT_SUCCESS = 'productupdatemodal/POST_PRODUCT_SUCCESS';
-const POST_PRODUCT_FAILURE = 'productupdatemodal/POST_PRODUCT_FAILURE';
+const POST_COMPANY = 'companymodal/POST_COMPANY';
+const POST_COMPANY_SUCCESS = 'companymodal/POST_COMPANY_SUCCESS';
+const POST_COMPANY_FAILURE = 'companymodal/POST_COMPANY_FAILURE';
 
 export const getButtonChange = createAction(BUTTON_CHANGE);
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
-export const initialForm = createAction(PRODUCT_INIT, form => form);
+export const initialForm = createAction(COMPANY_INIT, form => form);
 
 export const getShowModal = () => dispatch => {
     dispatch({ type: SHOW_MODAL});
@@ -38,10 +38,10 @@ export const getShowModal = () => dispatch => {
     }
 }
 
-export const getShowUpdateModal = product => async dispatch => {
+export const getShowUpdateModal = org => async dispatch => {
     dispatch({ type: SHOW_MODAL });
     try {
-        const res = await api.getProduct(product);
+        const res = await api.getOrg(org);
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
@@ -60,28 +60,28 @@ export const getShowUpdateModal = product => async dispatch => {
 };
 
 export const handleUpdateOk = (formData) => async dispatch => {
-    dispatch({ type: UPDATE_PRODUCT });
+    dispatch({ type: UPDATE_COMPANY });
     try {
-        await api.updateProduct(formData);
+        await api.updateOrg(formData);
         dispatch({
-            type: UPDATE_PRODUCT_SUCCESS
+            type: UPDATE_COMPANY_SUCCESS
         });
         dispatch({
-            type: PRODUCT_INIT,
-            payload: "productModal"
+            type: COMPANY_INIT,
+            payload: "companyModal"
         });
         dispatch({
-            type: GET_PRODUCT
+            type: GET_COMPANY
         });
         try {
-            const response = await api.getProductList();
+            const response = await api.getOrgList();
             dispatch({
-                type: GET_PRODUCT_SUCCESS,
+                type: GET_COMPANY_SUCCESS,
                 payload: response.data
             });
         } catch (e) {
             dispatch({
-                type: GET_PRODUCT_FAILURE,
+                type: GET_COMPANY_FAILURE,
                 payload: e,
                 error: true
             });
@@ -89,7 +89,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
         }
     } catch (e) {
         dispatch({
-            type: UPDATE_PRODUCT_FAILURE,
+            type: UPDATE_COMPANY_FAILURE,
             payload: e,
             error: true
         });
@@ -99,32 +99,32 @@ export const handleUpdateOk = (formData) => async dispatch => {
 
 export const getHandleCancel = () => dispatch => {
     dispatch({ type: HANDLE_CANCEL });
-    dispatch({ type: PRODUCT_INIT, payload: "productModal" });
+    dispatch({ type: COMPANY_INIT, payload: "companyModal" });
 };
 
 export const handleOk = (formData) => async dispatch => {
-    dispatch({ type: POST_PRODUCT });
+    dispatch({ type: POST_COMPANY });
     try {
-        await api.postProduct(formData);
+        await api.postOrg(formData);
         dispatch({
-            type: POST_PRODUCT_SUCCESS
+            type: POST_COMPANY_SUCCESS
         })
         dispatch({
-            type: PRODUCT_INIT,
-            payload: "productModal"
+            type: COMPANY_INIT,
+            payload: "companyModal"
         });
         dispatch({
-            type: GET_PRODUCT
+            type: GET_COMPANY
         });
         try {
-            const response = await api.getProductList();
+            const response = await api.getOrgList();
             dispatch({
-                type: GET_PRODUCT_SUCCESS,
+                type: GET_COMPANY_SUCCESS,
                 payload: response.data
             });
         } catch (e) {
             dispatch({
-                type: GET_PRODUCT_FAILURE,
+                type: GET_COMPANY_FAILURE,
                 payload: e,
                 error: true
             });
@@ -132,7 +132,7 @@ export const handleOk = (formData) => async dispatch => {
         }
     } catch(e) {
         dispatch({
-            type: POST_PRODUCT_FAILURE,
+            type: POST_COMPANY_FAILURE,
             payload: e,
             error: true,
         });
@@ -147,15 +147,13 @@ export const handleChangeInput = (changeData) => dispatch => {
 const initialState = {
     updateVisible: false,
     buttonFlag: true,
-    productModal: {
-        prdtNm: "",
-        prdtDesc: "",
-        prdtAmt: "",
-        prdtTpCd: "",
+    companyModal : {
+        orgNm: '',
+        orgAddr: '',
     },
 };
 
-const productupdatemodal = handleActions(
+const companymodal = handleActions(
     {
         [BUTTON_CHANGE]: state => ({
             ...state,
@@ -170,7 +168,7 @@ const productupdatemodal = handleActions(
         }),
         [SHOW_MODAL_SUCCESS]: (state, { payload: {form}}) =>
             produce(state, draft => {
-                draft["productModal"] = form
+                draft["companyModal"] = form
             }),
         [HANDLE_CANCEL]: state => ({
             ...state,
@@ -180,32 +178,33 @@ const productupdatemodal = handleActions(
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
             produce(state, draft => {
                 draft[form][key] = value
-        }),
-        [PRODUCT_INIT]: (state, { payload: form }) => ({
+            }),
+        [COMPANY_INIT]: (state, { payload: form }) => ({
             ...state,
             [form]: initialState[form],
         }),
-        [POST_PRODUCT]: state => ({
+        [POST_COMPANY]: state => ({
             ...state,
         }),
-        [POST_PRODUCT_SUCCESS]: state => ({
+        [POST_COMPANY_SUCCESS]: state => ({
+            ...state,
+            updateVisible: false,
+            buttonFlag: true,
+        }),
+        [POST_COMPANY_FAILURE]: state => ({
             ...state,
             updateVisible: false,
         }),
-        [POST_PRODUCT_FAILURE]: state => ({
-            ...state,
-            updateVisible: false,
-        }),
-        [UPDATE_PRODUCT]: state => ({
+        [UPDATE_COMPANY]: state => ({
             ...state,
             updateVisible: true,
         }),
-        [UPDATE_PRODUCT_SUCCESS]: state => ({
+        [UPDATE_COMPANY_SUCCESS]: state => ({
             ...state,
             updateVisible: false,
-            buttonFlag: true
+            buttonFlag: true,
         }),
-        [UPDATE_PRODUCT_FAILURE]: state => ({
+        [UPDATE_COMPANY_FAILURE]: state => ({
             ...state,
             updateVisible: false,
         }),
@@ -213,4 +212,4 @@ const productupdatemodal = handleActions(
     initialState,
 );
 
-export default productupdatemodal
+export default companymodal

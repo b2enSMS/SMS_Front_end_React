@@ -59,20 +59,25 @@ const useStyles = makeStyles(theme => ({
     plusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
     minusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
 }));
 
-const CompanyTable = ({ companyList, loadingTable }) => {
+const CompanyTable = ({ companyList, loadingTable, deleteCompany, showUpdateModal, showModal, changeButton }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
+    const handleMenuClick = key => {
+        console.log("key", key);
+        showUpdateModal(key)
+    }
     const columns = [
         {
-            title: '이름',
+            title: '기관 이름',
             dataIndex: 'orgNm',
 
         },
@@ -87,12 +92,11 @@ const CompanyTable = ({ companyList, loadingTable }) => {
             render: (text, record) =>
                 (<Dropdown
                         overlay={(
-                            <Menu>
-                                <Menu.Item onClick={()=>{
-                                    // const index = record.custId;
-                                    // console.log("recordrecord",record)
-                                    //showUpdateModal(index)
-                                }}>
+                            <Menu onClick={() => {
+                                handleMenuClick(record.orgId)
+                                changeButton()
+                            }}>
+                                <Menu.Item >
                                     수정
                                 </Menu.Item>
                             </Menu>
@@ -121,20 +125,19 @@ const CompanyTable = ({ companyList, loadingTable }) => {
     return(
         <div>
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
-                {hasSelected ? `Selected ${selectedRowKeys.length} items` : 'Selected 0 item'}
-            </div>
-
+            {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
+        </div>
             <div className={classes.button}>
                 <span style={{ paddingRight: 14 }}>
 
               <ColorButton
-                  //onClick={showModal}
+                  onClick={showModal}
                   className={classes.plusbutton}
                   size='small'
                   variant="outlined"
                   color="primary"
                   endIcon={<AddIcon />}
-              > Add New
+              > 기관 등록
               </ColorButton>
             </span>
                 <RemoveButton
@@ -143,8 +146,8 @@ const CompanyTable = ({ companyList, loadingTable }) => {
                     variant="outlined"
                     color="secondary"
                     endIcon={<RemoveIcon />}
-                    //onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
-                > Remove
+                    onClick={()=>{deleteCompany(selectedRowKeys);setSelectedRowKeys([]);}}
+                > 기관 삭제
                 </RemoveButton>
             </div>
             <Table
@@ -153,7 +156,7 @@ const CompanyTable = ({ companyList, loadingTable }) => {
                 tableLayout='undefined'
                 rowSelection={rowSelection}
                 columns={columns}
-                dataSource={companyList}
+                dataSource={loadingTable ? null : companyList}
                 size="small" />
         </div>
     );
