@@ -88,7 +88,8 @@ export const deleteCustomer = (selectedRowKeys) => {
 }
 
 // 고객 수정
-export const updateCustomer = (custId, formData) => {
+export const updateCustomer = (formData) => {
+    console.log("fdsfefgdf", formData);
     const data = {
         orgId: formData.orgId,
         orgNm: formData.orgNm,
@@ -98,7 +99,7 @@ export const updateCustomer = (custId, formData) => {
         telNo: formData.telNo,
         custTpCd: formData.custTpCd,
     }
-    axios.put(`/cust/${custId}`, data);
+    return axios.put(`/cust/${formData.custId}`, data);
 }
 
 //고객 등록
@@ -115,6 +116,19 @@ export const postCustomer = (formData) => {
         custTpCd: formData.custTpCd,
     }
     return axios.post('/cust/create', data);
+}
+
+export const getCustList = () => {
+    return axios.get('/cust/showall');
+}
+
+// 계약고객 리스트
+export const getContractCustomerList = () => {
+     return axios.get('/cust/cont');
+}
+
+export const getPresaleCustomerList = () => {
+    return axios.get('/cust/presale')
 }
 
 export const postManager = (formData) => {
@@ -240,3 +254,31 @@ export const getManager = (empNo) =>
 
 export const getCompanyList = () =>
     axios.get('/org/showall');
+
+export const deleteCompany = (selectedRowKeys) => {
+    axios.delete('/org',{data: {idx: selectedRowKeys}})
+}
+
+export const getOrgList = () => {
+    return axios.get('/org/showall');
+}
+
+export const getOrg = (orgId) => {
+    return axios.get(`/org/${orgId}`);
+}
+
+export const updateOrg = (formData) => {
+    const data = {
+        orgNm: formData.orgNm,
+        orgAddr: formData.orgAddr
+    }
+    axios.put(`/org/${formData.orgId}`, data);
+}
+
+export const postOrg = (formData) => {
+    const data = {
+        orgNm: formData.orgNm,
+        orgAddr: formData.orgAddr
+    }
+    axios.post(`/org/create`, data);
+}

@@ -59,40 +59,46 @@ const useStyles = makeStyles(theme => ({
     plusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
     minusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
 }));
 
-const PossibleCustomerTable = ({loadingTable, customerList, showModal, deleteCustomer, showUpdateModal}) => {
+const PossibleCustomerTable = ({ possibleCustomerList, loadingTable, deleteCustomer, showUpdateModal, showModal, changeButton }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const handleMenuClick = key => {
+        console.log("key", key);
+        showUpdateModal(key)
+    }
     const columns = [
         {
-            title: 'organization',
+            title: '기관',
             dataIndex: 'orgNm',
         },
         {
-            title: 'name',
+            title: '고객 이름',
             dataIndex: 'custNm',
         },
         {
-            title: 'email',
-            dataIndex: 'email',
-        },
-        {
-            title: 'phoneNum',
-            dataIndex: 'telNo',
-        },
-        {
-            title: 'position',
+            title: '직책',
             dataIndex: 'custRankNm',
         },
         {
-            title: '담/사',
-            dataIndex: 'custTpCd',
+            title: '이메일',
+            dataIndex: 'email',
+        },
+        {
+            title: '연락처',
+            dataIndex: 'telNo',
+        },
+        {
+            title: '고객 유형',
+            dataIndex: 'custTpCdNm',
         },
         {
             title: '',
@@ -101,12 +107,11 @@ const PossibleCustomerTable = ({loadingTable, customerList, showModal, deleteCus
             render: (text, record) =>
                 (<Dropdown
                         overlay={(
-                            <Menu>
-                                <Menu.Item onClick={()=>{
-                                    const index = record.custId;
-                                    console.log("recordrecord",record)
-                                    showUpdateModal(index)
-                                }}>
+                            <Menu onClick={() => {
+                                handleMenuClick(record.custId)
+                                changeButton()
+                            }}>
+                                <Menu.Item >
                                     수정
                                 </Menu.Item>
                             </Menu>
@@ -135,7 +140,7 @@ const PossibleCustomerTable = ({loadingTable, customerList, showModal, deleteCus
     return(
         <div>
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
-                {hasSelected ? `Selected ${selectedRowKeys.length} items` : 'Selected 0 item'}
+                {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
             </div>
 
             <div className={classes.button}>
@@ -148,7 +153,7 @@ const PossibleCustomerTable = ({loadingTable, customerList, showModal, deleteCus
                   variant="outlined"
                   color="primary"
                   endIcon={<AddIcon />}
-              > Add New
+              > 고객 등록
               </ColorButton>
             </span>
                 <RemoveButton
@@ -158,7 +163,7 @@ const PossibleCustomerTable = ({loadingTable, customerList, showModal, deleteCus
                     color="secondary"
                     endIcon={<RemoveIcon />}
                     onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
-                > Remove
+                > 고객 삭제
                 </RemoveButton>
             </div>
             <Table
@@ -167,7 +172,7 @@ const PossibleCustomerTable = ({loadingTable, customerList, showModal, deleteCus
                 tableLayout='undefined'
                 rowSelection={rowSelection}
                 columns={columns}
-                dataSource={loadingTable ? null : customerList}
+                dataSource={loadingTable ? null : possibleCustomerList}
                 size="small" />
         </div>
     );

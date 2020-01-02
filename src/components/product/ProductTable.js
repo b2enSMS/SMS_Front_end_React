@@ -59,10 +59,12 @@ const useStyles = makeStyles(theme => ({
     plusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
     minusbutton: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
+        fontWeight: 'bold'
     },
 }));
 
@@ -127,7 +129,7 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
     return(
         <div>
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
-                {hasSelected ? `Selected ${selectedRowKeys.length} items` : 'Selected 0 item'}
+                {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
             </div>
 
             <div className={classes.button}>
@@ -140,7 +142,7 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
                   variant="outlined"
                   color="primary"
                   endIcon={<AddIcon />}
-              > Add New
+              > 제품 등록
               </ColorButton>
             </span>
                 <RemoveButton
@@ -150,7 +152,7 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
                     color="secondary"
                     endIcon={<RemoveIcon />}
                     onClick={()=>{getDeleteProduct(selectedRowKeys);setSelectedRowKeys([]);}}
-                > Remove
+                > 제품 삭제
                 </RemoveButton>
             </div>
             <Table

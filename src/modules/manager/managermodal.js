@@ -3,7 +3,7 @@ import * as api from '../../lib/api';
 import produce from "immer";
 import { GET_MANAGER, GET_MANAGER_SUCCESS, GET_MANAGER_FAILURE } from './managertable';
 
-const MANAGER_INIT = 'managermodal/PRODUCT_INIT';
+const MANAGER_INIT = 'managermodal/MANAGER_INIT';
 const BUTTON_CHANGE = 'managermodal/BUTTON_CHANGE';
 
 const HANDLE_CANCEL = "managermodal/HANDLE_CANCEL";
@@ -60,6 +60,7 @@ export const getShowUpdateModal = product => async dispatch => {
 };
 
 export const handleUpdateOk = (formData) => async dispatch => {
+    console.log("handleUpdateOkhandleUpdateOk")
     dispatch({ type: UPDATE_MANAGER });
     try {
         await api.updateManager(formData);
@@ -202,6 +203,7 @@ const managermodal = handleActions(
         [UPDATE_MANAGER_SUCCESS]: state => ({
             ...state,
             updateVisible: false,
+            buttonFlag: true,
         }),
         [UPDATE_MANAGER_FAILURE]: state => ({
             ...state,

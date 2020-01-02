@@ -1,42 +1,44 @@
 import React, { useEffect } from 'react';
-import {connect} from 'react-redux';
-import  { ContractCustomer } from "components";
-import { getShowCustomerModal } from "../../modules/contractCustomer/contractcustomermodal";
-import { getCustomerList, deleteCustomer } from "../../modules/contractCustomer/contractcustomer";
-import { getShowUpdateModal } from "../../modules/contractCustomer/customerupdatemodal";
+import { connect } from 'react-redux';
+import { getContractCustomerList, deleteContractCustomer } from "modules/contractCustomer/contractcustomertable";
+import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/possibleCustomer/possiblecustomermodal";
+import {ContractCustomer} from "../../components";
 
 const ContractCustomerContainer = ({
-    customerList,
-    getCustomerList,
-    deleteCustomer,
-    loadingTable,
-    getShowCustomerModal,
-    getShowUpdateModal,
-}) => {
-    useEffect(() => {
-        getCustomerList();
-    }, [getCustomerList]);
+                                            getShowUpdateModal,
+                                       getContractCustomerList,
+                                       deleteContractCustomer,
+                                            contractCustomerList,
+                                            loadingTable,
+                                            getShowModal,
+                                            getButtonChange,
+                                        }) => {
+    useEffect(()=> {
+        getContractCustomerList();
+    }, [getContractCustomerList]);
 
     return (
         <ContractCustomer
+            contractCustomerList={contractCustomerList}
             loadingTable={loadingTable}
-            customerList={customerList}
-            showModal={getShowCustomerModal}
-            deleteCustomer={deleteCustomer}
+            deleteCustomer={deleteContractCustomer}
             showUpdateModal={getShowUpdateModal}
+            showModal={getShowModal}
+            changeButton={getButtonChange}
         />
     );
 };
 
 export default connect(
-    ({ contractcustomer }) => ({
-        customerList: contractcustomer.customerList,
-       loadingTable: contractcustomer.loadingTable,
+    ({ contractcustomertable }) => ({
+        contractCustomerList: contractcustomertable.contractCustomerList,
+        loadingTable: contractcustomertable.loadingTable,
     }),
     {
-        getCustomerList,
-        getShowCustomerModal,
-        deleteCustomer,
+        getContractCustomerList,
+        deleteContractCustomer,
         getShowUpdateModal,
+        getButtonChange,
+        getShowModal,
     }
 )(ContractCustomerContainer);
