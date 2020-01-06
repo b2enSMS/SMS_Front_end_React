@@ -1,8 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 // , useSelector, useDispatch
 import AddOrgModal from '../../components/meeting/AddOrgModal';
 import { getHandleCancel, handleChangeInput, handleOk } from "../../modules/meeting/addorgmodal";
+import {inputCust} from "../../modules/meeting/meetingmodal";
 
 
 const AddOrgModalContainer = ({
@@ -16,6 +17,12 @@ const AddOrgModalContainer = ({
 
 
 }) => {
+    const dispatch = useDispatch();
+    const { formData } = useSelector(({ addmanagermodal }) => ({ formData: addmanagermodal.custModal }));
+    const okok = () => {
+        handleOk();
+        dispatch(inputCust(formData));
+    }
     return (
       <AddOrgModal
           visible={visible}
@@ -23,7 +30,7 @@ const AddOrgModalContainer = ({
           HandleCancel={getHandleCancel}
           custList={custList}
           handleChangeInput={handleChangeInput}
-          handleOk={handleOk}
+          handleOk={okok}
       />
     );
 }

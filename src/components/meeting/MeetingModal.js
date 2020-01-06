@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import DateFnsUtils from "@date-io/date-fns";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import {Input} from "@material-ui/core";
+//import {Input} from "../contract/ContractModal";
 
 
 const useStyles = makeStyles(theme => ({
@@ -202,14 +204,62 @@ const MeetingModal = ({handleUpdateOk,b2enModal, meetCd, orgModal, updateVisible
                         <Grid item xs={12} sm={8}>
                             <Button className={classes.custProps} size="large" variant="outlined" onClick={orgModal}>고객 + </Button>
                         </Grid>
+
                         <Grid item xs={12} sm={4} >
                             <Button  size="large" variant="outlined" onClick={b2enModal}>담당자 +</Button>
                         </Grid>
+
+                        <CustomerList/>
                     </Grid>
                 </form>
             </Container>
         </Modal>
     );
+};
+
+const CustomerList = ({}) => {
+    return (
+      <div>
+          <Input/>
+
+      </div>
+    );
 }
+
+/*const CustomerList = ({ keyvar, license, removeLicenseHandler, classes }) => {
+    return (
+        <Grid container spacing={2} >
+            {console.log("indexLicense", keyvar, license)}
+            <Grid item xs={12} sm={4}>
+                <Input
+                    className={classes.textInput}
+                    value={"고객 명 : " + license.prdtNm}
+                    disabled inputProps={{ 'aria-label': 'description' }}
+                />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <Input
+                    className={classes.textInput}
+                    value={"고객 사 : " + (parseInt(license.contAmt) / 1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 만원 "}
+                    disabled inputProps={{ 'aria-label': 'description' }}
+                />
+            </Grid>
+            <Grid item xs={12} sm={1}>
+                <Button
+                    className={classes.delButton}
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => removeLicenseHandler(keyvar)}
+                >삭제
+                </Button>
+            </Grid>
+        </Grid>
+
+
+    );
+};*/
+
+
+
 
 export default MeetingModal

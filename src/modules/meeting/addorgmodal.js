@@ -18,7 +18,7 @@ export const initialForm = createAction(INIT_ORG, form => form);
 export const getShowOrgModal = () => async dispatch => {
     dispatch({ type: SHOW_ORG_MODAL });
     try {
-        const res = await api.getCustList();
+        const res = await api.getCustListMeet();
         dispatch({
             type: SHOW_ORG_MODAL_SUCCESS,
             payload: {
