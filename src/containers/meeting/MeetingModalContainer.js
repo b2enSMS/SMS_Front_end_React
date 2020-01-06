@@ -9,14 +9,10 @@ import {
     handleUpdateOk,
     getSelectHandleChange,
 } from "../../modules/meeting/meetingmodal";
-import { getShowOrgModal } from "../../modules/meeting/addorgmodal";
-import { getShowEmpModal } from "../../modules/meeting/addmanagermodal";
 import MeetingModal from "../../components/meeting/MeetingModal";
 
 const MeetingModalContainer = 
 ({
-    getShowOrgModal,
-    getShowEmpModal,
     meetCd,
     updateVisible,
     getHandleCancel,
@@ -42,8 +38,6 @@ const MeetingModalContainer =
     return (
         <MeetingModal
             meetCd={meetCd}
-            b2enModal={getShowEmpModal}
-            orgModal={getShowOrgModal}
             updateVisible={updateVisible}
             handleOk={UpdateOk}
             HandleCancel={getHandleCancel}
@@ -68,8 +62,6 @@ export default connect(
         myComList:meetingmodal.myComList,
     }),
     {
-        getShowEmpModal,
-        getShowOrgModal,
         getShowModal,
         getShowUpdateModal,
         getHandleCancel,
