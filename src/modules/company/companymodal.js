@@ -17,6 +17,10 @@ const SHOW_MODAL = 'companymodal/SHOW_MODAL';
 const SHOW_MODAL_SUCCESS = 'companymodal/SHOW_MODAL_SUCCESS';
 const SHOW_MODAL_FAILURE = 'companymodal/SHOW_MODAL_FAILURE';
 
+const SHOW_UPDATE_MODAL = 'companymodal/SHOW_UPDATE_MODAL';
+const SHOW_UPDATE_MODAL_SUCCESS = 'companymodal/SHOW_UPDATE_MODAL_SUCCESS';
+const SHOW_UPDATE_MODAL_FAILURE = 'companymodal/SHOW_UPDATE_MODAL_FAILURE';
+
 const POST_COMPANY = 'companymodal/POST_COMPANY';
 const POST_COMPANY_SUCCESS = 'companymodal/POST_COMPANY_SUCCESS';
 const POST_COMPANY_FAILURE = 'companymodal/POST_COMPANY_FAILURE';
@@ -39,11 +43,11 @@ export const getShowModal = () => dispatch => {
 }
 
 export const getShowUpdateModal = org => async dispatch => {
-    dispatch({ type: SHOW_MODAL });
+    dispatch({ type: SHOW_UPDATE_MODAL });
     try {
         const res = await api.getOrg(org);
         dispatch({
-            type: SHOW_MODAL_SUCCESS,
+            type: SHOW_UPDATE_MODAL_SUCCESS,
             payload: {
                 form: res.data,
             }
@@ -51,7 +55,7 @@ export const getShowUpdateModal = org => async dispatch => {
     } catch(e) {
         console.log("error");
         dispatch({
-            type: SHOW_MODAL_FAILURE,
+            type: SHOW_UPDATE_MODAL_FAILURE,
             payload: e,
             error: true
         });
@@ -163,10 +167,20 @@ const companymodal = handleActions(
             ...state,
             updateVisible: true,
         }),
+        [SHOW_MODAL_SUCCESS]: state => ({
+            ...state,
+        }),
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_MODAL_SUCCESS]: (state, { payload: {form}}) =>
+        [SHOW_UPDATE_MODAL]: state => ({
+            ...state,
+            updateVisible: true,
+        }),
+        [SHOW_UPDATE_MODAL_FAILURE]: state => ({
+            ...state,
+        }),
+        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: {form}}) =>
             produce(state, draft => {
                 draft["companyModal"] = form
             }),

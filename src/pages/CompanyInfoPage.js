@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CompanyTableContainer } from "../containers";
 import { Container, Paper } from "@material-ui/core";
 import CompanyModalContainer from "../containers/company/CompanyModalContainer";
-import PossibleCustomerModalContainer from "../containers/possibleCustomer/PossibleCustomerModalContainer";
 import CustomerTableContainer from "../containers/customer/CustomerTableContainer";
 import { Tabs } from 'antd';
+import CustomerModalContainer from "../containers/customer/CustomerModalContainer";
 const { TabPane } = Tabs;
 
 const textcolor = '#c5cae9';
@@ -69,7 +69,7 @@ const CompanyInfoPage = () => {
                         <Container maxWidth="lg" className={classes.container}>
                             <div >
                                 <CustomerTableContainer />
-                                <PossibleCustomerModalContainer />
+                                <CustomerModalContainer />
                             </div>
                         </Container>
                     </Paper>
