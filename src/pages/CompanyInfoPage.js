@@ -76,7 +76,7 @@ const CompanyInfoPage = () => {
     return (
         <div className={classes.root}>
             <Tabs defaultActiveKey="1" size='large'>
-                <TabPane tab="고객 관리" key="1">
+                <TabPane tab="고객사 관리" key="1">
                     <Paper >
                         <Container maxWidth="lg" className={classes.container}>
                             <div >
@@ -86,7 +86,7 @@ const CompanyInfoPage = () => {
                         </Container>
                     </Paper>
                 </TabPane>
-                <TabPane tab="고객사 관리" key="2">
+                <TabPane tab="고객 관리" key="2">
                     <Paper >
                         <Container maxWidth="lg" className={classes.container}>
                             <div >

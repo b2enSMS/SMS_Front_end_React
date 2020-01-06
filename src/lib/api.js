@@ -266,10 +266,21 @@ export const deleteMeeting = (selectedRowKeys) =>
     axios.delete(`/meet`,{data: {idx: selectedRowKeys}})
 
 export const getMeetingList = () =>
-    axios.get('/temp/showall');
+    axios.get('/meet/showall');
 
 export const getMeeting = (meetId) =>
-    axios.get(`/temp/${meetId}`);
+    axios.get(`/meet/${meetId}`);
+
+export const getMeetingCode = () =>
+    axios.get('/cmmncd/meet_tp_cd');
+
+export const postMeeting = (formData) => {
+    const data = {
+
+    }
+    axios.post(`/meet/create`, data);
+}
+
 export const getTempContract = (key) =>
     axios.get(`/temp/${key}`);
 

@@ -32,13 +32,12 @@ export const initialForm = createAction(MEETING_INIT, form => form);
 export const getShowModal = () => async dispatch => {
     dispatch({ type: SHOW_MODAL});
     try {
-        const response = await api.getOrganization();
-        const res = await api.getB2enManager();
+        const resCd = await api.getMeetingCode();
+        console.log("resCdresCdresCdresCdresCdresCdresCd",resCd);
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
-                orgList: response.data,
-                b2enList: res.data,
+                meetCd : resCd.data,
             }
         })
     } catch (err) {
@@ -52,15 +51,13 @@ export const getShowUpdateModal = meeting => async dispatch => {
     dispatch({ type: SHOW_UPDATE_MODAL });
     try {
         const res = await api.getMeeting(meeting);
-        console.log("getShowUpdateModal",res.data)
-        const response = await api.getOrganization();
-        const resMan = await api.getB2enManager();
+        console.log("getShowUpdateModal",res.data);
+        const resCd = await api.getMeetingCode();
         dispatch({
             type: SHOW_UPDATE_MODAL_SUCCESS,
             payload: {
                 form: res.data,
-                orgList: response.data,
-                b2enList: resMan.data,
+                meetCd: resCd.data,
             }
         })
     } catch(e) {
@@ -120,7 +117,7 @@ export const getHandleCancel = () => dispatch => {
 export const handleOk = (formData) => async dispatch => {
     dispatch({ type: POST_MEETING });
     try {
-        await api.postCustomer(formData);
+        await api.postMeeting(formData);
         dispatch({
             type: POST_MEETING_SUCCESS
         })
@@ -164,13 +161,15 @@ const initialState = {
     buttonFlag: true,
     meetingModal : {
         orgNm: '',
-        empNm: '',
+        emp: [],
+        cust: [],
         meetDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-        meetStartTime: '',
+        meetStartTime: new Date().getHours()+ ':' + new Date().getMinutes(),
         meetTotTime: '',
+        meetTpCd: '',
+        meetTpCdNm: '',
     },
-    orgList: [],
-    b2enList: [],
+    meetCd: [],
 };
 
 const meetingmodal = handleActions(
@@ -186,10 +185,9 @@ const meetingmodal = handleActions(
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_MODAL_SUCCESS]: (state, { payload: { orgList, b2enList}}) =>
+        [SHOW_MODAL_SUCCESS]: (state, { payload: { meetCd }}) =>
             produce(state, draft => {
-                draft["orgList"] = orgList;
-                draft['b2enList'] = b2enList;
+                draft["meetCd"] = meetCd;
             }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
@@ -198,11 +196,10 @@ const meetingmodal = handleActions(
         [SHOW_UPDATE_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: { form, orgList, b2enList}}) =>
+        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: { form, meetCd }}) =>
             produce(state, draft => {
-                draft["orgList"] = orgList;
                 draft["meetingModal"] = form;
-                draft['b2enList'] = b2enList;
+                draft["meetCd"] = meetCd;
             }),
         [HANDLE_CANCEL]: state => ({
             ...state,
