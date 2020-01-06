@@ -20,16 +20,13 @@ import possiblelicense from './possible/possiblelicense';
 import possiblehistory from './possible/possiblehistory';
 import meetingmodal from "./meeting/meetingmodal";
 import meetingtable from "./meeting/meetingtable";
-import addorgmodal from "./meeting/addorgmodal";
-import addmanagermodal from "./meeting/addmanagermodal";
 import customermodal from "./customer/customermodal";
 
 
 const rootReducer = combineReducers({
     contractmodal,contracttable,contractcustomermodal,licensemodal,producttable
     ,managertable,companytable,productupdatemodal,contracthistory,possiblecustomermodal,
-    possiblecustomertable,managermodal,companymodal,contractcustomertable,customertable,meetingmodal,meetingtable,possibletable,possiblemodal,possiblelicense,possiblehistory,
-    addorgmodal,addmanagermodal,customermodal
+    possiblecustomertable,managermodal,companymodal,contractcustomertable,customertable,meetingmodal,meetingtable,possibletable,possiblemodal,possiblelicense,possiblehistory,customermodal
 });
 
 export default rootReducer;

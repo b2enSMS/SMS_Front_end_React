@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
 import MeetingTableContainer from "../containers/meeting/MeetingTableContainer";
 import MeetingModalContainer from "../containers/meeting/MeetingModalContainer";
-import AddOrgModalContainer from "../containers/meeting/AddOrgModalContainer";
-import AddManagerModalContainer from "../containers/meeting/AddManagerModalContainer";
 
 const textcolor = '#174A84';
 
@@ -48,8 +46,6 @@ const MeetingInfoPage = () => {
                         <div >
                             <MeetingTableContainer/>
                             <MeetingModalContainer/>
-                            <AddOrgModalContainer/>
-                            <AddManagerModalContainer/>
                         </div>
                     </Container>
                 </Paper>
