@@ -6,26 +6,29 @@ import {
     getHandleCancel,
     handleChangeInput,
     handleOk,
-    handleUpdateOk
+    handleUpdateOk,
+    getSelectHandleChange,
 } from "../../modules/meeting/meetingmodal";
 import { getShowOrgModal } from "../../modules/meeting/addorgmodal";
 import { getShowEmpModal } from "../../modules/meeting/addmanagermodal";
 import MeetingModal from "../../components/meeting/MeetingModal";
 
-const MeetingModalContainer = ({
-                                   getShowOrgModal,
-                                   getShowEmpModal,
-                                   meetCd,
-                                            updateVisible,
-                                            getHandleCancel,
-                                            handleChangeInput,
-                                            meetingModal,
-                                            buttonFlag,
-                                            handleOk,
-                                            handleUpdateOk,
-                                            orgList,
-                                            b2enList
-                                        }) => {
+const MeetingModalContainer = 
+({
+    getShowOrgModal,
+    getShowEmpModal,
+    meetCd,
+    updateVisible,
+    getHandleCancel,
+    handleChangeInput,
+    meetingModal,
+    buttonFlag,
+    handleOk,
+    handleUpdateOk,
+    getSelectHandleChange,
+    custList,
+    myComList,
+}) => {
 
     const dispatch = useDispatch();
 
@@ -42,26 +45,27 @@ const MeetingModalContainer = ({
             b2enModal={getShowEmpModal}
             orgModal={getShowOrgModal}
             updateVisible={updateVisible}
-            orgList={orgList}
             handleOk={UpdateOk}
             HandleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
             meetingModal={meetingModal}
             buttonFlag={buttonFlag}
             handleUpdateOk={()=>handleUpdateOk(formData)}
-            b2enList={b2enList}
+            selectHandleChange={getSelectHandleChange}
+            custList={custList}
+            myComList={myComList}
         />
     );
 };
 
 export default connect(
     ({ meetingmodal }) => ({
-        orgList: meetingmodal.orgList,
         buttonFlag: meetingmodal.buttonFlag,
         updateVisible: meetingmodal.updateVisible,
         meetingModal: meetingmodal.meetingModal,
-        b2enList: meetingmodal.b2enList,
         meetCd: meetingmodal.meetCd,
+        custList: meetingmodal.custList,
+        myComList:meetingmodal.myComList,
     }),
     {
         getShowEmpModal,
@@ -69,6 +73,7 @@ export default connect(
         getShowModal,
         getShowUpdateModal,
         getHandleCancel,
+        getSelectHandleChange,
         handleChangeInput,
         handleOk,
         handleUpdateOk,

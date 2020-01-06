@@ -1,4 +1,4 @@
-import {createAction, handleActions} from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 import * as api from '../../lib/api';
 import produce from "immer";
 import { GET_MEETING, GET_MEETING_SUCCESS, GET_MEETING_FAILURE } from './meetingtable';
@@ -27,20 +27,25 @@ const SHOW_UPDATE_MODAL_FAILURE = 'meetingmodal/SHOW_UPDATE_MODAL_FAILURE';
 const POST_MEETING = 'meetingmodal/POST_MEETING';
 const POST_MEETING_SUCCESS = 'meetingmodal/POST_MEETING_SUCCESS';
 const POST_MEETING_FAILURE = 'meetingmodal/POST_MEETING_FAILURE';
+const SELECT_CHANGE_INPUT = 'meetingmodal/SELECT_CHANGE_INPUT'
 
 export const getButtonChange = createAction(BUTTON_CHANGE);
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+export const getSelectHandleChange = createAction(SELECT_CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
 export const initialForm = createAction(MEETING_INIT, form => form);
 
 export const getShowModal = () => async dispatch => {
-    dispatch({ type: SHOW_MODAL});
+    dispatch({ type: SHOW_MODAL });
     try {
         const resCd = await api.getMeetingCode();
-        console.log("resCdresCdresCdresCdresCdresCdresCd",resCd);
+        const responseBM = await api.getB2enManager();
+        const responseCust = await api.getCustListMeet();
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
-                meetCd : resCd.data,
+                meetCd: resCd.data,
+                custList: responseCust,
+                myComList:responseBM
             }
         })
     } catch (err) {
@@ -54,16 +59,20 @@ export const getShowUpdateModal = meeting => async dispatch => {
     dispatch({ type: SHOW_UPDATE_MODAL });
     try {
         const res = await api.getMeeting(meeting);
-        console.log("getShowUpdateModal",res.data);
+        console.log("getShowUpdateModal", res.data);
         const resCd = await api.getMeetingCode();
+        const responseBM = await api.getB2enManager();
+        const responseCust = await api.getCustListMeet();
         dispatch({
             type: SHOW_UPDATE_MODAL_SUCCESS,
             payload: {
                 form: res.data,
                 meetCd: resCd.data,
+                custList: responseCust,
+                myComList:responseBM
             }
         })
-    } catch(e) {
+    } catch (e) {
         console.log("error");
         dispatch({
             type: SHOW_UPDATE_MODAL_FAILURE,
@@ -159,7 +168,7 @@ export const handleOk = (formData) => async dispatch => {
             });
             throw e;
         }
-    } catch(e) {
+    } catch (e) {
         dispatch({
             type: POST_MEETING_FAILURE,
             payload: e,
@@ -176,24 +185,29 @@ export const handleChangeInput = (changeData) => dispatch => {
 const initialState = {
     updateVisible: false,
     buttonFlag: true,
-    meetingModal : {
-        orgNm: '',
-        emp: [],
-        cust: [],
+    meetingModal: {
+        empId: [],
+        custId: [],
         meetDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-        meetStartTime: new Date().getHours()+ ':' + new Date().getMinutes()+":00",
+        meetStartTime: new Date().getHours() + ':' + new Date().getMinutes() + ":00",
         meetTotTime: '',
         meetTpCd: '',
         meetTpCdNm: '',
     },
     meetCd: [],
+    custList:[],
+    myComList:[],
 };
 
 const meetingmodal = handleActions(
     {
+        [SELECT_CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
+            produce(state, draft => {
+                draft[form][key] = value
+            }),
         [BUTTON_CHANGE]: state => ({
             ...state,
-            buttonFlag : false
+            buttonFlag: false
         }),
         [SHOW_MODAL]: state => ({
             ...state,
@@ -202,9 +216,11 @@ const meetingmodal = handleActions(
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_MODAL_SUCCESS]: (state, { payload: { meetCd }}) =>
+        [SHOW_MODAL_SUCCESS]: (state, { payload: { meetCd,custList,myComList } }) =>
             produce(state, draft => {
                 draft["meetCd"] = meetCd;
+                draft["custList"] = custList.data;
+                draft["myComList"] = myComList.data;
             }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
@@ -213,21 +229,14 @@ const meetingmodal = handleActions(
         [SHOW_UPDATE_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: { form, meetCd }}) =>
+        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: { form, meetCd,custList,myComList } }) =>
             produce(state, draft => {
                 draft["meetingModal"] = form;
                 draft["meetCd"] = meetCd;
+                draft["custList"] = custList.data;
+                draft["myComList"] = myComList.data;
             }),
-        [INPUT_CUST]: (state, action) =>
-            produce(state, draft => {
-                let cust = Object.assign({}, action.payload.custModal);
-                draft["meetingModal"]["cust"] = state.meetingModal.cust.concat(cust)
-            }),
-        [INPUT_MANAGER]: (state, action) =>
-            produce(state, draft => {
-                let manager = Object.assign({}, action.payload.b2enModal);
-                draft["meetingModal"]["emp"] = state.meetingModal.emp.concat(manager)
-            }),
+
         [HANDLE_CANCEL]: state => ({
             ...state,
             updateVisible: false,
@@ -240,6 +249,8 @@ const meetingmodal = handleActions(
         [MEETING_INIT]: (state, { payload: form }) => ({
             ...state,
             [form]: initialState[form],
+            myComList:[],
+            custList:[],
         }),
         [POST_MEETING]: state => ({
             ...state,
@@ -251,7 +262,6 @@ const meetingmodal = handleActions(
         }),
         [POST_MEETING_FAILURE]: state => ({
             ...state,
-            updateVisible: false,
         }),
         [UPDATE_MEETING]: state => ({
             ...state,
@@ -263,7 +273,6 @@ const meetingmodal = handleActions(
         }),
         [UPDATE_MEETING_FAILURE]: state => ({
             ...state,
-            updateVisible: false,
         }),
     },
     initialState,

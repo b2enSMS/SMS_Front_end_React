@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import {makeStyles} from "@material-ui/core";
+import React from 'react';
+//import {makeStyles} from "@material-ui/core";
 /*import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';*/
 //import { withStyles, Button } from '@material-ui/core/';
 import { Table} from "antd";
 // Dropdown, Icon, Menu,
 
-const textcolor = '#174A84';
+//const textcolor = '#174A84';
 
 /*const ColorButton = withStyles(theme => ({
     root: {
@@ -26,52 +26,52 @@ const RemoveButton = withStyles(theme => ({
     },
 }))(Button);*/
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-    },
-    option: {
-        marginTop: theme.spacing(16),
-        marginBotton: theme.spacing(8),
-    },
-    tablepart: {
-        //paddingTop: theme.spacing(5),
-        paddingBottom: theme.spacing(5),
-        paddingLeft: theme.spacing(4),
-        paddingRight: theme.spacing(4),
-    },
-    container: {
-        paddingTop: theme.spacing(1),
-        paddingLeft: theme.spacing(0),
-        paddingRight: theme.spacing(0),
-        //paddingBottom: theme.spacing(1),
-    },
-    menuName: {
-        padding: theme.spacing(5),
-        color: textcolor,
-        fontWeight: '700',
-    },
-    button: {
-        paddingBottom: theme.spacing(1),
-        paddingRight: theme.spacing(5),
-        textAlign: 'right',
-        marginTop: -21,
-    },
-    plusbutton: {
-        paddingRight: theme.spacing(3),
-        paddingLeft: theme.spacing(3),
-        fontWeight: 'bold'
-    },
-    minusbutton: {
-        paddingRight: theme.spacing(3),
-        paddingLeft: theme.spacing(3),
-        fontWeight: 'bold'
-    },
-}));
+// const useStyles = makeStyles(theme => ({
+//     root: {
+//         display: 'flex',
+//     },
+//     option: {
+//         marginTop: theme.spacing(16),
+//         marginBotton: theme.spacing(8),
+//     },
+//     tablepart: {
+//         //paddingTop: theme.spacing(5),
+//         paddingBottom: theme.spacing(5),
+//         paddingLeft: theme.spacing(4),
+//         paddingRight: theme.spacing(4),
+//     },
+//     container: {
+//         paddingTop: theme.spacing(1),
+//         paddingLeft: theme.spacing(0),
+//         paddingRight: theme.spacing(0),
+//         //paddingBottom: theme.spacing(1),
+//     },
+//     menuName: {
+//         padding: theme.spacing(5),
+//         color: textcolor,
+//         fontWeight: '700',
+//     },
+//     button: {
+//         paddingBottom: theme.spacing(1),
+//         paddingRight: theme.spacing(5),
+//         textAlign: 'right',
+//         marginTop: -21,
+//     },
+//     plusbutton: {
+//         paddingRight: theme.spacing(3),
+//         paddingLeft: theme.spacing(3),
+//         fontWeight: 'bold'
+//     },
+//     minusbutton: {
+//         paddingRight: theme.spacing(3),
+//         paddingLeft: theme.spacing(3),
+//         fontWeight: 'bold'
+//     },
+// }));
 
 const ContractCustomer = ({ contractCustomerList, loadingTable, deleteCustomer, showUpdateModal, showModal, changeButton }) => {
-    const classes = useStyles();
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    //const classes = useStyles();
+    // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     /*const handleMenuClick = key => {
         console.log("key", key);
         showUpdateModal(key)
@@ -126,28 +126,28 @@ const ContractCustomer = ({ contractCustomerList, loadingTable, deleteCustomer, 
         },*/
     ];
 
-    const onSelectChange = selectedRowKeys => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        setSelectedRowKeys(selectedRowKeys)
-    };
+    // const onSelectChange = selectedRowKeys => {
+    //     console.log('selectedRowKeys changed: ', selectedRowKeys);
+    //     setSelectedRowKeys(selectedRowKeys)
+    // };
 
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
+    // const rowSelection = {
+    //     selectedRowKeys,
+    //     onChange: onSelectChange,
+    // };
 
-    const hasSelected = selectedRowKeys.length > 0;
+    // const hasSelected = selectedRowKeys.length > 0;
 
     return(
         <div>
-            <div style={{ marginLeft: 8, textAlign: 'left' }}>
+            {/* <div style={{ marginLeft: 8, textAlign: 'left' }}>
                 {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
-            </div>
+            </div> */}
 
-            <div className={classes.button}>
+            {/* <div className={classes.button}>
                 <span style={{ paddingRight: 14 }}>
 
-              {/*<ColorButton
+              <ColorButton
                   onClick={showModal}
                   className={classes.plusbutton}
                   size='small'
@@ -155,9 +155,9 @@ const ContractCustomer = ({ contractCustomerList, loadingTable, deleteCustomer, 
                   color="primary"
                   endIcon={<AddIcon />}
               > 고객 등록
-              </ColorButton>*/}
+              </ColorButton>
             </span>
-               {/* <RemoveButton
+               <RemoveButton
                     className={classes.minusbutton}
                     size='small'
                     variant="outlined"
@@ -165,13 +165,13 @@ const ContractCustomer = ({ contractCustomerList, loadingTable, deleteCustomer, 
                     endIcon={<RemoveIcon />}
                     onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
                 > 고객 삭제
-                </RemoveButton>*/}
-            </div>
+                </RemoveButton>
+            </div> */}
             <Table
                 rowKey="custId"
                 loading={loadingTable}
                 tableLayout='undefined'
-                rowSelection={rowSelection}
+                //rowSelection={rowSelection}
                 columns={columns}
                 dataSource={loadingTable ? null : contractCustomerList}
                 size="small" />

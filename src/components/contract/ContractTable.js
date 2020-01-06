@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Table, Menu, Dropdown, Icon } from 'antd';
 import { withStyles, Button } from '@material-ui/core/';
 import 'antd/dist/antd.css';
@@ -72,7 +72,7 @@ const pageInfo = {pageNumber:1};
 
 function ContractTable({ handleHistoryModal,loadingTable, contractList, showModal, deleteData, updateModalHandler, modalBtnHandler }) {
   const classes = useStyles();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const handleMenuClick = key => {
     console.log("key", key);
     updateModalHandler(key)
@@ -212,21 +212,21 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
         )
     },
   ];
-  const onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
-    setSelectedRowKeys(selectedRowKeys)
-  };
+  // const onSelectChange = selectedRowKeys => {
+  //   console.log('selectedRowKeys changed: ', selectedRowKeys);
+  //   setSelectedRowKeys(selectedRowKeys)
+  // };
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  }; 
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  // }; 
 
-  const hasSelected = selectedRowKeys.length > 0;
+  // const hasSelected = selectedRowKeys.length > 0;
   return (
     <div>
       <div style={{ marginLeft: 8, textAlign: 'left' }}>
-        {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
+        {/* {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'} */}
       </div>
       <div className={classes.button}>
         <span style={{ paddingRight: 14 }}>
@@ -256,7 +256,7 @@ function ContractTable({ handleHistoryModal,loadingTable, contractList, showModa
         rowKey="contId"
         loading={loadingTable}
         tableLayout='fixed'
-        rowSelection={rowSelection}
+        //rowSelection={rowSelection}
         columns={columns}
         rowClassName={(record, index) => {
           console.log("pageNumber",pageInfo.pageNumber,index,index+(10*(pageInfo.pageNumber-1)));

@@ -32,13 +32,23 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisible, HandleCancel, handleChangeInput, meetingModal, buttonFlag, handleOk }) => {
+const MeetingModal = ({
+    selectHandleChange,
+    handleUpdateOk,
+    meetCd,
+    updateVisible,
+    HandleCancel,
+    handleChangeInput,
+    meetingModal,
+    buttonFlag,
+    handleOk,
+    custList,
+    myComList,
+}) => {
 
     const classes = useStyles();
 
-    //const { Option } = Select;
-
-    const children = [];
+    const { Option } = Select;
 
     const handleinstallDtChange = (id, date) => {
         handleChangeInput({ form: "meetingModal", key: "meetDt", value: date })
@@ -48,11 +58,18 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
         handleChangeInput({ form: "meetingModal", key: ev.target.id, value: ev.target.value })
     };
 
-    const MeetingCodeHandleChange = (ev, value) => {
+    const meetingCodeHandleChange = (ev, value) => {
         handleChangeInput({ form: "meetingModal", key: "meetTpCd", value: value["cmmnDetailCd"] });
         handleChangeInput({ form: "meetingModal", key: "meetTpCdNm", value: value["cmmnDetailCdNm"] });
 
     }
+    const custSelectHandler = (value) => {
+        selectHandleChange({ form: "meetingModal", key: "custId", value: value });
+    }
+    const empSelectHandler = (value) => {
+        selectHandleChange({ form: "meetingModal", key: "empId", value: value });
+    }
+
 
     return (
         <Modal
@@ -61,6 +78,7 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
             okText={buttonFlag ? "등록" : "수정"}
             onOk={buttonFlag ? handleOk : handleUpdateOk}
             onCancel={HandleCancel}
+            cancelText="취소"
             style={{ top: 25 }}
         >
             <Container component="main" maxWidth="xs">
@@ -100,9 +118,8 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={1}>
-                        </Grid>
-                        <Grid item xs={12} sm={10}>
+
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
@@ -116,19 +133,17 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={1}>
-                        </Grid>
-                        <Grid item xs={12} sm={1}>
-                        </Grid>
-                        <Grid item xs={12} sm={10}>
+
+                        <Grid item xs={12} sm={6}>
 
                             <Autocomplete
                                 id="meetTpCdId"
                                 options={meetCd}
-                                onChange={MeetingCodeHandleChange}
+                                onChange={meetingCodeHandleChange}
                                 inputValue={meetingModal.meetTpCdNm}
                                 value={{ cmmnDetailCdNm: meetingModal.meetTpCdNm }}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
+                                disableClearable={true}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -143,30 +158,34 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={1}>
-                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <Select
+                                id='custId'
                                 mode="multiple"
-                                size='default'
-                                placeholder="Please select"
-                                defaultValue={['a10', 'c12']}
-                                onChange={handleChange}
+                                size='large'
+                                placeholder="고객 담당자"
+                                onChange={custSelectHandler}
+                                value={meetingModal.custId}
                                 style={{ width: '100%' }}
                             >
-                                {children}
+                                {custList.map((cust, index) => (
+                                    <Option key={cust.custId}>{cust.custNm}</Option>
+                                ))}
                             </Select>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <Select
+                                id="empId"
                                 mode="multiple"
-                                size='default'
-                                placeholder="Please select"
-                                defaultValue={['a10', 'c12']}
-                                onChange={handleChange}
+                                size='large'
+                                placeholder="비투엔 담당자"
+                                onChange={empSelectHandler}
+                                value={meetingModal.empId}
                                 style={{ width: '100%' }}
                             >
-                                {children}
+                                {myComList.map((myCom, index) => (
+                                    <Option key={myCom.empId}>{myCom.empNm}</Option>
+                                ))}
                             </Select>
                         </Grid>
                     </Grid>
