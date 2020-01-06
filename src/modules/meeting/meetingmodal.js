@@ -3,6 +3,9 @@ import * as api from '../../lib/api';
 import produce from "immer";
 import { GET_MEETING, GET_MEETING_SUCCESS, GET_MEETING_FAILURE } from './meetingtable';
 
+const INPUT_CUST = 'meetingmodal/INPUT_CUST';
+const INPUT_MANAGER = 'meetingmodal/INPUT_MANAGER';
+
 const MEETING_INIT = 'meetingmodal/MEETING_INIT';
 const BUTTON_CHANGE = 'meetingmodal/BUTTON_CHANGE';
 
@@ -70,6 +73,20 @@ export const getShowUpdateModal = meeting => async dispatch => {
         throw e;
     }
 };
+
+export const inputCust = (custModal) => dispatch => {
+    dispatch({
+        type: INPUT_CUST,
+        payload: { custModal }
+    })
+}
+
+export const inputManager = (b2enModal) => dispatch => {
+    dispatch({
+        type: INPUT_MANAGER,
+        payload: { b2enModal }
+    })
+}
 
 export const handleUpdateOk = (formData) => async dispatch => {
     dispatch({ type: UPDATE_MEETING });
@@ -200,6 +217,16 @@ const meetingmodal = handleActions(
             produce(state, draft => {
                 draft["meetingModal"] = form;
                 draft["meetCd"] = meetCd;
+            }),
+        [INPUT_CUST]: (state, action) =>
+            produce(state, draft => {
+                let cust = Object.assign({}, action.payload.custModal);
+                draft["meetingModal"]["cust"] = state.meetingModal.cust.concat(cust)
+            }),
+        [INPUT_MANAGER]: (state, action) =>
+            produce(state, draft => {
+                let manager = Object.assign({}, action.payload.b2enModal);
+                draft["meetingModal"]["emp"] = state.meetingModal.emp.concat(manager)
             }),
         [HANDLE_CANCEL]: state => ({
             ...state,

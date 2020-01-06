@@ -141,6 +141,10 @@ export const getCustList = () => {
     return axios.get('/cust/showall');
 }
 
+export const getCustListMeet = () => {
+    return axios.get('/cust/aclist');
+}
+
 // 계약고객 리스트
 export const getContractCustomerList = () => {
     return axios.get('/cust/cont');

@@ -6,7 +6,6 @@ import DateFnsUtils from "@date-io/date-fns";
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-
 const useStyles = makeStyles(theme => ({
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -67,56 +66,12 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
             <Container component="main" maxWidth="xs">
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
-
-                        {/*<Autocomplete
-                        id="orgId"
-                        options={orgList}
-                        onChange={autoCompleteHandleChange}
-                        getOptionLabel={option => option.orgNm}
-                        inputValue={meetingModal.orgNm}
-                        value={{ orgNm: meetingModal.orgNm }}
-                        disableClearable={true}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                className={classes.textField}
-                                variant="outlined"
-                                required
-                                //margin="normal"
-                                label="기관명"
-                                fullWidth
-                                value={meetingModal.orgNm}
-                            />
-                        )}
-                    />*/}
-                        {/*<Autocomplete
-                        id="empId"
-                        options={b2enList}
-                        onChange={autoCompleteHandleChange}
-                        getOptionLabel={option => option.empNm}
-                        inputValue={meetingModal.empNm}
-                        value={{ empNm: meetingModal.empNm }}
-                        disableClearable={true}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                className={classes.textField}
-                                variant="outlined"
-                                required
-                                //margin="normal"
-                                label="담당자명"
-                                fullWidth
-                                value={meetingModal.empNm}
-                            />
-                        )}
-                    />*/}
                         <Grid item xs={12} sm={6}>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <KeyboardDatePicker
                                     disableToolbar
                                     variant="inline"
                                     format="yyyy-MM-dd"
-                                    //margin="normal"
                                     id="meetDt"
                                     label="미팅 날짜"
                                     fullWidth
@@ -128,18 +83,6 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
                                 />
                             </MuiPickersUtilsProvider>
                         </Grid>
-                        {/*<TextField
-                        className={classes.textField}
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="meetDt"
-                        label="날짜"
-                        name="custNm"
-                        value={meetingModal.meetDt}
-                        onChange={handleChange}
-                    />*/}
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 id="meetStartTime"
@@ -195,7 +138,7 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
                                         margin="normal"
                                         label="미팅 코드"
                                         fullWidth
-                                    //value={possibleCustomerModal.custTpCdNm}
+                                        value={meetingModal.meetTpCdNm}
                                     />
                                 )}
                             />
@@ -231,6 +174,8 @@ const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisib
             </Container>
         </Modal>
     );
-}
+};
+
+
 
 export default MeetingModal
