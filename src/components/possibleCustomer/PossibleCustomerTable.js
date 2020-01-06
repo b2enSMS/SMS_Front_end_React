@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 import {makeStyles} from "@material-ui/core";
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
-import { withStyles, Button } from '@material-ui/core/';
-import {Dropdown, Icon, Menu, Table} from "antd";
-
+/*import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';*/
+//import { withStyles, Button } from '@material-ui/core/';
+import {Table} from "antd";
+//Dropdown, Icon, Menu,
 const textcolor = '#174A84';
 
-const ColorButton = withStyles(theme => ({
-    root: {
-        borderColor: '#0062cc',
-        '&:hover': {
-            borderColor: '#0062cc',
-        },
-    },
-}))(Button);
-
-const RemoveButton = withStyles(theme => ({
-    root: {
-        borderColor: '#0062cc',
-        '&:hover': {
-            borderColor: '#0062cc',
-        },
-    },
-}))(Button);
+// const ColorButton = withStyles(theme => ({
+//     root: {
+//         borderColor: '#0062cc',
+//         '&:hover': {
+//             borderColor: '#0062cc',
+//         },
+//     },
+// }))(Button);
+//
+// const RemoveButton = withStyles(theme => ({
+//     root: {
+//         borderColor: '#0062cc',
+//         '&:hover': {
+//             borderColor: '#0062cc',
+//         },
+//     },
+// }))(Button);
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -71,10 +71,10 @@ const useStyles = makeStyles(theme => ({
 const PossibleCustomerTable = ({ possibleCustomerList, loadingTable, deleteCustomer, showUpdateModal, showModal, changeButton }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const handleMenuClick = key => {
+    /*const handleMenuClick = key => {
         console.log("key", key);
         showUpdateModal(key)
-    }
+    }*/
     const columns = [
         {
             title: '기관',
@@ -100,7 +100,7 @@ const PossibleCustomerTable = ({ possibleCustomerList, loadingTable, deleteCusto
             title: '고객 유형',
             dataIndex: 'custTpCdNm',
         },
-        {
+        /*{
             title: '',
             dataIndex: 'menuTag',
             width: '5%',
@@ -122,7 +122,7 @@ const PossibleCustomerTable = ({ possibleCustomerList, loadingTable, deleteCusto
                         <Button size="small"><Icon type="menu" /></Button>
                     </Dropdown>
                 )
-        },
+        },*/
     ];
 
     const onSelectChange = selectedRowKeys => {
@@ -146,7 +146,7 @@ const PossibleCustomerTable = ({ possibleCustomerList, loadingTable, deleteCusto
             <div className={classes.button}>
                 <span style={{ paddingRight: 14 }}>
 
-              <ColorButton
+              {/*<ColorButton
                   onClick={showModal}
                   className={classes.plusbutton}
                   size='small'
@@ -154,9 +154,9 @@ const PossibleCustomerTable = ({ possibleCustomerList, loadingTable, deleteCusto
                   color="primary"
                   endIcon={<AddIcon />}
               > 고객 등록
-              </ColorButton>
+              </ColorButton>*/}
             </span>
-                <RemoveButton
+              {/*  <RemoveButton
                     className={classes.minusbutton}
                     size='small'
                     variant="outlined"
@@ -164,7 +164,7 @@ const PossibleCustomerTable = ({ possibleCustomerList, loadingTable, deleteCusto
                     endIcon={<RemoveIcon />}
                     onClick={()=>{deleteCustomer(selectedRowKeys);setSelectedRowKeys([]);}}
                 > 고객 삭제
-                </RemoveButton>
+                </RemoveButton>*/}
             </div>
             <Table
                 rowKey="custId"

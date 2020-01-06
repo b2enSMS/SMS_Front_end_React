@@ -52,8 +52,8 @@ const CompanyInfoPage = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Tabs defaultActiveKey="1" size='large' className={classes.tabMagic}>
-                <TabPane tab="고객 관리" key="1" className={classes.marginMinor} >
+            <Tabs defaultActiveKey="1" size='large'>
+                <TabPane tab="고객사 관리" key="1">
                     <Paper >
                         <Container maxWidth="lg" className={classes.container}>
                             <div >
@@ -63,7 +63,8 @@ const CompanyInfoPage = () => {
                         </Container>
                     </Paper>
                 </TabPane>
-                <TabPane tab="고객사 관리" key="2"  className={classes.marginMinor}>
+                <TabPane tab="고객 관리" key="2">
+
                     <Paper >
                         <Container maxWidth="lg" className={classes.container}>
                             <div >
