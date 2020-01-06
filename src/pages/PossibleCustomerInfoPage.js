@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
 import PossibleCustomerTableContainer from "../containers/possibleCustomer/PossibleCustomerTableContainer";
-import PossibleCustomerModalContainer from "../containers/possibleCustomer/PossibleCustomerModalContainer";
+//import PossibleCustomerModalContainer from "../containers/possibleCustomer/PossibleCustomerModalContainer";
 //import {ManagerTableContainer} from "../containers";
 
 const textcolor = '#174A84';
@@ -46,7 +46,6 @@ const PossibleCustomerInfoPage = () => {
                     <Container maxWidth="lg" className={classes.container}>
                         <div >
                             <PossibleCustomerTableContainer />
-                            <PossibleCustomerModalContainer/>
                         </div>
                     </Container>
                 </Paper>

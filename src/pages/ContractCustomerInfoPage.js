@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
 import ContractCustomerContainer from "../containers/contractCustomer/ContractCustomerContainer";
-import PossibleCustomerModalContainer from "../containers/possibleCustomer/PossibleCustomerModalContainer";
 
 const textcolor = '#174A84';
 
@@ -45,7 +44,6 @@ const ContractCustomerInfoPage = () => {
                     <Container maxWidth="lg" className={classes.container}>
                         <div >
                             <ContractCustomerContainer />
-                            <PossibleCustomerModalContainer />
                         </div>
                     </Container>
                 </Paper>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getCustList, deleteCustomer } from "modules/customer/customertable";
-import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/possibleCustomer/possiblecustomermodal";
+import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/customer/customermodal";
 import CustomerTable from "../../components/customer/CustomerTable";
 
 const CustomerTableContainer = ({
