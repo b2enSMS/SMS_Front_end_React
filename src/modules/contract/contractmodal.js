@@ -2,6 +2,8 @@ import { handleActions, createAction } from 'redux-actions';
 import * as api from '../../lib/api';
 import produce from 'immer';
 import { GET_CONTRACT, GET_CONTRACT_SUCCESS, GET_CONTRACT_FAILURE } from './contracttable'
+import {INITIALIZE_FORM as licensemodal_INITIALIZE_FORM} from './licensemodal'
+import { message } from 'antd';
 
 const CHANGE_INPUT = 'contractmodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'contractmodal/HANDLE_CANCLE';
@@ -26,15 +28,22 @@ const INITIALIZE_FORM = 'contractmodal/INITIALIZE_FORM'
 
 const BUTTON_CHANGE = 'contractmodal/BUTTON_CHANGE'
 
-export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+
+//export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+
+//Form안에 있는 TextField 값 초기화
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
+
+//등록 or 수정 시 버튼 Text 변경 (등록 -> 수정 or 수정 -> 등록)
 export const getButtonChange = createAction(BUTTON_CHANGE);
 
+//계약 정보 수정
 export const gethandleUpdate = (formData) => async dispatch => {
 
     dispatch({ type: POST_CONTRACT });
     try {
         await api.postUpdateContracts(formData);
+        message.success('업데이트 성공!!');
         dispatch({
             type: POST_CONTRACT_SUCCESS,
         });
@@ -65,6 +74,7 @@ export const gethandleUpdate = (formData) => async dispatch => {
     }
 };
 
+//라이센스 삭제버튼
 export const getRemoveLicense = (idx) => dispacth => {
     dispacth({
         type: REMOVE_LICENSE,
@@ -72,6 +82,7 @@ export const getRemoveLicense = (idx) => dispacth => {
     });
 }
 
+//테이블에서 상세버튼 클릭
 export const getUpdateModal = (key) => async dispatch => {
     dispatch({ type: UPDATE_CONTRACT })
     try {
@@ -103,13 +114,14 @@ export const getUpdateModal = (key) => async dispatch => {
     }
 }
 
-
+//라이센스 추가
 export const inputLicense = (licenseForm, fileList) => dispatch => {
     dispatch({
         type: INPUT_LICENSE,
         payload: { licenseForm, fileList }
     })
 }
+//라이센스 수정
 export const updateLicense = (licenseForm, fileList, keyIndex) => dispatch => {
     dispatch({
         type: UPDATE_LICENSE,
@@ -122,6 +134,7 @@ export const updateLicense = (licenseForm, fileList, keyIndex) => dispatch => {
 //     dispatch({ type: ARRAY_INPUT, payload: changeData });
 // }
 
+//모달 띄우기
 export const getShowModal = () => async dispatch => {
     dispatch({ type: SHOW_MODAL });
     try {
@@ -150,29 +163,29 @@ export const getShowModal = () => async dispatch => {
         throw e;
     }
 }
-
+//모달 취소 버튼 클릭
 export const getHandleCancel = () => dispatch => {
-    console.log("getHandleCancel")
     dispatch({ type: HANDLE_CANCEL });
     dispatch({ type: INITIALIZE_FORM, payload: "contractModal" });
 }
 
+//TextField 값 관리
 export const handleChangeInput = (changeData) => dispatch => {
-    console.log(changeData)
     dispatch({ type: CHANGE_INPUT, payload: changeData });
 }
 
+//등록 버튼 클릭
 export const handleOk = (formData) => async dispatch => {
 
     dispatch({ type: POST_CONTRACT });
     try {
-        console.log("handleOk", formData)
         await api.postContracts(formData);
+        message.success('등록 성공!!');
         dispatch({
             type: POST_CONTRACT_SUCCESS,
         });
         dispatch({ type: INITIALIZE_FORM, payload: "contractModal" });
-
+        dispatch({type: licensemodal_INITIALIZE_FORM,payload: 'licenseForm'})
         dispatch({ type: GET_CONTRACT });
         try {
             const response = await api.getContracts();
@@ -197,7 +210,17 @@ export const handleOk = (formData) => async dispatch => {
         throw e;
     }
 };
-
+/*
+    visible: 모달 띄우는 flag
+    confirmLoading: 모달 로딩 flag
+    contractModal: 모달안에 들어있는 form
+    buttonFlag: 등록 수정 버튼 변경 flag
+    orgList: 기관 리스트
+    b2enML: b2en담당자 리스트
+    contCdList: 계약 유형 리스트
+    headCont: 모계약 리스트
+    custML: 기관 담당자 리스트
+*/
 const initialState = {
     visible: false,
     confirmLoading: false,

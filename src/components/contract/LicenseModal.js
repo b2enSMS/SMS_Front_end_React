@@ -41,17 +41,17 @@ const useStyles = makeStyles(theme => ({
 
 const LicenseModal = ({ handleUpdateCancel,
     updateOk,
-    btnFlag, 
-    imageRemoveFlag, 
-    handleImageRemove, 
+    btnFlag,
+    imageRemoveFlag,
+    handleImageRemove,
     handleImageChange,
-    visible, 
-    confirmLoading, 
-    handleOk, 
-    handleCancel, 
-    handleChangeInput, 
-    licenseCodeList, 
-    productList, 
+    visible,
+    confirmLoading,
+    handleOk,
+    handleCancel,
+    handleChangeInput,
+    licenseCodeList,
+    productList,
     licenseForm }) => {
 
     const classes = useStyles();
@@ -80,11 +80,11 @@ const LicenseModal = ({ handleUpdateCancel,
     //종료일자 변경
     const handlelcnsEndDtChange = (id, date) => {
         handleChangeInput({ form: "licenseForm", key: "lcnsEndDt", value: date })
-    };   
+    };
 
     const [fileList, setFileList] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("useEffect", licenseForm.fileList);
         setFileList(licenseForm.fileList.concat());
     }, [licenseForm.fileList])
@@ -120,8 +120,6 @@ const LicenseModal = ({ handleUpdateCancel,
 
             let newFileList = [...info.fileList];
             const { status } = info.file;
-            console.log("status::", status);
-            console.log("licenseForm.fileList::", JSON.stringify(info.file));
             if (status === 'done') {
                 message.success(`${info.file.name} 등록 성공!`);
             } else if (status === 'error') {
@@ -131,16 +129,24 @@ const LicenseModal = ({ handleUpdateCancel,
             // handleImageChange(newFileList)
         },
         onRemove(file) {
-            console.log("onRemove", file, imageRemoveFlag)
+            console.log("onRemove", fileList, file, imageRemoveFlag)
+            
             const arr = []
             arr.push(file)
             handleImageRemove(arr)
-            if (imageRemoveFlag) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            // console.log("onRemove after fileList", fileList)
+            // if (imageRemoveFlag) {
+            //     return true;
+            // }
+            // else {
+            //     return false;
+            // }
+            // const index = fileList.indexOf(file);
+            // const newFileList = fileList.slice();
+            // newFileList.splice(index, 1);
+            // console.log("onRemove", newFileList);
+            // setFileList(newFileList);
+            return false;
         },
     };
 
@@ -148,10 +154,10 @@ const LicenseModal = ({ handleUpdateCancel,
         <Modal
             title="제품 등록"
             visible={visible}
-            onOk={() => {btnFlag? handleOk(fileList) : updateOk(fileList)}}
+            onOk={() => { btnFlag ? handleOk(fileList) : updateOk(fileList) }}
             okText={btnFlag ? "등록" : "수정"}
             confirmLoading={confirmLoading}
-            onCancel={() => {setFileList([]); btnFlag? handleCancel(licenseForm.fileList) : handleUpdateCancel()}}
+            onCancel={() => { setFileList([]); btnFlag ? handleCancel(licenseForm.fileList) : handleUpdateCancel() }}
             cancelText="취소"
             style={{ top: 65 }}
             width="35%"
@@ -322,4 +328,3 @@ const LicenseModal = ({ handleUpdateCancel,
     );
 }
 export default LicenseModal;
-  

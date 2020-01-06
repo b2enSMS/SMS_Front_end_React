@@ -1,6 +1,7 @@
 import { handleActions, createAction } from 'redux-actions';
 import produce from 'immer';
 import * as api from '../../lib/api';
+import { message } from 'antd';
 
 const CHANGE_INPUT = 'licensemodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'licensemodal/HANDLE_CANCLE';
@@ -9,7 +10,7 @@ const SHOW_LIMO = 'licensemodal/SHOW_LIMO';
 const SHOW_LIMO_SUCCESS = 'licensemodal/SHOW_LIMO_SUCCESS';
 const SHOW_LIMO_FAILURE = 'licensemodal/SHOW_LIMO_FAILURE';
 const OFF_MODAL = 'licensemodal/OFF_MODAL';
-const INITIALIZE_FORM = 'licensemodal/INITIALIZE_FORM';
+export const INITIALIZE_FORM = 'licensemodal/INITIALIZE_FORM';
 
 const IMAGE_CHANGE = 'licensemodal/IMAGE_CHANGE';
 const MODIFY_LICENSE = 'licensemodal/MODIFY_LICENSE';
@@ -23,14 +24,20 @@ const MODAL_IMAGE_REMOVE_FAILURE = 'licensemodal/MODAL_IMAGE_REMOVE_FAILURE'
 
 const BUTTON_CHANGE = 'licensemodal/BUTTON_CHANGE'
 
+//등록 수정 버튼 Flag
 export const getlicenseupdatebtn = createAction(BUTTON_CHANGE);
 
+//TextField값을 변경
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+
+//Form 초기화
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
-export const gethandleImageChange = createAction(IMAGE_CHANGE, (fileList) => ( {fileList} ))
 
+//이미지 변경
+export const gethandleImageChange = createAction(IMAGE_CHANGE, (fileList) => ({ fileList }))
 
-export const getmodifyLicenseHandler = (formData,key) => async dispatch => {
+//라이센스 수정 버튼 클릭
+export const getmodifyLicenseHandler = (formData, key) => async dispatch => {
     dispatch({ type: MODIFY_LICENSE })
     try {
         const responseProduct = await api.getProducts();
@@ -54,14 +61,16 @@ export const getmodifyLicenseHandler = (formData,key) => async dispatch => {
     }
 }
 
+//이미지 옆에 휴지통 버튼 클릭
 export const gethandleImageRemove = (fileList) => async dispatch => {
     console.log("gethandleImageRemove", fileList)
     dispatch({ type: MODAL_IMAGE_REMOVE })
     try {
         await api.getRemoveImage(fileList);
+        message.success('이미지 삭제 성공!!');
         dispatch({
             type: MODAL_IMAGE_REMOVE_SUCCESS,
-            payload: fileList 
+            payload: fileList
         });
     } catch (e) {
         dispatch({ type: MODAL_IMAGE_REMOVE_FAILURE })
@@ -69,6 +78,7 @@ export const gethandleImageRemove = (fileList) => async dispatch => {
     }
 };
 
+//라이센스 등록 버튼 클릭
 export const getShowModal = () => async dispatch => {
     dispatch({ type: SHOW_LIMO });
     try {
@@ -91,12 +101,12 @@ export const getShowModal = () => async dispatch => {
     }
 };
 
+//취소 버튼 클릭
 export const getHandleCancel = (fileList) => async dispatch => {
     console.log("getHandleCancel", fileList)
     dispatch({ type: MODAL_IMAGE_REMOVE })
     try {
         await api.getRemoveImage(fileList);
-
         dispatch({
             type: MODAL_IMAGE_REMOVE_SUCCESS,
             payload: { fileList }
@@ -110,16 +120,18 @@ export const getHandleCancel = (fileList) => async dispatch => {
     }
 
 }
-export const gethandleUpdateCancel = () => dispatch =>{
+//수정에서 취소 버튼 클릭
+export const gethandleUpdateCancel = () => dispatch => {
     dispatch({ type: HANDLE_CANCEL });
-        dispatch({ type: INITIALIZE_FORM, payload: "licenseForm" });
+    dispatch({ type: INITIALIZE_FORM, payload: "licenseForm" });
 }
 
+//TextField 수정
 export const handleChangeInput = (changeData) => dispatch => {
     console.log(changeData)
     dispatch({ type: CHANGE_INPUT, payload: changeData });
 }
-
+//등록 버튼 클릭
 export const handleOk = () => dispatch => {
     dispatch({ type: OFF_MODAL });
     dispatch({ type: INITIALIZE_FORM, payload: "licenseForm" });
@@ -163,7 +175,7 @@ const licensemodal = handleActions(
             visible: true,
         }),
 
-        [MODIFY_LICENSE_SUCCESS]: (state, { payload: { form, products, licCode,key } }) =>
+        [MODIFY_LICENSE_SUCCESS]: (state, { payload: { form, products, licCode, key } }) =>
             produce(state, draft => {
                 console.log("MODIFY_LICENSE_SUCCESS", form)
                 draft["licCode"] = licCode
@@ -183,26 +195,25 @@ const licensemodal = handleActions(
             ...state,
             imageRemoveFlag: true
         }),
-        [MODAL_IMAGE_REMOVE_SUCCESS]: (state, { payload: fileList }) => 
+        [MODAL_IMAGE_REMOVE_SUCCESS]: (state, { payload: fileList }) =>
 
             produce(state, draft => {
-                console.log("form remove before", fileList)
+                console.log("form remove before", fileList, state.licenseForm.fileList)
                 if (fileList && fileList.length > 0) {
                     for (let i in fileList) {
-                        draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.url !== fileList[i].url)
-                        console.log("REMOVE", fileList[i])
+                        draft['licenseForm']["fileList"] =  state.licenseForm.fileList.filter((v, index) => v.url !== fileList[i].url)
                     }
                 }
-        }),
+            }),
         [MODAL_IMAGE_REMOVE_FAILURE]: state => ({
             ...state,
             imageRemoveFlag: false
         }),
 
-        [IMAGE_CHANGE]: (state, { payload:  {fileList}  }) => 
+        [IMAGE_CHANGE]: (state, { payload: { fileList } }) =>
             produce(state, draft => {
                 console.log("moduleFile", fileList)
-                draft["licenseForm"]["fileList"] =fileList
+                draft["licenseForm"]["fileList"] = fileList
                 // draft["licenseForm"]["fileList"] = state.licenseForm.fileList.concat(file)
                 // draft["licenseForm"]["fileList"] = [...fileList]
             }),
