@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Table, Menu, Dropdown, Icon } from 'antd';
 import { withStyles, Button } from '@material-ui/core/';
 import 'antd/dist/antd.css';
@@ -66,7 +66,7 @@ const ColorButton = withStyles(theme => ({
 
 function PossibleContractTable({ handleHistoryModal, loadingTable, contractList, showModal, deleteData, updateModalHandler, modalBtnHandler }) {
     const classes = useStyles();
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const handleMenuClick = key => {
         console.log("key", key);
         updateModalHandler(key)
@@ -150,22 +150,22 @@ function PossibleContractTable({ handleHistoryModal, loadingTable, contractList,
                 )
         },
     ];
-    const onSelectChange = selectedRowKeys => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        setSelectedRowKeys(selectedRowKeys)
-    };
+    // const onSelectChange = selectedRowKeys => {
+    //     console.log('selectedRowKeys changed: ', selectedRowKeys);
+    //     setSelectedRowKeys(selectedRowKeys)
+    // };
 
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
+    // const rowSelection = {
+    //     selectedRowKeys,
+    //     onChange: onSelectChange,
+    // };
 
-    const hasSelected = selectedRowKeys.length > 0;
+    // const hasSelected = selectedRowKeys.length > 0;
     return (
         <div>
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
-                {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
-            </div>
+                {/* {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'} */}
+            </div> 
             <div className={classes.button}>
                 <span style={{ paddingRight: 14 }}>
 
@@ -194,7 +194,7 @@ function PossibleContractTable({ handleHistoryModal, loadingTable, contractList,
                 rowKey="tempVerId"
                 loading={loadingTable}
                 tableLayout='fixed'
-                rowSelection={rowSelection}
+                rowClassName="editable-row"
                 columns={columns}
                 dataSource={loadingTable ? null : contractList}
                 size="small" />
