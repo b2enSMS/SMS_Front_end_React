@@ -14,7 +14,7 @@ export const gethandleCancel = createAction(MODAL_CANCEL);
 export const gethandleHistoryModal = (tempVarId) => async dispatch => {
     dispatch({ type: SHOW_MODAL });
     try {
-        const response = await api.getHistoryList(tempVarId)
+        const response = await api.getTempHistoryList(tempVarId)
         dispatch({
             type: SHOW_MODAL_SUCCESS,
             payload: {
