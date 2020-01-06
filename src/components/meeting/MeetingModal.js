@@ -1,10 +1,9 @@
 import React from 'react';
 import { Container, TextField, Grid } from '@material-ui/core/';
-import {Modal} from "antd";
+import { Modal, Select } from "antd";
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import DateFnsUtils from "@date-io/date-fns";
-import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
@@ -34,10 +33,13 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const MeetingModal = ({handleUpdateOk,b2enModal, meetCd, orgModal, updateVisible, HandleCancel, handleChangeInput, meetingModal, buttonFlag, handleOk}) => {
+const MeetingModal = ({ handleUpdateOk, b2enModal, meetCd, orgModal, updateVisible, HandleCancel, handleChangeInput, meetingModal, buttonFlag, handleOk }) => {
 
     const classes = useStyles();
 
+    //const { Option } = Select;
+
+    const children = [];
 
     const handleinstallDtChange = (id, date) => {
         handleChangeInput({ form: "meetingModal", key: "meetDt", value: date })
@@ -47,18 +49,18 @@ const MeetingModal = ({handleUpdateOk,b2enModal, meetCd, orgModal, updateVisible
         handleChangeInput({ form: "meetingModal", key: ev.target.id, value: ev.target.value })
     };
 
-    const MeetingCodeHandleChange = (ev, value)=>{
+    const MeetingCodeHandleChange = (ev, value) => {
         handleChangeInput({ form: "meetingModal", key: "meetTpCd", value: value["cmmnDetailCd"] });
         handleChangeInput({ form: "meetingModal", key: "meetTpCdNm", value: value["cmmnDetailCdNm"] });
 
     }
 
-    return(
+    return (
         <Modal
             title="미팅 정보"
             visible={updateVisible}
-            okText={buttonFlag?"등록":"수정"}
-            onOk={buttonFlag?handleOk:handleUpdateOk}
+            okText={buttonFlag ? "등록" : "수정"}
+            onOk={buttonFlag ? handleOk : handleUpdateOk}
             onCancel={HandleCancel}
             style={{ top: 25 }}
         >
@@ -66,7 +68,7 @@ const MeetingModal = ({handleUpdateOk,b2enModal, meetCd, orgModal, updateVisible
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
 
-                    {/*<Autocomplete
+                        {/*<Autocomplete
                         id="orgId"
                         options={orgList}
                         onChange={autoCompleteHandleChange}
@@ -87,7 +89,7 @@ const MeetingModal = ({handleUpdateOk,b2enModal, meetCd, orgModal, updateVisible
                             />
                         )}
                     />*/}
-                    {/*<Autocomplete
+                        {/*<Autocomplete
                         id="empId"
                         options={b2enList}
                         onChange={autoCompleteHandleChange}
@@ -108,25 +110,25 @@ const MeetingModal = ({handleUpdateOk,b2enModal, meetCd, orgModal, updateVisible
                             />
                         )}
                     />*/}
-                    <Grid item xs={12} sm={6}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                                disableToolbar
-                                variant="inline"
-                                format="yyyy-MM-dd"
-                                //margin="normal"
-                                id="meetDt"
-                                label="미팅 날짜"
-                                fullWidth
-                                value={meetingModal.meetDt}
-                                onChange={handleinstallDtChange}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            />
-                        </MuiPickersUtilsProvider>
-                    </Grid>
-                    {/*<TextField
+                        <Grid item xs={12} sm={6}>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    disableToolbar
+                                    variant="inline"
+                                    format="yyyy-MM-dd"
+                                    //margin="normal"
+                                    id="meetDt"
+                                    label="미팅 날짜"
+                                    fullWidth
+                                    value={meetingModal.meetDt}
+                                    onChange={handleinstallDtChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </MuiPickersUtilsProvider>
+                        </Grid>
+                        {/*<TextField
                         className={classes.textField}
                         variant="outlined"
                         margin="normal"
@@ -145,6 +147,7 @@ const MeetingModal = ({handleUpdateOk,b2enModal, meetCd, orgModal, updateVisible
                                 type="time"
                                 fullWidth
                                 value={meetingModal.meetStartTime}
+                                onChange={handleChange}
                                 className={classes.textField}
                                 InputLabelProps={{
                                     shrink: true,
@@ -176,34 +179,52 @@ const MeetingModal = ({handleUpdateOk,b2enModal, meetCd, orgModal, updateVisible
                         </Grid>
                         <Grid item xs={12} sm={10}>
 
-                    <Autocomplete
-                        id="meetTpCdId"
-                        options={meetCd}
-                        onChange={MeetingCodeHandleChange}
-                        inputValue={meetingModal.meetTpCdNm}
-                        value={{ cmmnDetailCdNm: meetingModal.meetTpCdNm }}
-                        getOptionLabel={option => option.cmmnDetailCdNm}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                className={classes.textField}
-                                variant="outlined"
-                                required
-                                margin="normal"
-                                label="미팅 코드"
-                                fullWidth
-                                //value={possibleCustomerModal.custTpCdNm}
+                            <Autocomplete
+                                id="meetTpCdId"
+                                options={meetCd}
+                                onChange={MeetingCodeHandleChange}
+                                inputValue={meetingModal.meetTpCdNm}
+                                value={{ cmmnDetailCdNm: meetingModal.meetTpCdNm }}
+                                getOptionLabel={option => option.cmmnDetailCdNm}
+                                renderInput={params => (
+                                    <TextField
+                                        {...params}
+                                        className={classes.textField}
+                                        variant="outlined"
+                                        required
+                                        margin="normal"
+                                        label="미팅 코드"
+                                        fullWidth
+                                    //value={possibleCustomerModal.custTpCdNm}
+                                    />
+                                )}
                             />
-                        )}
-                    />
                         </Grid>
                         <Grid item xs={12} sm={1}>
                         </Grid>
-                        <Grid item xs={12} sm={8}>
-                            <Button className={classes.custProps} size="large" variant="outlined" onClick={orgModal}>고객 + </Button>
+                        <Grid item xs={12} sm={6}>
+                            <Select
+                                mode="multiple"
+                                size='default'
+                                placeholder="Please select"
+                                defaultValue={['a10', 'c12']}
+                                onChange={handleChange}
+                                style={{ width: '100%' }}
+                            >
+                                {children}
+                            </Select>
                         </Grid>
-                        <Grid item xs={12} sm={4} >
-                            <Button  size="large" variant="outlined" onClick={b2enModal}>담당자 +</Button>
+                        <Grid item xs={12} sm={6}>
+                            <Select
+                                mode="multiple"
+                                size='default'
+                                placeholder="Please select"
+                                defaultValue={['a10', 'c12']}
+                                onChange={handleChange}
+                                style={{ width: '100%' }}
+                            >
+                                {children}
+                            </Select>
                         </Grid>
                     </Grid>
                 </form>

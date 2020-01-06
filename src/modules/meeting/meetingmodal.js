@@ -74,7 +74,7 @@ export const getShowUpdateModal = meeting => async dispatch => {
 export const handleUpdateOk = (formData) => async dispatch => {
     dispatch({ type: UPDATE_MEETING });
     try {
-        await api.updateCustomer(formData);
+        await api.postUpdateMeeting(formData);
         dispatch({
             type: UPDATE_MEETING_SUCCESS
         });
@@ -164,7 +164,7 @@ const initialState = {
         emp: [],
         cust: [],
         meetDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-        meetStartTime: new Date().getHours()+ ':' + new Date().getMinutes(),
+        meetStartTime: new Date().getHours()+ ':' + new Date().getMinutes()+":00",
         meetTotTime: '',
         meetTpCd: '',
         meetTpCdNm: '',

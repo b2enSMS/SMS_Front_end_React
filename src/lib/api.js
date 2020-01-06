@@ -304,6 +304,28 @@ export const postMeeting = (formData) => {
     }
     axios.post(`/meet/create`, data);
 }
+export const postUpdateMeeting = (formData) => {
+    const custId = []
+    const empId = []
+    for(let i in formData.meetAttendCust){
+        custId.push(formData.meetAttendCust[i].custId)
+    }
+    for(let i in formData.meetAttendEmp){
+        empId.push(formData.meetAttendEmp[i].empId)
+    }
+    const data = {
+        orgId:formData.orgId,
+        meetDt: formData.meetDt,
+        meetCnt: formData.meetCnt,
+        meetStartTime:formData.meetStartTime,
+        meetTotTime:formData.meetTotTime,
+        meetTpCd:formData.meetTpCd,
+        custId:custId,
+        empId:empId,
+    }
+    console.log("postUpdateMeeting data",data)
+    axios.put(`/meet/${formData.meetId}`, data);
+}
 
 export const getTempContract = (key) =>
     axios.get(`/temp/${key}`);
