@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { message } from 'antd'
 
 axios.defaults.baseURL = "/sms/api";
 //(개발할 때) npm start를 하면 NODE_ENV 값이 development가 들어가고 
@@ -6,13 +7,36 @@ axios.defaults.baseURL = "/sms/api";
 if (process.env.NODE_ENV === "development") {
     axios.defaults.baseURL = "http://localhost:9000/sms/api";
 }
+// 응답 인터셉터 추가
+axios.interceptors.response.use(
+    function (response) {
+        return response;
+    },
+    function (error) {
+        message.error("오류 발생")
+        return Promise.reject(error);
+    });
 
 
 //이미지 삭제
 export const getRemoveImage = (fileList) => {
-    if(fileList && fileList.length>0){
-        console.log('api: getRemoveImage',fileList,{ idx: fileList})
-        return axios.delete(`/scan`, { data: { idx: fileList} })
+    if (fileList && fileList.length > 0) {
+        const file = []
+        for (let i in fileList) {
+            const response = {
+                name: fileList[i].name,
+                status: fileList[i].status,
+                url: fileList[i].url,
+                thumbUrl: fileList[i].thumbUrl,
+            }
+            const temp = {
+                uid:fileList[i].uid,
+                response:response
+            }
+            file.push(temp)
+        }
+        console.log('api: getRemoveImage', {file}, fileList, { idx: fileList })
+        return axios.delete(`/scan`, { data:  file  })
     }
 }
 
@@ -42,7 +66,7 @@ export const postContracts = (formData) => {
 
 
 export const postUpdateContracts = (formData) => {
-    console.log("formData야야야야ㅑ", formData.lcns)
+    console.log("postUpdateContracts: formData ", formData)
     const data = {
         prdtId: formData.prdtId,
         checkDt: formData.checkDt,
@@ -198,7 +222,7 @@ export const getManagers = () =>
 //기관 담당자 이름 리스트
 export const getorgML = () =>
     axios.get('/cust/aclist');
-    
+
 //계약 코드 리스트
 export const getcontCD = () =>
     axios.get('/cmmncd/cont_tp_cd');
@@ -226,7 +250,7 @@ export const getDeleteProducts = (selectedRowKeys) => {
 
 
 export const deleteB2enManager = (selectedRowKeys) =>
-    axios.delete(`/b2en`,{data: {idx: selectedRowKeys}})
+    axios.delete(`/b2en`, { data: { idx: selectedRowKeys } })
 
 // b2en 담당자 리스트
 export const getManagerList = () =>
@@ -267,7 +291,7 @@ export const postOrg = (formData) => {
     axios.post(`/org/create`, data);
 }
 export const deleteMeeting = (selectedRowKeys) =>
-    axios.delete(`/meet`,{data: {idx: selectedRowKeys}})
+    axios.delete(`/meet`, { data: { idx: selectedRowKeys } })
 
 export const getMeetingList = () =>
     axios.get('/meet/showall');
@@ -296,8 +320,8 @@ export const updatePossible = (formData) => {
         lcns: formData.lcns,
         custId: formData.custid,
         empId: formData.empId,
-        requestDt: formData.requestDt,
-        macAdrr: formData.macAdrr,
+        requestDate: formData.requestDate,
+        macAddr: formData.macAddr,
         issueReason: formData.issueReason,
     }
     axios.put(`/temp/${formData.tempVerId}`, data);
@@ -308,9 +332,13 @@ export const postPossible = (formData) => {
         lcns: formData.lcns,
         custId: formData.custid,
         empId: formData.empId,
-        requestDt: formData.requestDt,
-        macAdrr: formData.macAdrr,
+        requestDate: formData.requestDate,
+        macAddr: formData.macAddr,
         issueReason: formData.issueReason,
     }
     return axios.post('/temp/create', data);
 }
+
+export const getTempHistoryList = (tempVerId) =>
+    axios.get(`temp/hist/${tempVerId}`);
+

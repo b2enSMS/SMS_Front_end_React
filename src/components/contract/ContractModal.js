@@ -157,7 +157,7 @@ const ContractModal = ({ licenseupdatebtn,custML, headCont, modifyLicenseHandler
                                         //margin="normal"
                                         label="기관 담당자명"
                                         fullWidth
-                                        value={contractForm.empNm}
+                                        value={contractForm.custNm}
                                     />
                                 )}
                             />

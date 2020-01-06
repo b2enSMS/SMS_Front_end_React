@@ -183,6 +183,7 @@ const PossibleContractModal = ({ licenseupdatebtn, custML, modifyLicenseHandler,
                                 variant="outlined"
                                 required
                                 fullWidth
+                                multiline
                                 name="issueReason"
                                 label="비고"
                                 id="issueReason"
