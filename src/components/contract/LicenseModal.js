@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Upload, Icon, message } from 'antd';
-import { Container, TextField, Grid, Button } from '@material-ui/core/';
+import { Container, TextField, Grid, Button,InputAdornment } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -13,20 +13,20 @@ const useStyles = makeStyles(theme => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(0),
     },
-    textField: {
-        '& input:valid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:invalid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:valid:focus + fieldset': {
-            borderLeftWidth: 6,
-            padding: '4px !important', // override inline-style
+    // textField: {
+    //     '& input:valid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:invalid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:valid:focus + fieldset': {
+    //         borderLeftWidth: 6,
+    //         padding: '4px !important', // override inline-style
 
-        },
+    //     },
 
-    },
+    // },
     imageStyle: {
         paddingTop: theme.spacing(3)
     },
@@ -154,7 +154,7 @@ const LicenseModal = ({ handleUpdateCancel,
         <Modal
             title="제품 등록"
             visible={visible}
-            onOk={() => { btnFlag ? handleOk(fileList) : updateOk(fileList) }}
+            onOk={() => { setFileList([]);btnFlag ? handleOk(fileList) : updateOk(fileList) }}
             okText={btnFlag ? "등록" : "수정"}
             confirmLoading={confirmLoading}
             onCancel={() => { setFileList([]); btnFlag ? handleCancel(licenseForm.fileList) : handleUpdateCancel() }}
@@ -200,6 +200,12 @@ const LicenseModal = ({ handleUpdateCancel,
                                 name="contAmt"
                                 label="납품 가격"
                                 id="contAmt"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">원</InputAdornment>,
+                                }}
+                                inputProps={{
+                                    step: 10000,//만 원씩
+                                }}
                                 onChange={handleChange}
                                 autoComplete="off"
                                 value={licenseForm.contAmt}

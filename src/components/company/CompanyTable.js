@@ -84,6 +84,7 @@ const CompanyTable = ({ companyList, loadingTable, deleteCompany, showUpdateModa
         {
             title: '주소',
             dataIndex: 'orgAddr',
+            align: 'center',
         },
         {
             title: '',

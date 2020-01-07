@@ -83,22 +83,28 @@ const CustomerTable = ({ customerList, loadingTable, deleteCustomer, showUpdateM
         {
             title: '고객 이름',
             dataIndex: 'custNm',
+            align: 'center',
         },
         {
             title: '직책',
             dataIndex: 'custRankNm',
+            align: 'center',
         },
         {
             title: '이메일',
             dataIndex: 'email',
+            align: 'center',
+            ellipsis:true,
         },
         {
             title: '연락처',
             dataIndex: 'telNo',
+            align: 'center',
         },
         {
             title: '고객 유형',
             dataIndex: 'custTpCdNm',
+            align: 'center',
         },
         {
             title: '',

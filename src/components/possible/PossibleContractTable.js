@@ -112,8 +112,15 @@ function PossibleContractTable({ handleHistoryModal, loadingTable, contractList,
             }
         },
         {
-            title: '비고',
+            title: '유효기간',
+            dataIndex: 'lcnsEndDt',
+            align: 'center',
+            // width: '5%',
+        },
+        {
+            title: '요청사유',
             dataIndex: 'issueReason',
+            ellipsis:true,
             align: 'center',
             // width: '5%',
         },

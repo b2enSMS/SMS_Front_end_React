@@ -14,19 +14,19 @@ const useStyles = makeStyles(theme => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(0),
     },
-    textField: {
-        '& input:valid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:invalid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:valid:focus + fieldset': {
-            borderLeftWidth: 6,
-            padding: '4px !important', // override inline-style
+    // textField: {
+    //     '& input:valid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:invalid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:valid:focus + fieldset': {
+    //         borderLeftWidth: 6,
+    //         padding: '4px !important', // override inline-style
 
-        },
-    },
+    //     },
+    // },
     textInput: {
         paddingTop: theme.spacing(2),
     },
@@ -185,7 +185,7 @@ const PossibleContractModal = ({ licenseupdatebtn, custML, modifyLicenseHandler,
                                 fullWidth
                                 multiline
                                 name="issueReason"
-                                label="비고"
+                                label="요청사유"
                                 id="issueReason"
                                 onChange={handleChange}
                                 autoComplete="off"
@@ -224,7 +224,7 @@ const PossibleContractModal = ({ licenseupdatebtn, custML, modifyLicenseHandler,
 const LicenseItem = ({ licenseupdatebtn, keyvar, license, removeLicenseHandler, classes, modifyLicenseHandler }) => {
     return (
         <Grid container spacing={2} >
-            {console.log("indexLicense", keyvar, license)}
+            {console.log("Possible indexLicense", keyvar, license)}
             <Grid item xs={12} sm={4}>
                 <Input
                     className={classes.textInput}

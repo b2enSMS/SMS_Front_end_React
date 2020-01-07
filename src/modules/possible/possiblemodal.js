@@ -236,9 +236,7 @@ const possiblemodal = handleActions(
 
         [INPUT_LICENSE]: (state, action) =>
             produce(state, draft => {
-                let lcns = Object.assign({}, action.payload.licenseForm);
-                lcns.fileList = action.payload.fileList;
-                draft["possibleForm"]["lcns"] = state.possibleForm.lcns.concat(lcns)
+                draft["possibleForm"]["lcns"] = state.possibleForm.lcns.concat(action.payload.licenseForm)
             }),
 
         [UPDATE_LICENSE]: (state, {payload: {licenseForm,keyIndex}}) =>

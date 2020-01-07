@@ -51,11 +51,11 @@ class MainItemList extends React.Component {
             title={
               <span style={{ color: '#AAFFBE' }}>
                 <Icon type="appstore" />
-                <span>임시 정보 관리</span>
+                <span>Pre-sales 관리</span>
               </span>
             }
           >
-            <Menu.Item key="5"><Link to="/possiblecontract"><Icon type="reconciliation"/>임시 라이선스</Link></Menu.Item>
+            <Menu.Item key="5"><Link to="/possiblecontract"><Icon type="reconciliation"/>Pre-sales</Link></Menu.Item>
             <Menu.Item key="6"><Link to="/possiblecustomer"><Icon type="user" />가망 고객 관리</Link></Menu.Item>
             <Menu.Item key="7"><Link to="/meeting"><Icon type="team" />미팅이력 관리</Link></Menu.Item>
           </SubMenu>

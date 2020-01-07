@@ -79,23 +79,39 @@ const MeetingTable = ({ meetingList, loadingTable, deleteMeeting, showUpdateModa
         {
             title: '참석 기관',
             dataIndex: 'orgNm',
+            ellipsis:true,
+            width: '12%',
 
+        },
+        {
+            title: '기관 담당자',
+            dataIndex: 'custNm',
+            align:'center',
+        },
+        {
+            title: '담당자',
+            dataIndex: 'empNm',
+            align:'center',
         },
         {
             title: '날짜',
             dataIndex: 'meetDt',
+            align:'center',
         },
         {
             title: '시작 시간',
             dataIndex: 'meetStartTime',
+            align:'center',
         },
         {
             title: '미팅 총 시간',
             dataIndex: 'meetTotTime',
+            align:'center',
         },
         {
             title: '내용',
             dataIndex: 'meetCnt',
+            align:'center',
         },
         {
             title: '',

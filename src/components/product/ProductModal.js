@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, TextField } from '@material-ui/core/';
+import { Container, TextField,InputAdornment } from '@material-ui/core/';
 import {Modal} from "antd";
 import { makeStyles } from '@material-ui/core/styles';
 //import MenuItem from '@material-ui/core/MenuItem';
@@ -9,18 +9,18 @@ const useStyles = makeStyles(theme => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(0),
     },
-    textField: {
-        '& input:valid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:invalid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:valid:focus + fieldset': {
-            borderLeftWidth: 6,
-            padding: '4px !important', // override inline-style
-        },
-    },
+    // textField: {
+    //     '& input:valid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:invalid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:valid:focus + fieldset': {
+    //         borderLeftWidth: 6,
+    //         padding: '4px !important', // override inline-style
+    //     },
+    // },
 }));
 
 const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChangeInput, productInfo, buttonFlag, handleOk}) => {
@@ -62,11 +62,18 @@ const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         margin="normal"
                         required
                         fullWidth
+                        type='number'
                         id="prdtAmt"
                         label="가격"
                         name="prdtAmt"
                         value={productInfo.prdtAmt}
                         onChange={handleChange}
+                        InputProps={{
+                            endAdornment: <InputAdornment position="start">원</InputAdornment>,
+                        }}
+                        inputProps={{
+                            step: 10000,//만 원씩
+                        }}
                     />
                     <TextField
                         className={classes.textField}

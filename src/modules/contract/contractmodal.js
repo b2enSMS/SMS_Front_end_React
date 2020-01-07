@@ -239,7 +239,7 @@ const initialState = {
         contReportNo: "",
         headContId: "",
         headContNm: "",
-        custId: "",
+        custId: 0,
         custNm: "",
         contNm: "",
     },

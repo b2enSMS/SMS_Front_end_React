@@ -42,7 +42,7 @@ export const getRemoveImage = (fileList) => {
 
 //계약 등록
 export const postContracts = (formData) => {
-    console.log("formData야야야야ㅑ", formData.lcns)
+    console.log("formData postContracts", formData)
     const data = {
         prdtId: formData.prdtId,
         checkDt: formData.checkDt,
@@ -345,7 +345,7 @@ export const getTempContracts = () =>
 export const updatePossible = (formData) => {
     const data = {
         lcns: formData.lcns,
-        custId: formData.custid,
+        custId: formData.custId,
         empId: formData.empId,
         requestDate: formData.requestDate,
         macAddr: formData.macAddr,
@@ -355,9 +355,10 @@ export const updatePossible = (formData) => {
 }
 //임시 계약 등록
 export const postPossible = (formData) => {
+    console.log("postPossible",formData)
     const data = {
         lcns: formData.lcns,
-        custId: formData.custid,
+        custId: formData.custId,
         empId: formData.empId,
         requestDate: formData.requestDate,
         macAddr: formData.macAddr,

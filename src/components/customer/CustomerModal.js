@@ -9,18 +9,18 @@ const useStyles = makeStyles(theme => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(0),
     },
-    textField: {
-        '& input:valid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:invalid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:valid:focus + fieldset': {
-            borderLeftWidth: 6,
-            padding: '4px !important', // override inline-style
-        },
-    },
+    // textField: {
+    //     '& input:valid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:invalid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:valid:focus + fieldset': {
+    //         borderLeftWidth: 6,
+    //         padding: '4px !important', // override inline-style
+    //     },
+    // },
 }));
 
 const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, HandleCancel, handleChangeInput, customerModal, buttonFlag, handleOk}) => {
