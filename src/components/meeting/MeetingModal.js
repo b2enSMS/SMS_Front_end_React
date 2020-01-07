@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, TextField, Grid } from '@material-ui/core/';
+import { Container, TextField, Grid,InputAdornment } from '@material-ui/core/';
 import { Modal, Select } from "antd";
 import { makeStyles } from '@material-ui/core/styles';
 import DateFnsUtils from "@date-io/date-fns";
@@ -11,24 +11,24 @@ const useStyles = makeStyles(theme => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(0),
     },
-    textField: {
-        '& input:valid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:invalid + fieldset': {
-            borderWidth: 2,
-        },
-        '& input:valid:focus + fieldset': {
-            borderLeftWidth: 6,
-            padding: '4px !important', // override inline-style
-        },
-        mnProps: {
-            textAlign: 'right',
-        },
-        custProps: {
-            paddingRight: theme.spacing(1),
-            paddingLeft: theme.spacing(1)
-        },
+    // textField: {
+    //     '& input:valid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:invalid + fieldset': {
+    //         borderWidth: 2,
+    //     },
+    //     '& input:valid:focus + fieldset': {
+    //         borderLeftWidth: 6,
+    //         padding: '4px !important', // override inline-style
+    //     },
+    // },
+    mnProps: {
+        textAlign: 'right',
+    },
+    custProps: {
+        paddingRight: theme.spacing(1),
+        paddingLeft: theme.spacing(1)
     },
 }));
 
@@ -79,6 +79,7 @@ const MeetingModal = ({
             onOk={buttonFlag ? handleOk : handleUpdateOk}
             onCancel={HandleCancel}
             cancelText="취소"
+            disableClearable={true}
             style={{ top: 25 }}
         >
             <Container component="main" maxWidth="xs">
@@ -119,22 +120,28 @@ const MeetingModal = ({
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} >
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                margin="normal"
                                 required
                                 fullWidth
+                                type="number"
                                 id="meetTotTime"
                                 label="소요 시간"
                                 name="meetTotTime"
                                 value={meetingModal.meetTotTime}
                                 onChange={handleChange}
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">분</InputAdornment>,
+                                }}
+                                inputProps={{
+                                    step: 5,
+                                }}
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
 
                             <Autocomplete
                                 id="meetTpCdId"
@@ -147,15 +154,29 @@ const MeetingModal = ({
                                 renderInput={params => (
                                     <TextField
                                         {...params}
-                                        className={classes.textField}
                                         variant="outlined"
                                         required
-                                        margin="normal"
+                                        //margin="normal"
                                         label="미팅 코드"
                                         fullWidth
                                         value={meetingModal.meetTpCdNm}
                                     />
                                 )}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                className={classes.textField}
+                                variant="outlined"
+                                required
+                                fullWidth
+                                multiline
+                                name="meetCnt"
+                                label="요청사유"
+                                id="meetCnt"
+                                onChange={handleChange}
+                                autoComplete="off"
+                                value={meetingModal.meetCnt}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>

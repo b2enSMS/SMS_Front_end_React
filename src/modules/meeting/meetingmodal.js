@@ -189,7 +189,7 @@ const initialState = {
         empId: [],
         custId: [],
         meetDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-        meetStartTime: new Date().getHours() + ':' + new Date().getMinutes() + ":00",
+        meetStartTime: new Date().getHours() + ':' + new Date().getMinutes(),
         meetTotTime: '',
         meetTpCd: '',
         meetTpCdNm: '',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Container, Paper } from '@material-ui/core/';
+import { Container, Paper } from '@material-ui/core/';
 import {ManagerTableContainer} from "../containers";
 import ManagerModalContainer from "../containers/manager/ManagerModalContainer";
 
@@ -24,9 +24,17 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(4),
     },
     menuName: {
-        padding: theme.spacing(5),
+        // padding: theme.spacing(5),
+        // color: textcolor,
+        // fontWeight: '700',
+        padding: theme.spacing(4),
+        paddingBotton: theme.spacing(-1.25),
+        paddingTop: theme.spacing(4.5),
+        paddingLeft: theme.spacing(5.5),
+        lineHeight:1.33,
+        fontSize:'1.5rem',
         color: textcolor,
-        fontWeight: '700',
+        fontWeight: 580,
     },
 }));
 
@@ -36,9 +44,10 @@ const ProductInfoPage = () => {
     return (
         <span>
             <div>
-                <Typography className={classes.menuName} variant="h5">
-                    b2en 담당자 관리
-                </Typography>
+                {/* <Typography className={classes.menuName} variant="h5">
+                    
+                </Typography> */}
+                <h1 className={classes.menuName}>b2en 담당자 관리</h1>
             </div>
             <div className={classes.tablepart}>
                 <Paper >

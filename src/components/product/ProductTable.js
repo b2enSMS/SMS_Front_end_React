@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { withStyles, Button } from '@material-ui/core/';
-import {Dropdown, Icon, Menu, Table} from "antd";
+import { Dropdown, Icon, Menu, Table } from "antd";
 
 const textcolor = '#174A84';
 
@@ -79,15 +79,26 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
         {
             title: '이름',
             dataIndex: 'prdtNm',
+            align: 'center',
 
         },
         {
             title: '가격',
             dataIndex: 'prdtAmt',
+            align: 'right',
+            render: (value, record, index) => {
+                return {
+                    children: (value == null ? "-" : parseInt(value) / 1000).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 만원 ",
+                    props: {
+                        align: 'right',
+                    },
+                };
+            }
         },
         {
             title: '설명',
             dataIndex: 'prdtDesc',
+            align: 'center',
         },
         {
             title: '',
@@ -95,21 +106,21 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
             width: '5%',
             render: (text, record) =>
                 (<Dropdown
-                        overlay={(
-                            <Menu onClick={() => {
-                                handleMenuClick(record.prdtId)
-                                changeButton()
-                            }}>
-                                <Menu.Item >
-                                    수정
+                    overlay={(
+                        <Menu onClick={() => {
+                            handleMenuClick(record.prdtId)
+                            changeButton()
+                        }}>
+                            <Menu.Item >
+                                수정
                                 </Menu.Item>
-                            </Menu>
-                        )}
+                        </Menu>
+                    )}
 
-                        placement="bottomLeft">
+                    placement="bottomLeft">
 
-                        <Button size="small"><Icon type="menu" /></Button>
-                    </Dropdown>
+                    <Button size="small"><Icon type="menu" /></Button>
+                </Dropdown>
                 )
         },
     ];
@@ -126,7 +137,7 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
 
     const hasSelected = selectedRowKeys.length > 0;
 
-    return(
+    return (
         <div>
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
                 {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}
@@ -135,23 +146,23 @@ const ProductTable = ({ productList, loadingTable, getDeleteProduct, showUpdateM
             <div className={classes.button}>
                 <span style={{ paddingRight: 14 }}>
 
-              <ColorButton
-                  onClick={showModal}
-                  className={classes.plusbutton}
-                  size='small'
-                  variant="outlined"
-                  color="primary"
-                  endIcon={<AddIcon />}
-              > 제품 등록
+                    <ColorButton
+                        onClick={showModal}
+                        className={classes.plusbutton}
+                        size='small'
+                        variant="outlined"
+                        color="primary"
+                        endIcon={<AddIcon />}
+                    > 제품 등록
               </ColorButton>
-            </span>
+                </span>
                 <RemoveButton
                     className={classes.minusbutton}
                     size='small'
                     variant="outlined"
                     color="secondary"
                     endIcon={<RemoveIcon />}
-                    onClick={()=>{getDeleteProduct(selectedRowKeys);setSelectedRowKeys([]);}}
+                    onClick={() => { getDeleteProduct(selectedRowKeys); setSelectedRowKeys([]); }}
                 > 제품 삭제
                 </RemoveButton>
             </div>
