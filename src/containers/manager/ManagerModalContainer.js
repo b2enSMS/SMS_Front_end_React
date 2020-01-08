@@ -10,10 +10,11 @@ import {
 import ManagerModal from "../../components/manager/ManagerModal";
 
 const ManagerModalContainer = ({
-                                         updateVisible,
+                                   visible,
                                          getHandleCancel,
                                          handleChangeInput,
-                                         managerModal,
+                                   managerForm,
+                                   confirmLoading,
                                          buttonFlag,
                                          handleOk,
                                          handleUpdateOk
@@ -24,17 +25,18 @@ const ManagerModalContainer = ({
     useEffect(() => {
     },[dispatch])
 
-    const {formData} = useSelector(({managermodal})=>({formData : managermodal.managerModal}))
+    const {formData} = useSelector(({managermodal})=>({formData : managermodal.managerForm}))
     const UpdateOk = () =>{
         handleOk(formData);
     }
     return (
         <ManagerModal
-            updateVisible={updateVisible}
+            visible={visible}
+            confirmLoading={confirmLoading}
             handleOk={UpdateOk}
             HandleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
-            managerModal={managerModal}
+            managerForm={managerForm}
             buttonFlag={buttonFlag}
             handleUpdateOk={()=>handleUpdateOk(formData)}
         />
@@ -43,9 +45,10 @@ const ManagerModalContainer = ({
 
 export default connect(
     ({ managermodal }) => ({
+        confirmLoading: managermodal.confirmLoading,
         buttonFlag: managermodal.buttonFlag,
-        updateVisible: managermodal.updateVisible,
-        managerModal: managermodal.managerModal,
+        visible: managermodal.visible,
+        managerForm: managermodal.managerForm,
     }),
     {
         getShowUpdateModal,

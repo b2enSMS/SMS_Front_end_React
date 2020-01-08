@@ -249,7 +249,7 @@ export const getDeleteProducts = (selectedRowKeys) => {
 }
 
 
-export const deleteB2enManager = (selectedRowKeys) =>
+export const deleteManager = (selectedRowKeys) =>
     axios.delete(`/b2en`, { data: { idx: selectedRowKeys } })
 
 // b2en 담당자 리스트
