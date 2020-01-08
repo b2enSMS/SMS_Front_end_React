@@ -30,8 +30,7 @@ export const getManagerList = () => async dispatch => {
 export const deleteManager = selectedRowKeys => async dispatch => {
     dispatch({type: DELETE_MANAGER});
     try{
-        console.log("selectedRowKeysselectedRowKeys",selectedRowKeys);
-        await api.deleteB2enManager(selectedRowKeys);
+        await api.deleteManager(selectedRowKeys);
         dispatch({type: DELETE_MANAGER_SUCCESS});
     }catch(e){
         dispatch({

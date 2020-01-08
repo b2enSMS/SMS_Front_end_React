@@ -52,7 +52,6 @@ export const getShowUpdateModal = cust => async dispatch => {
     dispatch({ type: SHOW_UPDATE_MODAL });
     try {
         const res = await api.getCust(cust);
-        console.log("getShowUpdateModal",res.data)
         const response = await api.getOrganization();
         const resCd = await api.getcustCD();
         dispatch({
@@ -83,7 +82,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
         });
         dispatch({
             type: CUSTOMER_INIT,
-            payload: "customerModal"
+            payload: "customerForm"
         });
         dispatch({
             type: GET_CUSTOMER
@@ -114,7 +113,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
 
 export const getHandleCancel = () => dispatch => {
     dispatch({ type: HANDLE_CANCEL });
-    dispatch({ type: CUSTOMER_INIT, payload: "customerModal" });
+    dispatch({ type: CUSTOMER_INIT, payload: "customerForm" });
 };
 
 export const handleOk = (formData) => async dispatch => {
@@ -126,7 +125,7 @@ export const handleOk = (formData) => async dispatch => {
         })
         dispatch({
             type: CUSTOMER_INIT,
-            payload: "customerModal"
+            payload: "customerForm"
         });
         dispatch({
             type: GET_CUSTOMER
@@ -160,9 +159,10 @@ export const handleChangeInput = (changeData) => dispatch => {
 };
 
 const initialState = {
-    updateVisible: false,
+    confirmLoading: false,
+    visible: false,
     buttonFlag: true,
-    customerModal : {
+    customerForm : {
         orgNm: '',
         custNm: '',
         custRankNm: '',
@@ -183,7 +183,7 @@ const customermodal = handleActions(
         }),
         [SHOW_MODAL]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
         }),
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
@@ -195,7 +195,7 @@ const customermodal = handleActions(
             }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
         }),
         [SHOW_UPDATE_MODAL_FAILURE]: state => ({
             ...state,
@@ -203,12 +203,12 @@ const customermodal = handleActions(
         [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: { form, orgList, custCdList}}) =>
             produce(state, draft => {
                 draft["orgList"] = orgList;
-                draft["customerModal"] = form;
+                draft["customerForm"] = form;
                 draft['custCdList'] = custCdList;
             }),
         [HANDLE_CANCEL]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
             buttonFlag: true,
         }),
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
@@ -221,27 +221,34 @@ const customermodal = handleActions(
         }),
         [POST_CUSTOMER]: state => ({
             ...state,
-            updateVisible: true,
+            confirmLoading: true,
+            visible: true,
         }),
         [POST_CUSTOMER_SUCCESS]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
+            confirmLoading: false,
         }),
         [POST_CUSTOMER_FAILURE]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
+            confirmLoading: false,
         }),
         [UPDATE_CUSTOMER]: state => ({
             ...state,
-            updateVisible: true,
+            confirmLoading: true,
+            visible: true,
         }),
         [UPDATE_CUSTOMER_SUCCESS]: state => ({
             ...state,
-            updateVisible: false,
+            confirmLoading: false,
+            visible: false,
+            buttonFlag: true,
         }),
         [UPDATE_CUSTOMER_FAILURE]: state => ({
             ...state,
-            updateVisible: false,
+            confirmLoading: false,
+            visible: false,
         }),
     },
     initialState,

@@ -6,14 +6,15 @@ import {
     handleChangeInput,
     handleOk,
     handleUpdateOk
-} from "../../modules/product/productupdatemodal";
+} from "../../modules/product/productmodal";
 import ProductModal from "../../components/product/ProductModal";
 
-const ProductUpdateModalContainer = ({
-        updateVisible,
+const ProductModalContainer = ({
+                                         visible,
         getHandleCancel,
         handleChangeInput,
-        productModal,
+                                         productForm,
+                                         confirmLoading,
         buttonFlag,
         handleOk,
         handleUpdateOk
@@ -24,17 +25,18 @@ const ProductUpdateModalContainer = ({
     useEffect(() => {
     },[dispatch])
 
-    const {formData} = useSelector(({productupdatemodal})=>({formData : productupdatemodal.productModal}))
+    const {formData} = useSelector(({productupdatemodal})=>({formData : productupdatemodal.productForm}))
     const UpdateOk = () =>{
         handleOk(formData);
     }
     return (
         <ProductModal
-            updateVisible={updateVisible}
+            confirmLoading={confirmLoading}
+            visible={visible}
             handleOk={UpdateOk}
             HandleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
-            productInfo={productModal}
+            productForm={productForm}
             buttonFlag={buttonFlag}
             handleUpdateOk={()=>handleUpdateOk(formData)}
         />
@@ -43,9 +45,10 @@ const ProductUpdateModalContainer = ({
 
 export default connect(
     ({ productupdatemodal }) => ({
+        confirmLoading: productupdatemodal.confirmLoading,
         buttonFlag: productupdatemodal.buttonFlag,
-        updateVisible: productupdatemodal.updateVisible,
-        productModal: productupdatemodal.productModal,
+        visible: productupdatemodal.visible,
+        productForm: productupdatemodal.productForm,
     }),
     {
         getShowUpdateModal,
@@ -54,4 +57,4 @@ export default connect(
         handleOk,
         handleUpdateOk,
     }
-)(ProductUpdateModalContainer);
+)(ProductModalContainer);

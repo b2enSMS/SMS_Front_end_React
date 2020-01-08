@@ -17,6 +17,10 @@ const SHOW_MODAL = 'managermodal/SHOW_MODAL';
 const SHOW_MODAL_SUCCESS = 'managermodal/SHOW_MODAL_SUCCESS';
 const SHOW_MODAL_FAILURE = 'managermodal/SHOW_MODAL_FAILURE';
 
+const SHOW_UPDATE_MODAL = 'managermodal/SHOW_UPDATE_MODAL';
+const SHOW_UPDATE_MODAL_SUCCESS = 'managermodal/SHOW_UPDATE_MODAL_SUCCESS';
+const SHOW_UPDATE_MODAL_FAILURE = 'managermodal/SHOW_UPDATE_MODAL_FAILURE';
+
 const POST_MANAGER = 'managermodal/POST_MANAGER';
 const POST_MANAGER_SUCCESS = 'managermodal/POST_PRODUCT_SUCCESS';
 const POST_MANAGER_FAILURE = 'managermodal/POST_PRODUCT_FAILURE';
@@ -39,11 +43,11 @@ export const getShowModal = () => dispatch => {
 }
 
 export const getShowUpdateModal = product => async dispatch => {
-    dispatch({ type: SHOW_MODAL });
+    dispatch({ type: SHOW_UPDATE_MODAL });
     try {
         const res = await api.getManager(product);
         dispatch({
-            type: SHOW_MODAL_SUCCESS,
+            type: SHOW_UPDATE_MODAL_SUCCESS,
             payload: {
                 form: res.data,
             }
@@ -51,7 +55,7 @@ export const getShowUpdateModal = product => async dispatch => {
     } catch(e) {
         console.log("error");
         dispatch({
-            type: SHOW_MODAL_FAILURE,
+            type: SHOW_UPDATE_MODAL_FAILURE,
             payload: e,
             error: true
         });
@@ -60,7 +64,6 @@ export const getShowUpdateModal = product => async dispatch => {
 };
 
 export const handleUpdateOk = (formData) => async dispatch => {
-    console.log("handleUpdateOkhandleUpdateOk")
     dispatch({ type: UPDATE_MANAGER });
     try {
         await api.updateManager(formData);
@@ -69,7 +72,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
         });
         dispatch({
             type: MANAGER_INIT,
-            payload: "managerModal"
+            payload: "managerForm"
         });
         dispatch({
             type: GET_MANAGER
@@ -100,7 +103,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
 
 export const getHandleCancel = () => dispatch => {
     dispatch({ type: HANDLE_CANCEL });
-    dispatch({ type: MANAGER_INIT, payload: "managerModal" });
+    dispatch({ type: MANAGER_INIT, payload: "managerForm" });
 };
 
 export const handleOk = (formData) => async dispatch => {
@@ -112,7 +115,7 @@ export const handleOk = (formData) => async dispatch => {
         })
         dispatch({
             type: MANAGER_INIT,
-            payload: "managerModal"
+            payload: "managerForm"
         });
         dispatch({
             type: GET_MANAGER
@@ -146,9 +149,10 @@ export const handleChangeInput = (changeData) => dispatch => {
 };
 
 const initialState = {
-    updateVisible: false,
+    confirmLoading: false,
+    visible: false,
     buttonFlag: true,
-    managerModal : {
+    managerForm : {
         empNm: '',
         email: '',
         telNo: '',
@@ -163,18 +167,31 @@ const managermodal = handleActions(
         }),
         [SHOW_MODAL]: state => ({
             ...state,
-            updateVisible: true,
+            confirmLoading: true,
+            visible: true,
         }),
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_MODAL_SUCCESS]: (state, { payload: {form}}) =>
+        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: {form}}) =>
             produce(state, draft => {
-                draft["managerModal"] = form
+                draft["managerForm"] = form
             }),
+        [SHOW_UPDATE_MODAL]: state => ({
+            ...state,
+            confirmLoading: true,
+            visible: true,
+        }),
+        [SHOW_UPDATE_MODAL_FAILURE]: state => ({
+            ...state,
+        }),
+        [SHOW_MODAL_SUCCESS]: state => ({
+            ...state,
+            visible: true,
+        }),
         [HANDLE_CANCEL]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
             buttonFlag: true,
         }),
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
@@ -190,24 +207,24 @@ const managermodal = handleActions(
         }),
         [POST_MANAGER_SUCCESS]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
         }),
         [POST_MANAGER_FAILURE]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
         }),
         [UPDATE_MANAGER]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
         }),
         [UPDATE_MANAGER_SUCCESS]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
             buttonFlag: true,
         }),
         [UPDATE_MANAGER_FAILURE]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
         }),
     },
     initialState,

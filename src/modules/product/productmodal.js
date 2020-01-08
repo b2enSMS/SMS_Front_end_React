@@ -3,23 +3,27 @@ import * as api from '../../lib/api';
 import produce from "immer";
 import { GET_PRODUCT, GET_PRODUCT_SUCCESS, GET_PRODUCT_FAILURE } from './producttable';
 
-const PRODUCT_INIT = 'productupdatemodal/PRODUCT_INIT';
-const BUTTON_CHANGE = 'productupdatemodal/BUTTON_CHANGE';
+const PRODUCT_INIT = 'productmodal/PRODUCT_INIT';
+const BUTTON_CHANGE = 'productmodal/BUTTON_CHANGE';
 
-const HANDLE_CANCEL = "productupdatemodal/HANDLE_CANCEL";
-const CHANGE_INPUT = "productupdatemodal/CHANGE_INPUT";
+const HANDLE_CANCEL = "productmodal/HANDLE_CANCEL";
+const CHANGE_INPUT = "productmodal/CHANGE_INPUT";
 
-const UPDATE_PRODUCT = 'productupdatemodal/UPDATE_PRODUCT';
-const UPDATE_PRODUCT_SUCCESS = 'productupdatemodal/UPDATE_PRODUCT_SUCCESS';
-const UPDATE_PRODUCT_FAILURE = 'productupdatemodal/UPDATE_PRODUCT_FAILURE';
+const UPDATE_PRODUCT = 'productmodal/UPDATE_PRODUCT';
+const UPDATE_PRODUCT_SUCCESS = 'productmodal/UPDATE_PRODUCT_SUCCESS';
+const UPDATE_PRODUCT_FAILURE = 'productmodal/UPDATE_PRODUCT_FAILURE';
 
-const SHOW_MODAL = 'productupdatemodal/SHOW_MODAL';
-const SHOW_MODAL_SUCCESS = 'productupdatemodal/SHOW_MODAL_SUCCESS';
-const SHOW_MODAL_FAILURE = 'productupdatemodal/SHOW_MODAL_FAILURE';
+const SHOW_MODAL = 'productmodal/SHOW_MODAL';
+const SHOW_MODAL_SUCCESS = 'productmodal/SHOW_MODAL_SUCCESS';
+const SHOW_MODAL_FAILURE = 'productmodal/SHOW_MODAL_FAILURE';
 
-const POST_PRODUCT = 'productupdatemodal/POST_PRODUCT';
-const POST_PRODUCT_SUCCESS = 'productupdatemodal/POST_PRODUCT_SUCCESS';
-const POST_PRODUCT_FAILURE = 'productupdatemodal/POST_PRODUCT_FAILURE';
+const SHOW_UPDATE_MODAL = 'productmodal/SHOW_UPDATE_MODAL';
+const SHOW_UPDATE_MODAL_SUCCESS = 'productmodal/SHOW_UPDATE_MODAL_SUCCESS';
+const SHOW_UPDATE_MODAL_FAILURE = 'productmodal/SHOW_UPDATE_MODAL_FAILURE';
+
+const POST_PRODUCT = 'productmodal/POST_PRODUCT';
+const POST_PRODUCT_SUCCESS = 'productmodal/POST_PRODUCT_SUCCESS';
+const POST_PRODUCT_FAILURE = 'productmodal/POST_PRODUCT_FAILURE';
 
 export const getButtonChange = createAction(BUTTON_CHANGE);
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
@@ -39,11 +43,11 @@ export const getShowModal = () => dispatch => {
 }
 
 export const getShowUpdateModal = product => async dispatch => {
-    dispatch({ type: SHOW_MODAL });
+    dispatch({ type: SHOW_UPDATE_MODAL });
     try {
         const res = await api.getProduct(product);
         dispatch({
-            type: SHOW_MODAL_SUCCESS,
+            type: SHOW_UPDATE_MODAL_SUCCESS,
             payload: {
                 form: res.data,
             }
@@ -51,7 +55,7 @@ export const getShowUpdateModal = product => async dispatch => {
     } catch(e) {
         console.log("error");
         dispatch({
-            type: SHOW_MODAL_FAILURE,
+            type: SHOW_UPDATE_MODAL_FAILURE,
             payload: e,
             error: true
         });
@@ -68,7 +72,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
         });
         dispatch({
             type: PRODUCT_INIT,
-            payload: "productModal"
+            payload: "productForm"
         });
         dispatch({
             type: GET_PRODUCT
@@ -99,7 +103,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
 
 export const getHandleCancel = () => dispatch => {
     dispatch({ type: HANDLE_CANCEL });
-    dispatch({ type: PRODUCT_INIT, payload: "productModal" });
+    dispatch({ type: PRODUCT_INIT, payload: "productForm" });
 };
 
 export const handleOk = (formData) => async dispatch => {
@@ -111,7 +115,7 @@ export const handleOk = (formData) => async dispatch => {
         })
         dispatch({
             type: PRODUCT_INIT,
-            payload: "productModal"
+            payload: "productForm"
         });
         dispatch({
             type: GET_PRODUCT
@@ -145,9 +149,10 @@ export const handleChangeInput = (changeData) => dispatch => {
 };
 
 const initialState = {
-    updateVisible: false,
+    confirmLoading: false,
+    visible: false,
     buttonFlag: true,
-    productModal: {
+    productForm: {
         prdtNm: "",
         prdtDesc: "",
         prdtAmt: "",
@@ -155,7 +160,7 @@ const initialState = {
     },
 };
 
-const productupdatemodal = handleActions(
+const productmodal = handleActions(
     {
         [BUTTON_CHANGE]: state => ({
             ...state,
@@ -163,18 +168,28 @@ const productupdatemodal = handleActions(
         }),
         [SHOW_MODAL]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
         }),
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_MODAL_SUCCESS]: (state, { payload: {form}}) =>
+        [SHOW_MODAL_SUCCESS]: state => ({
+            ...state,
+        }),
+        [SHOW_UPDATE_MODAL]: state => ({
+            ...state,
+            visible: true,
+        }),
+        [SHOW_UPDATE_MODAL_FAILURE]: state => ({
+            ...state,
+        }),
+        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: {form}}) =>
             produce(state, draft => {
-                draft["productModal"] = form
+                draft["productForm"] = form
             }),
         [HANDLE_CANCEL]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
             buttonFlag: true,
         }),
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
@@ -187,30 +202,32 @@ const productupdatemodal = handleActions(
         }),
         [POST_PRODUCT]: state => ({
             ...state,
+            confirmLoading: true,
         }),
         [POST_PRODUCT_SUCCESS]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
         }),
         [POST_PRODUCT_FAILURE]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
         }),
         [UPDATE_PRODUCT]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
+            confirmLoading: true,
         }),
         [UPDATE_PRODUCT_SUCCESS]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
             buttonFlag: true
         }),
         [UPDATE_PRODUCT_FAILURE]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
         }),
     },
     initialState,
 );
 
-export default productupdatemodal
+export default productmodal
