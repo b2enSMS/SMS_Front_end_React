@@ -113,7 +113,7 @@ function PossibleContTable({ histShowModal, loadingTable, contList, showModal, c
         },
         {
             title: '유효기간',
-            dataIndex: 'lcnsEndDt',
+            dataIndex: 'lcnsEndDate',
             align: 'center',
             // width: '5%',
         },

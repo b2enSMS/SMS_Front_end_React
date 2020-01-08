@@ -64,10 +64,12 @@ const MeetingModal = ({
 
     }
     const custSelectHandler = (value) => {
-        selectHandleChange({ form: "meetingModal", key: "custId", value: value });
+        console.log("custSelectHandler",value)
+        selectHandleChange({ form: "meetingModal", key: "custs", value: value });
     }
     const empSelectHandler = (value) => {
-        selectHandleChange({ form: "meetingModal", key: "empId", value: value });
+        console.log("empSelectHandler",value)
+        selectHandleChange({ form: "meetingModal", key: "emps", value: value });
     }
 
 
@@ -186,7 +188,8 @@ const MeetingModal = ({
                                 size='large'
                                 placeholder="고객 담당자"
                                 onChange={custSelectHandler}
-                                value={meetingModal.custId}
+                                value={meetingModal.custs}
+                                labelInValue
                                 style={{ width: '100%' }}
                             >
                                 {custList.map((cust, index) => (
@@ -201,7 +204,8 @@ const MeetingModal = ({
                                 size='large'
                                 placeholder="비투엔 담당자"
                                 onChange={empSelectHandler}
-                                value={meetingModal.empId}
+                                value={meetingModal.emps}
+                                labelInValue
                                 style={{ width: '100%' }}
                             >
                                 {myComList.map((myCom, index) => (

@@ -307,28 +307,21 @@ export const postMeeting = (formData) => {
         meetStartTime:formData.meetStartTime,
         meetTotTime:formData.meetTotTime,
         meetTpCd:formData.meetTpCd,
-        custId:formData.custId,
-        empId:formData.empId,
+        custs:formData.custs,
+        emps:formData.emps,
     }
     return axios.post(`/meet/create`, data);
 }
 export const postUpdateMeeting = (formData) => {
-    const custId = []
-    const empId = []
-    for(let i in formData.meetAttendCust){
-        custId.push(formData.meetAttendCust[i].custId)
-    }
-    for(let i in formData.meetAttendEmp){
-        empId.push(formData.meetAttendEmp[i].empId)
-    }
+
     const data = {
         meetDt: formData.meetDt,
         meetCnt: formData.meetCnt,
         meetStartTime:formData.meetStartTime,
         meetTotTime:formData.meetTotTime,
         meetTpCd:formData.meetTpCd,
-        custId:custId,
-        empId:empId,
+        custs:formData.custs,
+        emps:formData.emps,
     }
     console.log("postUpdateMeeting data",data)
     return axios.put(`/meet/${formData.meetId}`, data);
@@ -348,6 +341,7 @@ export const updatePossible = (formData) => {
         requestDate: formData.requestDate,
         macAddr: formData.macAddr,
         issueReason: formData.issueReason,
+        user:formData.user,
     }
     axios.put(`/temp/${formData.tempVerId}`, data);
 }
@@ -361,6 +355,7 @@ export const postPossible = (formData) => {
         requestDate: formData.requestDate,
         macAddr: formData.macAddr,
         issueReason: formData.issueReason,
+        user:formData.user,
     }
     return axios.post('/temp/create', data);
 }
