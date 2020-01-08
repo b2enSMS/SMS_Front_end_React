@@ -186,8 +186,8 @@ const initialState = {
     updateVisible: false,
     buttonFlag: true,
     meetingModal: {
-        empId: [],
-        custId: [],
+        emps: [],
+        custs: [],
         meetDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         meetStartTime: new Date().getHours() + ':' + new Date().getMinutes(),
         meetTotTime: '',
@@ -204,10 +204,6 @@ const meetingmodal = handleActions(
         [SELECT_CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
             produce(state, draft => {
                 draft[form][key] = value
-                if(key==="empId")
-                    draft["meetAttendEmp"]=value
-                else
-                    draft["meetAttendCust"]=value
             }),
         [BUTTON_CHANGE]: state => ({
             ...state,

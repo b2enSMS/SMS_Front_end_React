@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
     // },
     textInput: {
         paddingTop: theme.spacing(2),
+        width:"100%"
     },
     inputButton: {
         marginTop: theme.spacing(1),
@@ -130,26 +131,23 @@ const PossibleContModal = ({ licenseButtonChange, custList, licenseUpdateHandler
                                 )}
                             />
                         </Grid>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
-                            <Grid item xs={12} sm={6}>
-                                <KeyboardDatePicker
-                                    disableToolbar
-                                    className={classes.textDate}
-                                    variant="inline"
-                                    format="yyyy-MM-dd"
-                                    //margin="normal"
-                                    id="requestDate"
-                                    label="요청일자"
-                                    fullWidth
-                                    value={contForm.requestDate}
-                                    onChange={handlecontDtChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
-                            </Grid>
-                        </MuiPickersUtilsProvider>
+
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                className={classes.textField}
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="user"
+                                label="사용자 이름"
+                                id="user"
+                                onChange={handleChange}
+                                autoComplete="off"
+                                value={contForm.user}
+                            />
+                        </Grid>
+
 
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -168,14 +166,26 @@ const PossibleContModal = ({ licenseButtonChange, custList, licenseUpdateHandler
                         </Grid>
 
 
-
                         <Grid item xs={12} sm={6}>
-                            <Button size="large"
-                                className={classes.prdtBtn}
-                                onClick={licenseShowModal}
-                                variant="outlined">제품 등록
-                            </Button>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    disableToolbar
+                                    className={classes.textDate}
+                                    variant="inline"
+                                    format="yyyy-MM-dd"
+                                    //margin="normal"
+                                    id="requestDate"
+                                    label="요청일자"
+                                    fullWidth
+                                    value={contForm.requestDate}
+                                    onChange={handlecontDtChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </MuiPickersUtilsProvider>
                         </Grid>
+
 
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -193,7 +203,13 @@ const PossibleContModal = ({ licenseButtonChange, custList, licenseUpdateHandler
                             />
                         </Grid>
 
-
+                        <Grid item xs={12} sm={6}>
+                            <Button size="large"
+                                className={classes.prdtBtn}
+                                onClick={licenseShowModal}
+                                variant="outlined">제품 등록
+                            </Button>
+                        </Grid>
 
 
 
@@ -225,15 +241,14 @@ const LicenseItem = ({ licenseButtonChange, keyvar, license, licenseHandleDelete
     return (
         <Grid container spacing={2} >
             {console.log("Possible indexLicense", keyvar, license)}
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={9}>
                 <Input
                     className={classes.textInput}
                     value={"제품명: " + license.prdtNm}
                     disabled inputProps={{ 'aria-label': 'description' }}
                 />
             </Grid>
-            <Grid item xs={12} sm={6}>
-
+            <Grid item xs={12} sm={1}>
             </Grid>
             <Grid item xs={12} sm={1}>
                 <Button

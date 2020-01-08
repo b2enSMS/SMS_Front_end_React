@@ -196,6 +196,7 @@ const initialState = {
         custNm: "",
         macAddr: "",
         issueReason: "",
+        user:"",
     },
     buttonFlag: true,
     managerList: [],
