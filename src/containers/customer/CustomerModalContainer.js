@@ -11,14 +11,15 @@ import CustomerModal from "../../components/customer/CustomerModal"
 
 
 const CustomerModalContainer = ({
-                                         updateVisible,
+                                    visible,
                                          getHandleCancel,
                                          handleChangeInput,
-                                    customerModal,
+                                    customerForm,
                                          buttonFlag,
                                          handleOk,
                                          handleUpdateOk,
                                          orgList,
+                                    confirmLoading,
                                          custCdList
                                      }) => {
 
@@ -27,18 +28,19 @@ const CustomerModalContainer = ({
     useEffect(() => {
     },[dispatch])
 
-    const {formData} = useSelector(({customermodal})=>({formData : customermodal.customerModal}))
+    const {formData} = useSelector(({customermodal})=>({formData : customermodal.customerForm}))
     const UpdateOk = () =>{
         handleOk(formData);
     }
     return (
         <CustomerModal
-            updateVisible={updateVisible}
+            visible={visible}
+            confirmLoading={confirmLoading}
             orgList={orgList}
             handleOk={UpdateOk}
             HandleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
-            customerModal={customerModal}
+            customerForm={customerForm}
             buttonFlag={buttonFlag}
             handleUpdateOk={()=>handleUpdateOk(formData)}
             custCdList={custCdList}
@@ -48,10 +50,11 @@ const CustomerModalContainer = ({
 
 export default connect(
     ({ customermodal }) => ({
+        confirmLoading: customermodal.confirmLoading,
         orgList: customermodal.orgList,
         buttonFlag: customermodal.buttonFlag,
-        updateVisible: customermodal.updateVisible,
-        customerModal: customermodal.customerModal,
+        visible: customermodal.visible,
+        customerForm: customermodal.customerForm,
         custCdList: customermodal.custCdList
     }),
     {

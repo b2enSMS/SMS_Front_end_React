@@ -68,7 +68,7 @@ import RemoveIcon from '@material-ui/icons/Remove';*/
 //     },
 // }));
 
-const PossibleCustomerTable = ({ possibleCustomerList, loadingTable, deleteCustomer, showUpdateModal, showModal, changeButton }) => {
+const PossibleCustomerTable = ({ possibleCustomerList, loadingTable }) => {
     // const classes = useStyles();
     // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     /*const handleMenuClick = key => {

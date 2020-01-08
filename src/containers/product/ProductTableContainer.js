@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getProductList, getDeleteProduct } from "modules/product/producttable";
-import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/product/productupdatemodal";
+import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/product/productmodal";
 import { ProductTable } from "components"
 
 const ProductTableContainer = ({

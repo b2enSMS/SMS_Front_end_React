@@ -23,18 +23,19 @@ const useStyles = makeStyles(theme => ({
     // },
 }));
 
-const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChangeInput, productInfo, buttonFlag, handleOk}) => {
+const ProductModal = ({handleUpdateOk, visible, HandleCancel, confirmLoading, handleChangeInput, productForm, buttonFlag, handleOk}) => {
 
     const classes = useStyles();
 
     const handleChange = ev => {
-        handleChangeInput({ form: "productModal", key: ev.target.id, value: ev.target.value })
+        handleChangeInput({ form: "productForm", key: ev.target.id, value: ev.target.value })
     }
 
     return(
         <Modal
             title="제품 정보"
-            visible={updateVisible}
+            visible={visible}
+            confirmLoading={confirmLoading}
             okText={buttonFlag?"등록":"수정"}
             onOk={buttonFlag?handleOk:handleUpdateOk}
             onCancel={HandleCancel}
@@ -53,7 +54,7 @@ const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         id="prdtNm"
                         label="제품명"
                         name="prdtNm"
-                        value={productInfo.prdtNm}
+                        value={productForm.prdtNm}
                         onChange={handleChange}
                     />
                     <TextField
@@ -66,7 +67,7 @@ const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         id="prdtAmt"
                         label="가격"
                         name="prdtAmt"
-                        value={productInfo.prdtAmt}
+                        value={productForm.prdtAmt}
                         onChange={handleChange}
                         InputProps={{
                             endAdornment: <InputAdornment position="start">원</InputAdornment>,
@@ -84,7 +85,7 @@ const ProductModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         name="prdtDesc"
                         label="설명"
                         id="prdtDesc"
-                        value={productInfo.prdtDesc}
+                        value={productForm.prdtDesc}
                         onChange={handleChange}
                     />
                 </form>

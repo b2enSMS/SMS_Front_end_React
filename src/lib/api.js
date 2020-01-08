@@ -150,6 +150,7 @@ export const getContCustList = () => {
     return axios.get('/cust/cont');
 }
 
+// 가망고객 리스트
 export const getPresaleCustomerList = () => {
     return axios.get('/cust/presale')
 }
@@ -249,7 +250,7 @@ export const getDeleteProducts = (selectedRowKeys) => {
 }
 
 
-export const deleteB2enManager = (selectedRowKeys) =>
+export const deleteManager = (selectedRowKeys) =>
     axios.delete(`/b2en`, { data: { idx: selectedRowKeys } })
 
 // b2en 담당자 리스트

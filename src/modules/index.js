@@ -7,8 +7,7 @@ import licensemodal from "./contract/licensemodal";
 import producttable from "./product/producttable";
 import managertable from "./manager/managertable";
 import orgtable from "./organization/orgtable";
-import productupdatemodal from "./product/productupdatemodal";
-import possiblecustomermodal from "./possibleCustomer/possiblecustomermodal";
+import productmodal from "./product/productmodal";
 import possiblecustomertable from "./possibleCustomer/possiblecustomertable";
 import managermodal from "./manager/managermodal";
 import orgmodal from "./organization/orgmodal";
@@ -23,9 +22,12 @@ import customermodal from "./customer/customermodal";
 
 
 const rootReducer = combineReducers({
+
     contmodal,conttable,licensemodal,producttable
-    ,managertable,orgtable,productupdatemodal,conthist,possiblecustomermodal,
-    possiblecustomertable,managermodal,orgmodal,contcusttable,customertable,meetingmodal,meetingtable,possibletable,possiblemodal,possiblelicense,possiblehist,customermodal
+    ,managertable,orgtable,conthist,
+    possiblecustomertable,managermodal,orgmodal,contcusttable,customertable,meetingmodal,
+    meetingtable,possibletable,possiblemodal,possiblelicense,possiblehist,customermodal,productmodal
+
 });
 
 export default rootReducer;

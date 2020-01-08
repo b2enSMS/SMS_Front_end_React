@@ -24,18 +24,19 @@ const useStyles = makeStyles(theme => ({
     // },
 }));
 
-const ManagerModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChangeInput, managerModal, buttonFlag, handleOk}) => {
+const ManagerModal = ({handleUpdateOk, visible, HandleCancel, handleChangeInput, managerForm, buttonFlag, handleOk, confirmLoading}) => {
 
     const classes = useStyles();
 
     const handleChange = ev => {
-        handleChangeInput({ form: "managerModal", key: ev.target.id, value: ev.target.value })
+        handleChangeInput({ form: "managerForm", key: ev.target.id, value: ev.target.value })
     }
 
     return(
         <Modal
             title="제품 정보"
-            visible={updateVisible}
+            visible={visible}
+            confirmLoading={confirmLoading}
             okText={buttonFlag?"등록":"수정"}
             onOk={buttonFlag?handleOk:handleUpdateOk}
             onCancel={HandleCancel}
@@ -53,7 +54,7 @@ const ManagerModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         id="empNm"
                         label="이름"
                         name="empNm"
-                        value={managerModal.empNm}
+                        value={managerForm.empNm}
                         onChange={handleChange}
                     />
                     <TextField
@@ -65,7 +66,7 @@ const ManagerModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         id="email"
                         label="email"
                         name="email"
-                        value={managerModal.email}
+                        value={managerForm.email}
                         onChange={handleChange}
                     />
                     <TextField
@@ -77,7 +78,7 @@ const ManagerModal = ({handleUpdateOk, updateVisible, HandleCancel, handleChange
                         name="telNo"
                         label="번호"
                         id="telNo"
-                        value={managerModal.telNo}
+                        value={managerForm.telNo}
                         onChange={handleChange}
                     />
                 </form>

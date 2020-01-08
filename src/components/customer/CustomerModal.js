@@ -23,31 +23,31 @@ const useStyles = makeStyles(theme => ({
     // },
 }));
 
-const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, HandleCancel, handleChangeInput, customerModal, buttonFlag, handleOk}) => {
+const CustomerModal = ({handleUpdateOk, orgList, custCdList, confirmLoading, visible, HandleCancel, handleChangeInput, customerForm, buttonFlag, handleOk}) => {
 
     const classes = useStyles();
 
     const handleChange = ev => {
-        handleChangeInput({ form: "customerModal", key: ev.target.id, value: ev.target.value })
+        handleChangeInput({ form: "customerForm", key: ev.target.id, value: ev.target.value })
     }
 
     const autoCompleteHandleChange = (ev, value) => {
         console.log("autoCompleteHandleChange", value)
         for (var key in value) {
-            handleChangeInput({ form: "customerModal", key: key, value: value[key] });
+            handleChangeInput({ form: "customerForm", key: key, value: value[key] });
         }
     }
-
-    const contCodeHandleChange = (ev, value)=>{
-        handleChangeInput({ form: "customerModal", key: "custTpCd", value: value["cmmnDetailCd"] });
-        handleChangeInput({ form: "customerModal", key: "custTpCdNm", value: value["cmmnDetailCdNm"] });
+    const contractCodeHandleChange = (ev, value)=>{
+        handleChangeInput({ form: "customerForm", key: "custTpCd", value: value["cmmnDetailCd"] });
+        handleChangeInput({ form: "customerForm", key: "custTpCdNm", value: value["cmmnDetailCdNm"] });
 
     }
 
     return(
         <Modal
             title="고객 정보"
-            visible={updateVisible}
+            visible={visible}
+            confirmLoading={confirmLoading}
             okText={buttonFlag?"등록":"수정"}
             onOk={buttonFlag?handleOk:handleUpdateOk}
             onCancel={HandleCancel}
@@ -60,8 +60,8 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, Hand
                         options={orgList}
                         onChange={autoCompleteHandleChange}
                         getOptionLabel={option => option.orgNm}
-                        inputValue={customerModal.orgNm}
-                        value={{ orgNm: customerModal.orgNm }}
+                        inputValue={customerForm.orgNm}
+                        value={{ orgNm: customerForm.orgNm }}
                         disableClearable={true}
                         renderInput={params => (
                             <TextField
@@ -72,7 +72,7 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, Hand
                                 //margin="normal"
                                 label="기관명"
                                 fullWidth
-                                value={customerModal.orgNm}
+                                value={customerForm.orgNm}
                             />
                         )}
                     />
@@ -86,7 +86,7 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, Hand
                         id="custNm"
                         label="고객명"
                         name="custNm"
-                        value={customerModal.custNm}
+                        value={customerForm.custNm}
                         onChange={handleChange}
                     />
                     <TextField
@@ -98,7 +98,7 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, Hand
                         id="custRankNm"
                         label="직책"
                         name="custRankNm"
-                        value={customerModal.custRankNm}
+                        value={customerForm.custRankNm}
                         onChange={handleChange}
                     />
                     <TextField
@@ -110,7 +110,7 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, Hand
                         id="email"
                         label="이메일"
                         name="email"
-                        value={customerModal.email}
+                        value={customerForm.email}
                         onChange={handleChange}
                     />
                     <TextField
@@ -122,15 +122,15 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, Hand
                         name="telNo"
                         label="연락처"
                         id="telNo"
-                        value={customerModal.telNo}
+                        value={customerForm.telNo}
                         onChange={handleChange}
                     />
                     <Autocomplete
                         id="custTpCd"
                         options={custCdList}
-                        onChange={contCodeHandleChange}
-                        inputValue={customerModal.custTpCdNm}
-                        value={{ cmmnDetailCdNm: customerModal.custTpCdNm }}
+                        onChange={contractCodeHandleChange}
+                        inputValue={customerForm.custTpCdNm}
+                        value={{ cmmnDetailCdNm: customerForm.custTpCdNm }}
                         getOptionLabel={option => option.cmmnDetailCdNm}
                         renderInput={params => (
                             <TextField
