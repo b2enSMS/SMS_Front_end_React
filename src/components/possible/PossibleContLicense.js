@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Upload, Icon, message } from 'antd';
-import { Container, TextField, Grid, Button,InputAdornment } from '@material-ui/core/';
+import React from 'react';
+import { Modal} from 'antd';
+import { Container, TextField, Grid } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -13,20 +13,20 @@ const useStyles = makeStyles(theme => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(0),
     },
-    // textField: {
-    //     '& input:valid + fieldset': {
-    //         borderWidth: 2,
-    //     },
-    //     '& input:invalid + fieldset': {
-    //         borderWidth: 2,
-    //     },
-    //     '& input:valid:focus + fieldset': {
-    //         borderLeftWidth: 6,
-    //         padding: '4px !important', // override inline-style
+    textField: {
+        '& input:valid + fieldset': {
+            borderWidth: 2,
+        },
+        '& input:invalid + fieldset': {
+            borderWidth: 2,
+        },
+        '& input:valid:focus + fieldset': {
+            borderLeftWidth: 6,
+            padding: '4px !important', // override inline-style
 
-    //     },
+        },
 
-    // },
+    },
     imageStyle: {
         paddingTop: theme.spacing(3)
     },
@@ -39,24 +39,22 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const LicenseModal = ({ handleUpdateCancel,
+const PossibleContLicense = ({ handleUpdateCancel,
     updateOk,
-    btnFlag,
-    imageRemoveFlag,
-    imageHandleRemove,
-    visible,
-    confirmLoading,
-    handleOk,
-    handleCancel,
-    handleChangeInput,
-    licenseCodeList,
-    productList,
+    btnFlag, 
+    visible, 
+    confirmLoading, 
+    handleOk, 
+    handleCancel, 
+    handleChangeInput, 
+    licenseCodeList, 
+    productList, 
     licenseForm }) => {
 
     const classes = useStyles();
-    const handleChange = ev => {
-        handleChangeInput({ form: "licenseForm", key: ev.target.id, value: ev.target.value })
-    }
+    // const handleChange = ev => {
+    //     handleChangeInput({ form: "licenseForm", key: ev.target.id, value: ev.target.value })
+    // }
 
     const autoCompleteHandleChange = (ev, value) => {
         console.log("autoCompleteHandleChange", value)
@@ -79,69 +77,21 @@ const LicenseModal = ({ handleUpdateCancel,
     //종료일자 변경
     const handlelcnsEndDtChange = (id, date) => {
         handleChangeInput({ form: "licenseForm", key: "lcnsEndDt", value: date })
-    };
-
-    const [fileList, setFileList] = useState([]);
-
-    useEffect(() => {
-        console.log("useEffect", licenseForm.fileList);
-        setFileList(licenseForm.fileList.concat());
-    }, [licenseForm.fileList])
-
-    console.log("fileList::", fileList);
-
-    const props2 = {
-        action: 'http://localhost:9000/sms/api/scan/upload',
-        listType: 'picture',
-        className: 'upload-list-inline',
-        fileList: fileList,
-        onChange(info) {
-
-            let newFileList = [...info.fileList];
-            const { status } = info.file;
-            if (status === 'done') {
-                message.success(`${info.file.name} 등록 성공!`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} 등록 실패...`);
-            }
-            setFileList(newFileList)
-        },
-        onRemove(file) {
-            console.log("onRemove", fileList, file, imageRemoveFlag)
-            
-            const arr = []
-            arr.push(file)
-            imageHandleRemove(arr)
-            // console.log("onRemove after fileList", fileList)
-            // if (imageRemoveFlag) {
-            //     return true;
-            // }
-            // else {
-            //     return false;
-            // }
-            // const index = fileList.indexOf(file);
-            // const newFileList = fileList.slice();
-            // newFileList.splice(index, 1);
-            // console.log("onRemove", newFileList);
-            // setFileList(newFileList);
-            return false;
-        },
-    };
+    };   
 
     return (
         <Modal
             title="제품 등록"
             visible={visible}
-            onOk={() => { setFileList([]);btnFlag ? handleOk(fileList) : updateOk(fileList) }}
+            onOk={() => {btnFlag? handleOk() : updateOk()}}
             okText={btnFlag ? "등록" : "수정"}
             confirmLoading={confirmLoading}
-            onCancel={() => { setFileList([]); btnFlag ? handleCancel(licenseForm.fileList) : handleUpdateCancel() }}
+            onCancel={() => {btnFlag? handleCancel() : handleUpdateCancel()}}
             cancelText="취소"
-            style={{ top: 65 }}
+            style={{ top: 120 }}
             width="35%"
             maskClosable={false}
         >
-
             <Container component="main" fixed>
                 <form className={classes.form} >
                     <Grid container spacing={1} >
@@ -168,28 +118,6 @@ const LicenseModal = ({ handleUpdateCancel,
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField
-                                className={classes.textField}
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                type="number"
-                                name="contAmt"
-                                label="납품 가격"
-                                id="contAmt"
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">원</InputAdornment>,
-                                }}
-                                inputProps={{
-                                    step: 10000,//만 원씩
-                                }}
-                                onChange={handleChange}
-                                autoComplete="off"
-                                value={licenseForm.contAmt}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
                             <Autocomplete
                                 id="lcnsTpCd"
                                 options={licenseCodeList}
@@ -212,36 +140,7 @@ const LicenseModal = ({ handleUpdateCancel,
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                className={classes.textField}
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="lcnsNo"
-                                label="라이센스 번호"
-                                id="lcnsNo"
-                                onChange={handleChange}
-                                autoComplete="off"
-                                value={licenseForm.lcnsNo}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                className={classes.textField}
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="certNo"
-                                label="증명 번호"
-                                id="certNo"
-                                onChange={handleChange}
-                                autoComplete="off"
-                                value={licenseForm.certNo}
-                            />
-                        </Grid>
+
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <Grid item xs={12} sm={6}>
                                 <KeyboardDatePicker
@@ -291,24 +190,12 @@ const LicenseModal = ({ handleUpdateCancel,
                                     }}
                                 />
                             </Grid>
-
                         </MuiPickersUtilsProvider>
                     </Grid>
                 </form>
-
-                <div className={classes.imageStyle}>
-                    <Upload {...props2}
-                    >
-                        <Button size="large" variant="outlined">
-                            스캔본 <Icon className={classes.iconStyle} type="upload" />
-                        </Button>
-                        {/* {licenseForm.imageFile === {} ?
-                             : ""} */}
-
-                    </Upload>
-                </div>
             </Container>
         </Modal >
     );
 }
-export default LicenseModal;
+export default PossibleContLicense;
+  

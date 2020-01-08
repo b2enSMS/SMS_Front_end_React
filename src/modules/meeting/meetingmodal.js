@@ -204,6 +204,10 @@ const meetingmodal = handleActions(
         [SELECT_CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
             produce(state, draft => {
                 draft[form][key] = value
+                if(key==="empId")
+                    draft["meetAttendEmp"]=value
+                else
+                    draft["meetAttendCust"]=value
             }),
         [BUTTON_CHANGE]: state => ({
             ...state,

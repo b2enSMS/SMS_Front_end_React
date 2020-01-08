@@ -37,7 +37,6 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, confirmLoading, vis
             handleChangeInput({ form: "customerForm", key: key, value: value[key] });
         }
     }
-
     const contractCodeHandleChange = (ev, value)=>{
         handleChangeInput({ form: "customerForm", key: "custTpCd", value: value["cmmnDetailCd"] });
         handleChangeInput({ form: "customerForm", key: "custTpCdNm", value: value["cmmnDetailCdNm"] });

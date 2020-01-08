@@ -1,9 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Container, Paper } from '@material-ui/core/';
-import { ProductTableContainer } from "containers";
-import ProductModalContainer from "../containers/product/ProductModalContainer";
-
+import { Container, Paper } from '@material-ui/core/';
+import { PossibleContTableContainer, PossibleContModalContainer, PossibleContLicenseContainer, PossibleContHistContainer } from "containers";
 const textcolor = '#174A84';
 
 const useStyles = makeStyles(theme => ({
@@ -11,7 +9,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
     },
     container: {
-        paddingTop: theme.spacing(1),
+        paddingTop: theme.spacing(3.3),
         paddingLeft: theme.spacing(0),
         paddingRight: theme.spacing(0),
         //paddingBottom: theme.spacing(1),
@@ -24,28 +22,36 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(4),
     },
     menuName: {
-        padding: theme.spacing(5),
+        padding: theme.spacing(4),
+        paddingBotton: theme.spacing(-1.25),
+        paddingTop: theme.spacing(4.8),
+        paddingLeft: theme.spacing(5.8),
+        lineHeight:1.33,
+        fontSize:'1.5rem',
         color: textcolor,
-        fontWeight: '700',
+        fontWeight: 580,
     },
+    
 }));
 
 
-const ProductInfoPage = () => {
+const PossibleContInfoPage = () => {
     const classes = useStyles();
     return (
         <span>
             <div>
-                <Typography className={classes.menuName} variant="h5">
-                    제품 관리
-                </Typography>
+                <h1 className={classes.menuName}>
+                    Pre-sales
+                </h1>
             </div>
             <div className={classes.tablepart}>
                 <Paper >
                     <Container maxWidth="lg" className={classes.container}>
                         <div >
-                            <ProductTableContainer />
-                            <ProductModalContainer />
+                            <PossibleContTableContainer />
+                            <PossibleContModalContainer />
+                            <PossibleContLicenseContainer />
+                            <PossibleContHistContainer />
                         </div>
                     </Container>
                 </Paper>
@@ -54,4 +60,4 @@ const ProductInfoPage = () => {
     );
 }
 
-export default ProductInfoPage;
+export default PossibleContInfoPage;

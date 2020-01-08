@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { LicenseModal } from 'components';
-import { gethandleUpdateCancel,gethandleImageRemove, gethandleImageChange, handleOk, handleChangeInput, getHandleCancel } from 'modules/contract/licensemodal';
-import { inputLicense,updateLicense } from 'modules/contract/contractmodal'
+import { gethandleUpdateCancel,getImageHandleRemove, getImageHandleChange, handleOk, handleChangeInput, getHandleCancel } from 'modules/contract/licensemodal';
+import { inputLicense,updateLicense } from 'modules/contract/contmodal'
 
 const LicenseContainer = ({
     visible,
@@ -16,8 +16,8 @@ const LicenseContainer = ({
     imageRemoveFlag,
     btnFlag,
     keyIndex,
-    gethandleImageChange,
-    gethandleImageRemove,
+    getImageHandleChange,
+    getImageHandleRemove,
     gethandleUpdateCancel,
 }) => {
     const dispatch = useDispatch();
@@ -31,13 +31,13 @@ const LicenseContainer = ({
 
     const okok = (fileList) => {
         console.log("okok", fileList)
-        gethandleImageChange(fileList);
+        getImageHandleChange(fileList);
         handleOk();
         console.log("okokformData", formData)
         dispatch(inputLicense(formData, fileList));
     }
     const updateOkOk = (fileList) => {
-        gethandleImageChange(fileList);
+        getImageHandleChange(fileList);
         handleOk();
         dispatch(updateLicense(formData,fileList, keyIndex))
     }
@@ -52,8 +52,7 @@ const LicenseContainer = ({
             productList={products}
             licenseCodeList={licCode}
             licenseForm={licenseForm}
-            handleImageRemove={gethandleImageRemove}
-            handleImageChange={gethandleImageChange}
+            imageHandleRemove={getImageHandleRemove}
             imageRemoveFlag={imageRemoveFlag}
             btnFlag={btnFlag}
             handleUpdateCancel={gethandleUpdateCancel}
@@ -76,8 +75,8 @@ export default connect(
     }),
     {
         gethandleUpdateCancel,
-        gethandleImageChange,
-        gethandleImageRemove,
+        getImageHandleChange,
+        getImageHandleRemove,
         handleOk,
         handleChangeInput,
         getHandleCancel,

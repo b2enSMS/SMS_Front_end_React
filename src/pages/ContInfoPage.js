@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
-import { ProductTableContainer } from "containers";
-import ProductModalContainer from "../containers/product/ProductModalContainer";
+import { ContTableContainer } from "containers";
+import { ContModalContainer } from "containers";
+import {LicenseContainer,ContHistContainer} from "containers";
 
 const textcolor = '#174A84';
 
@@ -11,7 +12,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
     },
     container: {
-        paddingTop: theme.spacing(1),
+        paddingTop: theme.spacing(3.3),
         paddingLeft: theme.spacing(0),
         paddingRight: theme.spacing(0),
         //paddingBottom: theme.spacing(1),
@@ -28,24 +29,27 @@ const useStyles = makeStyles(theme => ({
         color: textcolor,
         fontWeight: '700',
     },
+
 }));
 
 
-const ProductInfoPage = () => {
+const ContInfoPage = () => {
     const classes = useStyles();
     return (
         <span>
             <div>
                 <Typography className={classes.menuName} variant="h5">
-                    제품 관리
+                    계약정보
                 </Typography>
             </div>
             <div className={classes.tablepart}>
                 <Paper >
                     <Container maxWidth="lg" className={classes.container}>
                         <div >
-                            <ProductTableContainer />
-                            <ProductModalContainer />
+                            <ContHistContainer/>
+                            <ContTableContainer />
+                            <ContModalContainer />
+                            <LicenseContainer/>
                         </div>
                     </Container>
                 </Paper>
@@ -54,4 +58,4 @@ const ProductInfoPage = () => {
     );
 }
 
-export default ProductInfoPage;
+export default ContInfoPage;

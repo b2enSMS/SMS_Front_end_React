@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import {CompanyInfoPage, ContractInfoPage, MeetingInfoPage, PossibleCustomerInfoPage} from 'pages';
+import {OrgInfoPage, ContInfoPage, MeetingInfoPage, PossibleCustomerInfoPage} from 'pages';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {MainItemList} from "components";
-import { ContractCustomerInfoPage, ProductInfoPage, ManagerInfoPage, PossibleContractInfoPage  } from "pages";
+import { ContCustInfoPage, ProductInfoPage, ManagerInfoPage, PossibleContInfoPage  } from "pages";
 
 import Image from 'images/Logo.png';
 
@@ -138,13 +138,13 @@ const useStyles = makeStyles(theme => ({
                     </Typography>
             </div>
             <Divider />
-            <Route exact path="/" component={ContractInfoPage} />
-            <Route exact path="/contractcustomer" component={ContractCustomerInfoPage} />
+            <Route exact path="/" component={ContInfoPage} />
+            <Route exact path="/contcust" component={ContCustInfoPage} />
             <Route exact path="/product" component={ProductInfoPage} />
             <Route exact path="/manager" component={ManagerInfoPage} />
             <Route exact path="/possiblecustomer" component={PossibleCustomerInfoPage} />
-            <Route exact path="/company" component={CompanyInfoPage} />
-            <Route exact path="/possiblecontract" component={PossibleContractInfoPage} />
+            <Route exact path="/org" component={OrgInfoPage} />
+            <Route exact path="/possiblecont" component={PossibleContInfoPage} />
             <Route exact path="/meeting" component={MeetingInfoPage} />
           </main>
         </div>

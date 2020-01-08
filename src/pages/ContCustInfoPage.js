@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
-import { ProductTableContainer } from "containers";
-import ProductModalContainer from "../containers/product/ProductModalContainer";
+import {ContCustContainer} from "containers";
 
 const textcolor = '#174A84';
 
@@ -11,7 +10,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
     },
     container: {
-        paddingTop: theme.spacing(1),
+        paddingTop: theme.spacing(0),
         paddingLeft: theme.spacing(0),
         paddingRight: theme.spacing(0),
         //paddingBottom: theme.spacing(1),
@@ -31,21 +30,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const ProductInfoPage = () => {
+const ContCustInfoPage = () => {
     const classes = useStyles();
     return (
         <span>
             <div>
                 <Typography className={classes.menuName} variant="h5">
-                    제품 관리
+                    계약 고객 관리
                 </Typography>
             </div>
             <div className={classes.tablepart}>
                 <Paper >
                     <Container maxWidth="lg" className={classes.container}>
                         <div >
-                            <ProductTableContainer />
-                            <ProductModalContainer />
+                            <ContCustContainer />
                         </div>
                     </Container>
                 </Paper>
@@ -54,4 +52,4 @@ const ProductInfoPage = () => {
     );
 }
 
-export default ProductInfoPage;
+export default ContCustInfoPage;
