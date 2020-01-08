@@ -10,11 +10,11 @@ import {
 import ProductModal from "../../components/product/ProductModal";
 
 const ProductModalContainer = ({
-                                         visible,
+        visible,
         getHandleCancel,
         handleChangeInput,
-                                         productForm,
-                                         confirmLoading,
+        productForm,
+        confirmLoading,
         buttonFlag,
         handleOk,
         handleUpdateOk
@@ -25,7 +25,7 @@ const ProductModalContainer = ({
     useEffect(() => {
     },[dispatch])
 
-    const {formData} = useSelector(({productupdatemodal})=>({formData : productupdatemodal.productForm}))
+    const {formData} = useSelector(({productmodal})=>({formData : productmodal.productForm}))
     const UpdateOk = () =>{
         handleOk(formData);
     }
@@ -44,11 +44,11 @@ const ProductModalContainer = ({
 };
 
 export default connect(
-    ({ productupdatemodal }) => ({
-        confirmLoading: productupdatemodal.confirmLoading,
-        buttonFlag: productupdatemodal.buttonFlag,
-        visible: productupdatemodal.visible,
-        productForm: productupdatemodal.productForm,
+    ({ productmodal }) => ({
+        confirmLoading: productmodal.confirmLoading,
+        buttonFlag: productmodal.buttonFlag,
+        visible: productmodal.visible,
+        productForm: productmodal.productForm,
     }),
     {
         getShowUpdateModal,

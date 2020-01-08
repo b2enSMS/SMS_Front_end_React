@@ -150,6 +150,7 @@ export const getContractCustomerList = () => {
     return axios.get('/cust/cont');
 }
 
+// 가망고객 리스트
 export const getPresaleCustomerList = () => {
     return axios.get('/cust/presale')
 }
