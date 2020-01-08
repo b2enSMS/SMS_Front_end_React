@@ -207,10 +207,12 @@ const productmodal = handleActions(
         [POST_PRODUCT_SUCCESS]: state => ({
             ...state,
             visible: false,
+            confirmLoading: false,
         }),
         [POST_PRODUCT_FAILURE]: state => ({
             ...state,
             visible: false,
+            confirmLoading: false,
         }),
         [UPDATE_PRODUCT]: state => ({
             ...state,
@@ -220,11 +222,13 @@ const productmodal = handleActions(
         [UPDATE_PRODUCT_SUCCESS]: state => ({
             ...state,
             visible: false,
-            buttonFlag: true
+            buttonFlag: true,
+            confirmLoading: false,
         }),
         [UPDATE_PRODUCT_FAILURE]: state => ({
             ...state,
             visible: false,
+            confirmLoading: false,
         }),
     },
     initialState,

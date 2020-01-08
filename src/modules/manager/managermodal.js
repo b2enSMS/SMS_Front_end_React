@@ -167,7 +167,6 @@ const managermodal = handleActions(
         }),
         [SHOW_MODAL]: state => ({
             ...state,
-            confirmLoading: true,
             visible: true,
         }),
         [SHOW_MODAL_FAILURE]: state => ({
@@ -179,7 +178,6 @@ const managermodal = handleActions(
             }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
-            confirmLoading: true,
             visible: true,
         }),
         [SHOW_UPDATE_MODAL_FAILURE]: state => ({
@@ -204,26 +202,32 @@ const managermodal = handleActions(
         }),
         [POST_MANAGER]: state => ({
             ...state,
+            confirmLoading: true,
         }),
         [POST_MANAGER_SUCCESS]: state => ({
             ...state,
             visible: false,
+            confirmLoading: false,
         }),
         [POST_MANAGER_FAILURE]: state => ({
             ...state,
+            confirmLoading: false,
             visible: false,
         }),
         [UPDATE_MANAGER]: state => ({
             ...state,
+            confirmLoading: true,
             visible: true,
         }),
         [UPDATE_MANAGER_SUCCESS]: state => ({
             ...state,
             visible: false,
+            confirmLoading: false,
             buttonFlag: true,
         }),
         [UPDATE_MANAGER_FAILURE]: state => ({
             ...state,
+            confirmLoading: false,
             visible: false,
         }),
     },
