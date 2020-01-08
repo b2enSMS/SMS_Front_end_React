@@ -25,7 +25,7 @@ const MODAL_IMAGE_REMOVE_FAILURE = 'licensemodal/MODAL_IMAGE_REMOVE_FAILURE'
 const BUTTON_CHANGE = 'licensemodal/BUTTON_CHANGE'
 
 //등록 수정 버튼 Flag
-export const getlicenseupdatebtn = createAction(BUTTON_CHANGE);
+export const licenseButtonChange = createAction(BUTTON_CHANGE);
 
 //TextField값을 변경
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
@@ -34,10 +34,10 @@ export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => 
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 
 //이미지 변경
-export const gethandleImageChange = createAction(IMAGE_CHANGE, (fileList) => ({ fileList }))
+export const getImageHandleChange = createAction(IMAGE_CHANGE, (fileList) => ({ fileList }))
 
 //라이센스 수정 버튼 클릭
-export const getmodifyLicenseHandler = (formData, key) => async dispatch => {
+export const licenseUpdateHandler = (formData, key) => async dispatch => {
     dispatch({ type: MODIFY_LICENSE })
     try {
         const responseProduct = await api.getProducts();
@@ -62,8 +62,8 @@ export const getmodifyLicenseHandler = (formData, key) => async dispatch => {
 }
 
 //이미지 옆에 휴지통 버튼 클릭
-export const gethandleImageRemove = (fileList) => async dispatch => {
-    console.log("gethandleImageRemove", fileList)
+export const getImageHandleRemove = (fileList) => async dispatch => {
+    console.log("getImageHandleRemove", fileList)
     dispatch({ type: MODAL_IMAGE_REMOVE })
     try {
         await api.getRemoveImage(fileList);

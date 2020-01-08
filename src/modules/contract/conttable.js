@@ -1,21 +1,22 @@
 import { handleActions } from 'redux-actions';
 import * as api from '../../lib/api';
+import { message } from 'antd';
 
+export const GET_CONT = 'conttable/GET_CONT';
+export const GET_CONT_SUCCESS = 'conttable/GET_CONT_SUCCESS';
+export const GET_CONT_FAILURE = 'conttable/GET_CONT_FAILURE';
 
-export const GET_CONT = 'possibletable/GET_CONT';
-export const GET_CONT_SUCCESS = 'possibletable/GET_CONT_SUCCESS';
-export const GET_CONT_FAILURE = 'possibletable/GET_CONT_FAILURE';
+const DELETE_CONT = 'conttable/DELETE_CONT';
+const DELETE_CONT_SUCCESS = 'conttable/DELETE_CONT_SUCCESS';
+const DELETE_CONT_FAILURE = 'conttable/DELETE_CONT_FAILURE'
 
-const DELETE_CONT = 'possibletable/DELETE_CONT';
-const DELETE_CONT_SUCCESS = 'possibletable/DELETE_CONT_SUCCESS';
-const DELETE_CONT_FAILURE = 'possibletable/DELETE_CONT_FAILURE'
-
-
+//테이블 로우 다중 삭제
 export const getContDelete = selectedRowKeys => async dispatch => {
     dispatch({type: DELETE_CONT});
     try{
         await api.getDeleteConts(selectedRowKeys);
         dispatch({type: DELETE_CONT_SUCCESS});
+        message.success('삭제 완료');
     }catch(e){
         dispatch({
             type: DELETE_CONT_FAILURE,
@@ -27,7 +28,7 @@ export const getContDelete = selectedRowKeys => async dispatch => {
 
     dispatch({ type: GET_CONT });
     try {
-        const response = await api.getTempConts();
+        const response = await api.getConts();
         dispatch({
             type: GET_CONT_SUCCESS,
             payload: response.data
@@ -41,11 +42,11 @@ export const getContDelete = selectedRowKeys => async dispatch => {
         throw e;
     }
 }
-
+//테이블에 계약 정보 리스트 넣기
 export const getContList = () => async dispatch => {
     dispatch({ type: GET_CONT });
     try {
-        const response = await api.getTempConts();
+        const response = await api.getConts();
         dispatch({
             type: GET_CONT_SUCCESS,
             payload: response.data
@@ -60,13 +61,18 @@ export const getContList = () => async dispatch => {
     }
 };
 
+/*
+visible: true/false 모달 띄우기
+contList: 모든 계약 정보
+loadingTable: true/false 테이블 로딩
+*/
 const initialState = {
     visible: false,
     contList: null,
     loadingTable: false
 }
 
-const possibletable = handleActions(
+const conttable = handleActions(
     {
 
         [DELETE_CONT]: state =>({
@@ -102,4 +108,4 @@ const possibletable = handleActions(
     initialState,
 );
 
-export default possibletable;
+export default conttable;

@@ -41,8 +41,8 @@ export const getRemoveImage = (fileList) => {
 }
 
 //계약 등록
-export const postContracts = (formData) => {
-    console.log("formData postContracts", formData)
+export const postConts = (formData) => {
+    console.log("formData postConts", formData)
     const data = {
         prdtId: formData.prdtId,
         checkDt: formData.checkDt,
@@ -65,8 +65,8 @@ export const postContracts = (formData) => {
 
 
 
-export const postUpdateContracts = (formData) => {
-    console.log("postUpdateContracts: formData ", formData)
+export const postUpdateConts = (formData) => {
+    console.log("postUpdateConts: formData ", formData)
     const data = {
         prdtId: formData.prdtId,
         checkDt: formData.checkDt,
@@ -87,7 +87,7 @@ export const postUpdateContracts = (formData) => {
 }
 
 //계약 테이블 - 리스트 삭제
-export const getDeleteContracts = (selectedRowKeys) => {
+export const getDeleteConts = (selectedRowKeys) => {
     console.log("selected", selectedRowKeys)
 
     return axios.delete(`/cont`, { data: { idx: selectedRowKeys } })
@@ -146,7 +146,7 @@ export const getCustListMeet = () => {
 }
 
 // 계약고객 리스트
-export const getContractCustomerList = () => {
+export const getContCustList = () => {
     return axios.get('/cust/cont');
 }
 
@@ -196,11 +196,11 @@ export const getheadConts = () =>
     axios.get('/cont/aclist')
 
 //계약
-export const getContract = (key) =>
+export const getCont = (key) =>
     axios.get(`/cont/${key}`);
 
 
-export const getHistoryList = (contId) =>
+export const getHistList = (contId) =>
     axios.get(`cont/hist/${contId}`);
 
 //기관 리스트
@@ -208,7 +208,7 @@ export const getOrganization = () =>
     axios.get('/org/aclist');
 
 //계약 리스트
-export const getContracts = () =>
+export const getConts = () =>
     axios.get('/cont/showall');
 
 //비투엔 담당자 이름 리스트
@@ -259,17 +259,14 @@ export const getManagerList = () =>
 export const getManager = (empNo) =>
     axios.get(`/b2en/${empNo}`)
 
-export const getCompanyList = () =>
+export const getOrgList = () =>
     axios.get('/org/showall');
 
 
-export const deleteCompany = (selectedRowKeys) => {
+export const deleteOrg = (selectedRowKeys) => {
     axios.delete('/org', { data: { idx: selectedRowKeys } })
 }
 
-export const getOrgList = () => {
-    return axios.get('/org/showall');
-}
 
 export const getOrg = (orgId) => {
     return axios.get(`/org/${orgId}`);
@@ -336,10 +333,10 @@ export const postUpdateMeeting = (formData) => {
     return axios.put(`/meet/${formData.meetId}`, data);
 }
 
-export const getTempContract = (key) =>
+export const getTempCont = (key) =>
     axios.get(`/temp/${key}`);
 
-export const getTempContracts = () =>
+export const getTempConts = () =>
     axios.get('/temp/showall');
 
 export const updatePossible = (formData) => {
@@ -367,6 +364,6 @@ export const postPossible = (formData) => {
     return axios.post('/temp/create', data);
 }
 
-export const getTempHistoryList = (tempVerId) =>
+export const getTempHistList = (tempVerId) =>
     axios.get(`temp/hist/${tempVerId}`);
 

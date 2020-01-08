@@ -18,12 +18,12 @@ const MODIFY_LICENSE_FAILURE = 'possiblelicense/MODIFY_LICENSE_FAILURE';
 
 const BUTTON_CHANGE = 'possiblelicense/BUTTON_CHANGE'
 
-export const getlicenseupdatebtn = createAction(BUTTON_CHANGE);
+export const licenseButtonChange = createAction(BUTTON_CHANGE);
 
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
 
-export const getmodifyLicenseHandler = (formData,key) => async dispatch => {
+export const licenseUpdateHandler = (formData,key) => async dispatch => {
     dispatch({ type: MODIFY_LICENSE })
     try {
         const responseProduct = await api.getProducts();

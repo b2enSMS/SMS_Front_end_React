@@ -44,7 +44,7 @@ class MainItemList extends React.Component {
           >
 
             <Menu.Item key="1" ><Link to="/"><Icon type="reconciliation" />계약 라이선스</Link></Menu.Item>
-            <Menu.Item key="2" ><Link to="/contractcustomer"><Icon type="user" />계약 고객 관리</Link></Menu.Item>
+            <Menu.Item key="2" ><Link to="/contcust"><Icon type="user" />계약 고객 관리</Link></Menu.Item>
           </SubMenu>
           <SubMenu
             key="sub2"
@@ -55,7 +55,7 @@ class MainItemList extends React.Component {
               </span>
             }
           >
-            <Menu.Item key="5"><Link to="/possiblecontract"><Icon type="reconciliation"/>Pre-sales</Link></Menu.Item>
+            <Menu.Item key="5"><Link to="/possiblecont"><Icon type="reconciliation"/>Pre-sales</Link></Menu.Item>
             <Menu.Item key="6"><Link to="/possiblecustomer"><Icon type="user" />가망 고객 관리</Link></Menu.Item>
             <Menu.Item key="7"><Link to="/meeting"><Icon type="team" />미팅이력 관리</Link></Menu.Item>
           </SubMenu>
@@ -70,7 +70,7 @@ class MainItemList extends React.Component {
           >
               <Menu.Item key="8"><Link to="/product"><Icon type="reconciliation"/>제품관리</Link></Menu.Item>
               <Menu.Item key="9"><Link to="/manager"><Icon type="user" />b2en 담당자 관리</Link></Menu.Item>
-              <Menu.Item key="10"><Link to="/company"><Icon type="team" />고객 관리</Link></Menu.Item>
+              <Menu.Item key="10"><Link to="/org"><Icon type="team" />고객 관리</Link></Menu.Item>
           </SubMenu>
         </Menu>
       </div>

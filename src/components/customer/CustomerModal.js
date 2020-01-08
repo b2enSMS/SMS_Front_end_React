@@ -38,7 +38,7 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, Hand
         }
     }
 
-    const contractCodeHandleChange = (ev, value)=>{
+    const contCodeHandleChange = (ev, value)=>{
         handleChangeInput({ form: "customerModal", key: "custTpCd", value: value["cmmnDetailCd"] });
         handleChangeInput({ form: "customerModal", key: "custTpCdNm", value: value["cmmnDetailCdNm"] });
 
@@ -128,7 +128,7 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, updateVisible, Hand
                     <Autocomplete
                         id="custTpCd"
                         options={custCdList}
-                        onChange={contractCodeHandleChange}
+                        onChange={contCodeHandleChange}
                         inputValue={customerModal.custTpCdNm}
                         value={{ cmmnDetailCdNm: customerModal.custTpCdNm }}
                         getOptionLabel={option => option.cmmnDetailCdNm}
