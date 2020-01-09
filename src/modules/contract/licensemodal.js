@@ -62,7 +62,7 @@ export const licenseUpdateHandler = (formData, key) => async dispatch => {
 }
 
 //이미지 옆에 휴지통 버튼 클릭
-export const getImageHandleRemove = (fileList) => async dispatch => {
+export const getImageHandleRemove = (fileList,nowFileList) => async dispatch => {
     console.log("getImageHandleRemove", fileList)
     dispatch({ type: MODAL_IMAGE_REMOVE })
     try {
@@ -70,7 +70,10 @@ export const getImageHandleRemove = (fileList) => async dispatch => {
         message.success('이미지 삭제 성공!!');
         dispatch({
             type: MODAL_IMAGE_REMOVE_SUCCESS,
-            payload: fileList,
+            payload: {
+                fileList:fileList,
+                nowFileList: nowFileList,
+            }
         });
     } catch (e) {
         dispatch({ type: MODAL_IMAGE_REMOVE_FAILURE })
@@ -195,19 +198,20 @@ const licensemodal = handleActions(
             ...state,
             imageRemoveFlag: true
         }),
-        [MODAL_IMAGE_REMOVE_SUCCESS]: (state, { payload: fileList }) =>
+        [MODAL_IMAGE_REMOVE_SUCCESS]: (state, { payload: fileList,nowFileList }) =>
 
             produce(state, draft => {
                 console.log("form remove before", fileList, state.licenseForm.fileList)
                 if (fileList && fileList.length > 0) {
+                    if (state.licenseForm.fileList > 0) {
                         for (let i in fileList) {
-                            if (fileList[i].response) {
-                                console.log("response 있는 fileList", fileList[i].response, state.licenseForm.fileList)
-                                draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.response.url !== fileList[i].response.url)
-                            }
-                            else
-                                draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.url !== fileList[i].url)
+                            draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.uid !== fileList[i].uid)
                         }
+                    }else{
+                        for (let i in fileList) {
+                            draft['licenseForm']["fileList"] = nowFileList.filter((v, index) => v.uid !== fileList[i].uid)
+                        }
+                    }
                 }
             }),
         [MODAL_IMAGE_REMOVE_FAILURE]: state => ({
