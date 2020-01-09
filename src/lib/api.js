@@ -21,22 +21,24 @@ axios.interceptors.response.use(
 //이미지 삭제
 export const getRemoveImage = (fileList) => {
     if (fileList && fileList.length > 0) {
-        const file = []
-        for (let i in fileList) {
-            const response = {
-                name: fileList[i].name,
-                status: fileList[i].status,
-                url: fileList[i].url,
-                thumbUrl: fileList[i].thumbUrl,
+        if (fileList[0].response) {
+            const file = []
+            for (let i in fileList) {
+                const temp = {
+                    uid: fileList[i].uid,
+                    name: fileList[i].response.name,
+                    status: fileList[i].response.status,
+                    url: fileList[i].response.url,
+                    thumbUrl: fileList[i].thumbUrl,
+                }
+                file.push(temp)
             }
-            const temp = {
-                uid:fileList[i].uid,
-                response:response
-            }
-            file.push(temp)
+            console.log('api: getRemoveImage', { file }, fileList, { idx: fileList })
+            return axios.delete(`/scan`, { data: file })
         }
-        console.log('api: getRemoveImage', {file}, fileList, { idx: fileList })
-        return axios.delete(`/scan`, { data:  file  })
+        else{
+            return axios.delete(`/scan`, { data: fileList })
+        }
     }
 }
 
@@ -304,11 +306,11 @@ export const postMeeting = (formData) => {
     const data = {
         meetDt: formData.meetDt,
         meetCnt: formData.meetCnt,
-        meetStartTime:formData.meetStartTime,
-        meetTotTime:formData.meetTotTime,
-        meetTpCd:formData.meetTpCd,
-        custs:formData.custs,
-        emps:formData.emps,
+        meetStartTime: formData.meetStartTime,
+        meetTotTime: formData.meetTotTime,
+        meetTpCd: formData.meetTpCd,
+        custs: formData.custs,
+        emps: formData.emps,
     }
     return axios.post(`/meet/create`, data);
 }
@@ -317,13 +319,13 @@ export const postUpdateMeeting = (formData) => {
     const data = {
         meetDt: formData.meetDt,
         meetCnt: formData.meetCnt,
-        meetStartTime:formData.meetStartTime,
-        meetTotTime:formData.meetTotTime,
-        meetTpCd:formData.meetTpCd,
-        custs:formData.custs,
-        emps:formData.emps,
+        meetStartTime: formData.meetStartTime,
+        meetTotTime: formData.meetTotTime,
+        meetTpCd: formData.meetTpCd,
+        custs: formData.custs,
+        emps: formData.emps,
     }
-    console.log("postUpdateMeeting data",data)
+    console.log("postUpdateMeeting data", data)
     return axios.put(`/meet/${formData.meetId}`, data);
 }
 
@@ -341,13 +343,13 @@ export const updatePossible = (formData) => {
         requestDate: formData.requestDate,
         macAddr: formData.macAddr,
         issueReason: formData.issueReason,
-        user:formData.user,
+        user: formData.user,
     }
     axios.put(`/temp/${formData.tempVerId}`, data);
 }
 //임시 계약 등록
 export const postPossible = (formData) => {
-    console.log("postPossible",formData)
+    console.log("postPossible", formData)
     const data = {
         lcns: formData.lcns,
         custId: formData.custId,
@@ -355,7 +357,7 @@ export const postPossible = (formData) => {
         requestDate: formData.requestDate,
         macAddr: formData.macAddr,
         issueReason: formData.issueReason,
-        user:formData.user,
+        user: formData.user,
     }
     return axios.post('/temp/create', data);
 }

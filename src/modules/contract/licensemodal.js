@@ -70,7 +70,7 @@ export const getImageHandleRemove = (fileList) => async dispatch => {
         message.success('이미지 삭제 성공!!');
         dispatch({
             type: MODAL_IMAGE_REMOVE_SUCCESS,
-            payload: fileList
+            payload: fileList,
         });
     } catch (e) {
         dispatch({ type: MODAL_IMAGE_REMOVE_FAILURE })
@@ -200,9 +200,14 @@ const licensemodal = handleActions(
             produce(state, draft => {
                 console.log("form remove before", fileList, state.licenseForm.fileList)
                 if (fileList && fileList.length > 0) {
-                    for (let i in fileList) {
-                        draft['licenseForm']["fileList"] =  state.licenseForm.fileList.filter((v, index) => v.url !== fileList[i].url)
-                    }
+                        for (let i in fileList) {
+                            if (fileList[i].response) {
+                                console.log("response 있는 fileList", fileList[i].response, state.licenseForm.fileList)
+                                draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.response.url !== fileList[i].response.url)
+                            }
+                            else
+                                draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.url !== fileList[i].url)
+                        }
                 }
             }),
         [MODAL_IMAGE_REMOVE_FAILURE]: state => ({
