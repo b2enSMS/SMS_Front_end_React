@@ -111,7 +111,8 @@ const LicenseModal = ({ handleUpdateCancel,
             
             const arr = []
             arr.push(file)
-            imageHandleRemove(arr)
+            setFileList(fileList.filter((v,index) => v.uid !== file.uid))
+            imageHandleRemove(arr,fileList)
             // console.log("onRemove after fileList", fileList)
             // if (imageRemoveFlag) {
             //     return true;
