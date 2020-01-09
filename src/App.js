@@ -139,13 +139,13 @@ const useStyles = makeStyles(theme => ({
             </div>
             <Divider />
             <Route exact path="/" component={ContInfoPage} />
-            <Route exact path="/contcust" component={ContCustInfoPage} />
-            <Route exact path="/product" component={ProductInfoPage} />
-            <Route exact path="/manager" component={ManagerInfoPage} />
-            <Route exact path="/possiblecustomer" component={PossibleCustomerInfoPage} />
-            <Route exact path="/org" component={OrgInfoPage} />
-            <Route exact path="/possiblecont" component={PossibleContInfoPage} />
-            <Route exact path="/meeting" component={MeetingInfoPage} />
+            <Route path="/contcust" component={ContCustInfoPage} />
+            <Route path="/product" component={ProductInfoPage} />
+            <Route path="/manager" component={ManagerInfoPage} />
+            <Route path="/possiblecustomer" component={PossibleCustomerInfoPage} />
+            <Route path="/org" component={OrgInfoPage} />
+            <Route path="/possiblecont" component={PossibleContInfoPage} />
+            <Route path="/meeting" component={MeetingInfoPage} />
           </main>
         </div>
 
