@@ -4,6 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { withStyles, Button } from '@material-ui/core/';
 import {Dropdown, Icon, Menu, Table} from "antd";
+import GetColumnSearchProps from '../../lib/searchAction';
 
 const textcolor = '#174A84';
 
@@ -79,6 +80,9 @@ const OrgTable = ({ orgList, loadingTable, deleteOrg, showUpdateModal, showModal
         {
             title: '기관 이름',
             dataIndex: 'orgNm',
+            width:'25%',
+            ellipsis: true,
+            ...GetColumnSearchProps('orgNm','기관 이름'),
 
         },
         {

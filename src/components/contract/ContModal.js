@@ -208,6 +208,7 @@ const ContModal = ({ licenseButtonChange,custList, headContList, licenseUpdateHa
                                 id="contTpCd"
                                 options={contCdList}
                                 onChange={contCodeHandleChange}
+                                disabled={buttonFlag?false:true}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
                                 inputValue={contForm.contTpNm}
                                 value={{ cmmnDetailCdNm: contForm.contTpNm }}

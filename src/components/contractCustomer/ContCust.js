@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table} from "antd";
+import { Table } from "antd";
+import GetColumnSearchProps from '../../lib/searchAction';
 // Dropdown, Icon, Menu,
 
 //const textcolor = '#174A84';
@@ -65,6 +66,8 @@ const RemoveButton = withStyles(theme => ({
 //     },
 // }));
 
+
+
 const ContCust = ({ contCustList, loadingTable }) => {
     //const classes = useStyles();
     // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -72,36 +75,75 @@ const ContCust = ({ contCustList, loadingTable }) => {
         console.log("key", key);
         showUpdateModal(key)
     }*/
+
     const columns = [
         {
             title: '기관',
             dataIndex: 'orgNm',
+            ...GetColumnSearchProps('orgNm', '기관'),
+            width: '20%'
         },
         {
             title: '고객 이름',
             dataIndex: 'custNm',
             align: 'center',
+            ...GetColumnSearchProps('custNm', '고객 이름'),
+            render: (value, record, index) => {
+                return {
+                    children: value,
+                    props: {
+                        align: 'center',
+                    },
+                };
+            }
+
         },
         {
             title: '직책',
             dataIndex: 'custRankNm',
             align: 'center',
+            render: (value, record, index) => {
+                return {
+                    children: value,
+                    props: {
+                        align: 'center',
+                    },
+                };
+            }
+
         },
         {
             title: '이메일',
             dataIndex: 'email',
             align: 'center',
-            ellipsis:true,
+            ellipsis: true,
+
         },
         {
             title: '연락처',
             dataIndex: 'telNo',
             align: 'center',
+            render: (value, record, index) => {
+                return {
+                    children: value,
+                    props: {
+                        align: 'center',
+                    },
+                };
+            }
         },
         {
             title: '고객 유형',
             dataIndex: 'custTpCdNm',
             align: 'center',
+            render: (value, record, index) => {
+                return {
+                    children: value,
+                    props: {
+                        align: 'center',
+                    },
+                };
+            }
         },
         /*{
             title: '',
@@ -140,7 +182,7 @@ const ContCust = ({ contCustList, loadingTable }) => {
 
     // const hasSelected = selectedRowKeys.length > 0;
 
-    return(
+    return (
         <div>
             {/* <div style={{ marginLeft: 8, textAlign: 'left' }}>
                 {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'}

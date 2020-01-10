@@ -1,5 +1,6 @@
 import React from 'react';
 import {Table} from "antd";
+import GetColumnSearchProps from '../../lib/searchAction';
 // import {makeStyles} from "@material-ui/core";
 /*import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';*/
@@ -79,11 +80,13 @@ const PossibleCustomerTable = ({ possibleCustomerList, loadingTable }) => {
         {
             title: '기관',
             dataIndex: 'orgNm',
+            ...GetColumnSearchProps('orgNm','기관'),
         },
         {
             title: '고객 이름',
             dataIndex: 'custNm',
             align: 'center',
+            ...GetColumnSearchProps('custNm','고객 이름'),
         },
         {
             title: '직책',

@@ -70,7 +70,7 @@ const PossibleContModal = ({ licenseButtonChange, custList, licenseUpdateHandler
     };
     return (
         <Modal
-            title="임시계약정보"
+            title="임시라이센스정보"
             visible={visible}
             onOk={buttonFlag ? handleOk : handleUpdate}
             okText={buttonFlag ? "등록" : "수정"}

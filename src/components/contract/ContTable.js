@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 //import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
+import GetColumnSearchProps from '../../lib/searchAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,6 +41,10 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fff1f0',
     color: 'red'
   },
+  backgroundOrange: {
+    backgroundColor: '#fff7e6',
+    color: 'orange'
+  },
 
   amountColumn: {
     marginRight: '10px'
@@ -68,11 +73,16 @@ const ColorButton = withStyles(theme => ({
 
 
 
-const pageInfo = {pageNumber:1};
+// const pageInfo = {
+//   pageNumber: 1,
+//   filterArr: [],
+//   extraInfo: [],
+// };
 
-function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete, updateModalHandler, modalBtnHandler }) {
+function ContTable({ histShowModal, loadingTable, contList, showModal, contDelete, updateModalHandler, modalBtnHandler }) {
   const classes = useStyles();
   // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
   const handleMenuClick = key => {
     console.log("key", key);
     updateModalHandler(key)
@@ -81,20 +91,32 @@ function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete
     {
       title: '기관/회사',
       dataIndex: 'orgNm',
-      ellipsis:true,
-      width: '12%'
+      ellipsis: true,
+      width: '18%',
+      ...GetColumnSearchProps('orgNm','기관/회사'),
     },
     {
       title: '사업명',
       dataIndex: 'contNm',
-      ellipsis:true,
-      width: '20%'
+      ellipsis: true,
+      width: '20%',
+      ...GetColumnSearchProps('contNm', '사업명'),
     },
     {
       title: '담당자',
       dataIndex: 'empNm',
       align: 'center',
-      // width: '5%',
+      ...GetColumnSearchProps('empNm', '담당자'),
+
+      //width: '10%',
+      render: (value, record, index) => {
+        return {
+          children: value,
+          props: {
+            align: 'center',
+          },
+        };
+      }
     },
     // {
     //   title: '수주번호',
@@ -110,10 +132,12 @@ function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete
     //   }
     // },
     {
-      title: '계약일자',
-      dataIndex: 'contDt',
+      title: '제품명',
+      dataIndex: 'prdtNm',
       align: 'center',
-      // width: '8%',
+      ellipsis: true,
+      width: '10%',
+      ...GetColumnSearchProps('prdtNm','제품명'),
       render: (value, record, index) => {
         return {
           children: value,
@@ -123,6 +147,7 @@ function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete
         };
       }
     },
+
     {
       title: '계약금액',
       dataIndex: 'contTotAmt',
@@ -137,6 +162,22 @@ function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete
         };
       }
     },
+
+    {
+      title: '계약일자',
+      dataIndex: 'contDt',
+      align: 'center',
+      // width: '8%',
+      render: (value, record, index) => {
+        return {
+          children: value,
+          props: {
+            align: 'center',
+          },
+        };
+      }
+    },
+
     {
       title: '검수일자',
       dataIndex: 'checkDt',
@@ -151,20 +192,20 @@ function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete
         };
       }
     },
-    {
-      title: '유지보수개시',
-      dataIndex: 'mtncStartDt',
-      align: 'center',
-      // width: '8%',
-      render: (value, record, index) => {
-        return {
-          children: value,
-          props: {
-            align: 'center',
-          },
-        };
-      }
-    },
+    // {
+    //   title: '유지보수개시',
+    //   dataIndex: 'mtncStartDt',
+    //   align: 'center',
+    //   // width: '8%',
+    //   render: (value, record, index) => {
+    //     return {
+    //       children: value,
+    //       props: {
+    //         align: 'center',
+    //       },
+    //     };
+    //   }
+    // },
     {
       title: '유지보수종료',
       dataIndex: 'mtncEndDt',
@@ -188,10 +229,10 @@ function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete
         (<Dropdown
           overlay={(
             <Menu onClick={(e) => {
-              if(e.key==="1"){
-              handleMenuClick(record.contId)
-              modalBtnHandler()
-              }else{
+              if (e.key === "1") {
+                handleMenuClick(record.contId)
+                modalBtnHandler()
+              } else {
                 histShowModal(record.contId)
               }
             }}>
@@ -199,7 +240,7 @@ function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete
                 상세
             </Menu.Item>
 
-            <Menu.Item key="2">
+              <Menu.Item key="2">
                 히스토리
             </Menu.Item>
             </Menu>
@@ -259,14 +300,18 @@ function ContTable({ histShowModal,loadingTable, contList, showModal, contDelete
         //rowSelection={rowSelection}
         columns={columns}
         rowClassName={(record, index) => {
-          console.log("pageNumber",pageInfo.pageNumber,index,index+(10*(pageInfo.pageNumber-1)));
-          if (contList[index+(10*(pageInfo.pageNumber-1))].tight){
-            return classes.backgroundRed
-        }
+          console.log('rowClass',record)
+          if(record.children){
+            if(record.tight) return classes.backgroundOrange
+          }else{
+            if(record.headContId===0){
+              if(record.tight) return classes.backgroundRed
+            }else{
+              if(record.tight) return classes.backgroundRed
+            }
+          }
         }}
-        onChange={(pageData) => {
-          pageInfo.pageNumber=pageData.current
-          console.log("pageData",pageData);
+        onChange={(pageData, filters, sorter, extra) => {
         }}
         dataSource={loadingTable ? null : contList}
         size="small" />

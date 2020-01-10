@@ -4,6 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { withStyles, Button } from '@material-ui/core/';
 import {Dropdown, Icon, Menu, Table} from "antd";
+import GetColumnSearchProps from '../../lib/searchAction';
 
 const textcolor = '#174A84';
 
@@ -81,17 +82,20 @@ const MeetingTable = ({ meetingList, loadingTable, deleteMeeting, showUpdateModa
             dataIndex: 'orgNm',
             ellipsis:true,
             width: '12%',
+            ...GetColumnSearchProps('orgNm','참석 기관'),
 
         },
         {
             title: '기관 담당자',
             dataIndex: 'custNm',
             align:'center',
+            ...GetColumnSearchProps('custNm','기관 담당자'),
         },
         {
             title: '담당자',
             dataIndex: 'empNm',
             align:'center',
+            ...GetColumnSearchProps('empNm','담당자'),
         },
         {
             title: '날짜',
