@@ -4,6 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { withStyles, Button } from '@material-ui/core/';
 import {Dropdown, Icon, Menu, Table} from "antd";
+import GetColumnSearchProps from '../../lib/searchAction';
 
 const textcolor = '#174A84';
 
@@ -71,6 +72,7 @@ const useStyles = makeStyles(theme => ({
 const CustomerTable = ({ customerList, loadingTable, deleteCustomer, showUpdateModal, showModal, changeButton }) => {
     const classes = useStyles();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
     const handleMenuClick = key => {
         console.log("key", key);
         showUpdateModal(key)
@@ -79,11 +81,13 @@ const CustomerTable = ({ customerList, loadingTable, deleteCustomer, showUpdateM
         {
             title: '기관',
             dataIndex: 'orgNm',
+            ...GetColumnSearchProps('orgNm','기관')
         },
         {
             title: '고객 이름',
             dataIndex: 'custNm',
             align: 'center',
+            ...GetColumnSearchProps('custNm','고객 이름')
         },
         {
             title: '직책',

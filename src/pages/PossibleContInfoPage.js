@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Paper } from '@material-ui/core/';
+import { Container, Paper,Typography } from '@material-ui/core/';
 import { PossibleContTableContainer, PossibleContModalContainer, PossibleContLicenseContainer, PossibleContHistContainer } from "containers";
 const textcolor = '#174A84';
 
@@ -22,16 +22,11 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(4),
     },
     menuName: {
-        padding: theme.spacing(4),
-        paddingBotton: theme.spacing(-1.25),
-        paddingTop: theme.spacing(4.8),
-        paddingLeft: theme.spacing(5.8),
-        lineHeight:1.33,
-        fontSize:'1.5rem',
+        padding: theme.spacing(5),
         color: textcolor,
-        fontWeight: 580,
+        fontWeight: '700',
     },
-    
+
 }));
 
 
@@ -40,9 +35,9 @@ const PossibleContInfoPage = () => {
     return (
         <span>
             <div>
-                <h1 className={classes.menuName}>
-                    Pre-sales
-                </h1>
+                <Typography className={classes.menuName} variant="h5">
+                    임시 라이센스
+                </Typography>
             </div>
             <div className={classes.tablepart}>
                 <Paper >

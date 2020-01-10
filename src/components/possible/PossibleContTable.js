@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 //import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
-
+import GetColumnSearchProps from '../../lib/searchAction';
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -76,7 +76,8 @@ function PossibleContTable({ histShowModal, loadingTable, contList, showModal, c
             title: '기관/회사',
             dataIndex: 'orgNm',
             ellipsis: true,
-            width: '12%'
+            width: '15%',
+            ...GetColumnSearchProps('orgNm','기관/회사')
         },
         {
             title: '기관담당자',
@@ -84,12 +85,14 @@ function PossibleContTable({ histShowModal, loadingTable, contList, showModal, c
             align: 'center',
             //ellipsis: true,
             //width: '20%'
+            ...GetColumnSearchProps('custNm','기관 담당자')
         },
         {
             title: '담당자',
             dataIndex: 'empNm',
             align: 'center',
             // width: '5%',
+            ...GetColumnSearchProps('empNm','담당자')
         },
         {
             title: 'Mac주소',

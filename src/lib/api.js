@@ -58,7 +58,7 @@ export const postConts = (formData) => {
         contReportNo: formData.contReportNo,
         contTpCd: formData.contTpCd,
         custId: formData.custId,
-        HeadContIdAC: formData.HeadContIdAC,
+        headContId: formData.HeadContId,
         contNm: formData.contNm,
 
     }
@@ -82,7 +82,7 @@ export const postUpdateConts = (formData) => {
         contReportNo: formData.contReportNo,
         contTpCd: formData.contTpCd,
         custId: formData.custId,
-        HeadContIdAC: formData.HeadContIdAC,
+        headContId: formData.headContId,
         contNm: formData.contNm,
     }
     return axios.put(`/cont/${formData.contId}`, data);

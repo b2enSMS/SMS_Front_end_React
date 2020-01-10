@@ -135,10 +135,10 @@ const MeetingModal = ({
                                 value={meetingModal.meetTotTime}
                                 onChange={handleChange}
                                 InputProps={{
-                                    endAdornment: <InputAdornment position="start">분</InputAdornment>,
+                                    endAdornment: <InputAdornment position="end">시간</InputAdornment>,
                                 }}
                                 inputProps={{
-                                    step: 5,
+                                    step: 1,
                                 }}
                             />
                         </Grid>

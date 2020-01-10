@@ -193,6 +193,8 @@ const initialState = {
         meetTotTime: '',
         meetTpCd: '',
         meetTpCdNm: '',
+        meetCnt:'',
+        
     },
     meetCd: [],
     custList:[],
