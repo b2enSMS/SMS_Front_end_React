@@ -52,15 +52,13 @@ export default function GetColumnSearchProps(dataIndex, name) {
             <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
         ),
         onFilter: (value, record) => {
-            // return record[dataIndex]
-            //     .toString()
-            //     .toLowerCase()
-            //     .includes(value.toLowerCase())
-            //return record.children && record.children[0][dataIndex].toLowerCase().startsWith(value)
-            return
-            record.children &&
+            if(record.children){
+                return record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) ||
                 Object.keys(record.children).some(k => record.children[k][dataIndex].toLowerCase().includes(value.toLowerCase()))
-                //record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+            }else{
+                return record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) 
+            }
+
         },
         onFilterDropdownVisibleChange: visible => {
             if (visible) {

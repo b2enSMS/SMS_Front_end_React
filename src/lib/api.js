@@ -13,7 +13,11 @@ axios.interceptors.response.use(
         return response;
     },
     function (error) {
-        message.error(error.response.data.info)
+        //let msg = ""
+        //error.response.data.map((arr, index) => msg += `${arr.info}\n`)
+        //error.response.data.map((arr, index) => message.error( `${arr.info}\n`))
+        //console.log("error Response", msg)
+        message.error(error.response.data[1].info)
         return Promise.reject(error);
     });
 
@@ -36,7 +40,7 @@ export const getRemoveImage = (fileList) => {
             console.log('api: getRemoveImage', { file }, fileList, { idx: fileList })
             return axios.delete(`/scan`, { data: file })
         }
-        else{
+        else {
             return axios.delete(`/scan`, { data: fileList })
         }
     }
