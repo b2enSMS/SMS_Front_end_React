@@ -108,17 +108,8 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
       title: '담당자',
       dataIndex: 'empNm',
       align: 'center',
-      ...GetColumnSearchProps('empNm', '담당자'),
-
-      //width: '10%',
-      render: (value, record, index) => {
-        return {
-          children: value,
-          props: {
-            align: 'center',
-          },
-        };
-      }
+      ...GetColumnSearchProps('empNm','담당자'),
+      
     },
     // {
     //   title: '수주번호',
@@ -140,14 +131,6 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
       ellipsis: true,
       width: '10%',
       ...GetColumnSearchProps('prdtNm', '제품명'),
-      render: (value, record, index) => {
-        return {
-          children: value,
-          props: {
-            align: 'center',
-          },
-        };
-      }
     },
 
     {
