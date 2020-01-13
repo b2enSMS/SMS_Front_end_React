@@ -152,6 +152,13 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
       title: '계약일자',
       dataIndex: 'contDt',
       align: 'center',
+      sorter: (a, b) => {
+          let ar1 = a.contDt.split('-');
+          let ar2 = b.contDt.split('-');
+          let da1 = new Date(ar1[0], ar1[1], ar1[2]);
+          let da2 = new Date(ar2[0], ar2[1], ar2[2]);
+          return da1 - da2;
+      },
       // width: '8%',
       render: (value, record, index) => {
         return {

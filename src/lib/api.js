@@ -16,7 +16,7 @@ axios.interceptors.response.use(
         //let msg = ""
         //error.response.data.map((arr, index) => msg += `${arr.info}\n`)
         //error.response.data.map((arr, index) => message.error( `${arr.info}\n`))
-        //console.log("error Response", msg)
+        console.log("error Response",error.response.data)
         message.error(error.response.data[1].info)
         return Promise.reject(error);
     });
