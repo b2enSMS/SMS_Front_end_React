@@ -13,7 +13,7 @@ axios.interceptors.response.use(
         return response;
     },
     function (error) {
-        message.error("오류 발생")
+        message.error(error.response.data.info)
         return Promise.reject(error);
     });
 
