@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Menu, Dropdown, Icon } from 'antd';
 import { withStyles, Button } from '@material-ui/core/';
 import 'antd/dist/antd.css';
@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 import GetColumnSearchProps from '../../lib/searchAction';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -82,6 +83,7 @@ const ColorButton = withStyles(theme => ({
 function ContTable({ histShowModal, loadingTable, contList, showModal, contDelete, updateModalHandler, modalBtnHandler }) {
   const classes = useStyles();
   // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [expandedRowKeys, setExpandedRowKeys] = useState([]);
 
   const handleMenuClick = key => {
     console.log("key", key);
@@ -93,7 +95,7 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
       dataIndex: 'orgNm',
       ellipsis: true,
       width: '18%',
-      ...GetColumnSearchProps('orgNm','기관/회사'),
+      ...GetColumnSearchProps('orgNm', '기관/회사'),
     },
     {
       title: '사업명',
@@ -137,7 +139,7 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
       align: 'center',
       ellipsis: true,
       width: '10%',
-      ...GetColumnSearchProps('prdtNm','제품명'),
+      ...GetColumnSearchProps('prdtNm', '제품명'),
       render: (value, record, index) => {
         return {
           children: value,
@@ -299,19 +301,38 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
         tableLayout='fixed'
         //rowSelection={rowSelection}
         columns={columns}
+        expandedRowKeys={expandedRowKeys}
         rowClassName={(record, index) => {
-          console.log('rowClass',record)
-          if(record.children){
-            if(record.tight) return classes.backgroundOrange
-          }else{
-            if(record.headContId===0){
-              if(record.tight) return classes.backgroundRed
-            }else{
-              if(record.tight) return classes.backgroundRed
+          if (record.children) {
+            if (record.tight) return classes.backgroundOrange
+          } else {
+            if (record.headContId === 0) {
+              if (record.tight) return classes.backgroundRed
+            } else {
+              if (record.tight) return classes.backgroundRed
             }
           }
         }}
         onChange={(pageData, filters, sorter, extra) => {
+          console.log("@12122412wdq", filters, extra, Object.keys(filters)[0])
+          let isFilter = false;
+          for (let i in Object.keys(filters)) {
+            if (filters[Object.keys(filters)[i]].length > 0) isFilter = true
+          }
+          if (isFilter) {
+            let arr = []
+            for (let i in extra.currentDataSource) {
+              console.log("Extreaaeafafea", extra.currentDataSource[i])
+              arr.push(extra.currentDataSource[i].contId)
+            }
+            console.log("onChange !!!!!!!!!!!!!!!", arr)
+            setExpandedRowKeys(arr)
+          }else{
+            setExpandedRowKeys([])
+          }
+        }}
+        onExpandedRowsChange={(expandedRow) => {
+          setExpandedRowKeys(expandedRow)
         }}
         dataSource={loadingTable ? null : contList}
         size="small" />

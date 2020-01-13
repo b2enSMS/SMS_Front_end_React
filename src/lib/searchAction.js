@@ -21,6 +21,7 @@ export default function GetColumnSearchProps(dataIndex, name) {
     };
     return ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+
             <div style={{ padding: 8 }}>
                 <Input
                     ref={node => {
@@ -50,11 +51,17 @@ export default function GetColumnSearchProps(dataIndex, name) {
         filterIcon: filtered => (
             <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
         ),
-        onFilter: (value, record) =>
-            record[dataIndex]
-                .toString()
-                .toLowerCase()
-                .includes(value.toLowerCase()),
+        onFilter: (value, record) => {
+            // return record[dataIndex]
+            //     .toString()
+            //     .toLowerCase()
+            //     .includes(value.toLowerCase())
+            //return record.children && record.children[0][dataIndex].toLowerCase().startsWith(value)
+            return
+            record.children &&
+                Object.keys(record.children).some(k => record.children[k][dataIndex].toLowerCase().includes(value.toLowerCase()))
+                //record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+        },
         onFilterDropdownVisibleChange: visible => {
             if (visible) {
                 setTimeout(() => searchInput.select());
