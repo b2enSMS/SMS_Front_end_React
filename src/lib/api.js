@@ -10,6 +10,12 @@ if (process.env.NODE_ENV === "development") {
 // 응답 인터셉터 추가
 axios.interceptors.response.use(
     function (response) {
+        console.log("success Response", response)
+        if(response.config.method === "get"){
+
+        }else{
+            message.success(response.data[0].info)
+        }
         return response;
     },
     function (error) {

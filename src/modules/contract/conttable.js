@@ -1,6 +1,5 @@
 import { handleActions } from 'redux-actions';
 import * as api from '../../lib/api';
-import { message } from 'antd';
 
 export const GET_CONT = 'conttable/GET_CONT';
 export const GET_CONT_SUCCESS = 'conttable/GET_CONT_SUCCESS';
@@ -16,7 +15,6 @@ export const getContDelete = selectedRowKeys => async dispatch => {
     try{
         await api.getDeleteConts(selectedRowKeys);
         dispatch({type: DELETE_CONT_SUCCESS});
-        message.success('삭제 완료');
     }catch(e){
         dispatch({
             type: DELETE_CONT_FAILURE,

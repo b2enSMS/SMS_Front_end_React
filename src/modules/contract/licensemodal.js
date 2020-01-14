@@ -1,7 +1,6 @@
 import { handleActions, createAction } from 'redux-actions';
 import produce from 'immer';
 import * as api from '../../lib/api';
-import { message } from 'antd';
 
 const CHANGE_INPUT = 'licensemodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'licensemodal/HANDLE_CANCLE';
@@ -67,7 +66,6 @@ export const getImageHandleRemove = (fileList,nowFileList) => async dispatch => 
     dispatch({ type: MODAL_IMAGE_REMOVE })
     try {
         await api.getRemoveImage(fileList);
-        message.success('이미지 삭제 성공!!');
         dispatch({
             type: MODAL_IMAGE_REMOVE_SUCCESS,
             payload: {
