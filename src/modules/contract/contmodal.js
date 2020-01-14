@@ -3,7 +3,6 @@ import * as api from '../../lib/api';
 import produce from 'immer';
 import { GET_CONT, GET_CONT_SUCCESS, GET_CONT_FAILURE } from './conttable'
 import {INITIALIZE_FORM as licensemodal_INITIALIZE_FORM} from './licensemodal'
-import { message } from 'antd';
 
 const CHANGE_INPUT = 'contmodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'contmodal/HANDLE_CANCLE';
@@ -43,7 +42,6 @@ export const gethandleUpdate = (formData) => async dispatch => {
     dispatch({ type: POST_CONT });
     try {
         await api.postUpdateConts(formData);
-        message.success('업데이트 성공!!');
         dispatch({
             type: POST_CONT_SUCCESS,
         });
@@ -180,7 +178,6 @@ export const handleOk = (formData) => async dispatch => {
     dispatch({ type: POST_CONT });
     try {
         await api.postConts(formData);
-        message.success('등록 성공!!');
         dispatch({
             type: POST_CONT_SUCCESS,
         });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Upload, Icon, message } from 'antd';
+import { Modal, Upload, Icon } from 'antd';
 import { Container, TextField, Grid, Button,InputAdornment } from '@material-ui/core/';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
@@ -98,12 +98,6 @@ const LicenseModal = ({ handleUpdateCancel,
         onChange(info) {
 
             let newFileList = [...info.fileList];
-            const { status } = info.file;
-            if (status === 'done') {
-                message.success(`${info.file.name} 등록 성공!`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} 등록 실패...`);
-            }
             setFileList(newFileList)
         },
         onRemove(file) {
