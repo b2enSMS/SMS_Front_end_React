@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, TextField, InputAdornment } from '@material-ui/core/';
 import { Modal } from "antd";
 import { makeStyles } from '@material-ui/core/styles';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles(theme => ({
@@ -24,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     // },
 }));
 
-const ProductModal = ({ prdtCd,handleUpdateOk, visible, handleCancel, confirmLoading, handleChangeInput, productForm, buttonFlag, handleOk }) => {
+const ProductModal = ({ prdtCd, handleUpdateOk, visible, handleCancel, confirmLoading, handleChangeInput, productForm, buttonFlag, handleOk }) => {
 
     const classes = useStyles();
 
@@ -62,14 +61,13 @@ const ProductModal = ({ prdtCd,handleUpdateOk, visible, handleCancel, confirmLoa
                         value={productForm.prdtNm}
                         onChange={handleChange}
                     />
-                    <CurrencyTextField
+                    <TextField
                         className={classes.textField}
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        currencySymbol=""
-                        //type='number'
+                        type='number'
                         id="prdtAmt"
                         label="가격"
                         name="prdtAmt"
