@@ -17,7 +17,8 @@ const ProductModalContainer = ({
         confirmLoading,
         buttonFlag,
         handleOk,
-        handleUpdateOk
+        handleUpdateOk,
+        prdtCd,
     }) => {
 
     const dispatch = useDispatch();
@@ -34,11 +35,12 @@ const ProductModalContainer = ({
             confirmLoading={confirmLoading}
             visible={visible}
             handleOk={UpdateOk}
-            HandleCancel={getHandleCancel}
+            handleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
             productForm={productForm}
             buttonFlag={buttonFlag}
             handleUpdateOk={()=>handleUpdateOk(formData)}
+            prdtCd={prdtCd}
         />
     );
 };
@@ -49,6 +51,7 @@ export default connect(
         buttonFlag: productmodal.buttonFlag,
         visible: productmodal.visible,
         productForm: productmodal.productForm,
+        prdtCd:productmodal.prdtCd,
     }),
     {
         getShowUpdateModal,

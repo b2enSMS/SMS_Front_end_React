@@ -1,8 +1,9 @@
 import React from 'react';
-import { Container, TextField,InputAdornment } from '@material-ui/core/';
-import {Modal} from "antd";
+import { Container, TextField, InputAdornment } from '@material-ui/core/';
+import { Modal } from "antd";
 import { makeStyles } from '@material-ui/core/styles';
-//import MenuItem from '@material-ui/core/MenuItem';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles(theme => ({
     form: {
@@ -23,27 +24,31 @@ const useStyles = makeStyles(theme => ({
     // },
 }));
 
-const ProductModal = ({handleUpdateOk, visible, HandleCancel, confirmLoading, handleChangeInput, productForm, buttonFlag, handleOk}) => {
+const ProductModal = ({ prdtCd,handleUpdateOk, visible, handleCancel, confirmLoading, handleChangeInput, productForm, buttonFlag, handleOk }) => {
 
     const classes = useStyles();
 
     const handleChange = ev => {
         handleChangeInput({ form: "productForm", key: ev.target.id, value: ev.target.value })
     }
-
-    return(
+    const prdtCodeHandleChange = (ev, value) => {
+        handleChangeInput({ form: "productForm", key: "prdtTpCd", value: value["cmmnDetailCd"] });
+        handleChangeInput({ form: "productForm", key: "prdtTpCdNm", value: value["cmmnDetailCdNm"] });
+    }
+    return (
         <Modal
             title="제품 정보"
             visible={visible}
             confirmLoading={confirmLoading}
-            okText={buttonFlag?"등록":"수정"}
-            onOk={buttonFlag?handleOk:handleUpdateOk}
-            onCancel={HandleCancel}
+            okText={buttonFlag ? "등록" : "수정"}
+            onOk={buttonFlag ? handleOk : handleUpdateOk}
+            onCancel={handleCancel}
+            cancelText="취소"
             style={{ top: 25 }}
 
         >
             <Container component="main" maxWidth="xs">
-                <form className={classes.form}>
+                <form className={classes.form} autoComplete="off">
 
                     <TextField
                         className={classes.textField}
@@ -57,13 +62,14 @@ const ProductModal = ({handleUpdateOk, visible, HandleCancel, confirmLoading, ha
                         value={productForm.prdtNm}
                         onChange={handleChange}
                     />
-                    <TextField
+                    <CurrencyTextField
                         className={classes.textField}
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        type='number'
+                        currencySymbol=""
+                        //type='number'
                         id="prdtAmt"
                         label="가격"
                         name="prdtAmt"
@@ -88,6 +94,27 @@ const ProductModal = ({handleUpdateOk, visible, HandleCancel, confirmLoading, ha
                         value={productForm.prdtDesc}
                         onChange={handleChange}
                     />
+                    <Autocomplete
+                        id="prdtTpCdId"
+                        options={prdtCd}
+                        onChange={prdtCodeHandleChange}
+                        inputValue={productForm.prdtTpCdNm}
+                        value={{ cmmnDetailCdNm: productForm.prdtTpCdNm }}
+                        getOptionLabel={option => option.cmmnDetailCdNm}
+                        disableClearable={true}
+                        renderInput={params => (
+                            <TextField
+                                {...params}
+                                variant="outlined"
+                                required
+                                margin="normal"
+                                label="제품 유형"
+                                fullWidth
+                                value={productForm.prdtTpCdNm}
+                            />
+                        )}
+                    />
+
                 </form>
             </Container>
         </Modal>

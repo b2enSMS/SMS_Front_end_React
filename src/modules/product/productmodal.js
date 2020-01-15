@@ -29,11 +29,15 @@ export const getButtonChange = createAction(BUTTON_CHANGE);
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
 export const initialForm = createAction(PRODUCT_INIT, form => form);
 
-export const getShowModal = () => dispatch => {
+export const getShowModal = () =>async dispatch => {
     dispatch({ type: SHOW_MODAL});
     try {
+        const response = await api.getProductCD();
         dispatch({
             type: SHOW_MODAL_SUCCESS,
+            payload: {
+                prdtCd:response.data,
+            }
         })
     } catch (err) {
         dispatch({
@@ -46,10 +50,12 @@ export const getShowUpdateModal = product => async dispatch => {
     dispatch({ type: SHOW_UPDATE_MODAL });
     try {
         const res = await api.getProduct(product);
+        const response = await api.getProductCD();
         dispatch({
             type: SHOW_UPDATE_MODAL_SUCCESS,
             payload: {
                 form: res.data,
+                prdtCd:response.data,
             }
         })
     } catch(e) {
@@ -157,7 +163,9 @@ const initialState = {
         prdtDesc: "",
         prdtAmt: "",
         prdtTpCd: "",
+        prdtTpCdNm: "",
     },
+    prdtCd: [],
 };
 
 const productmodal = handleActions(
@@ -173,8 +181,9 @@ const productmodal = handleActions(
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_MODAL_SUCCESS]: state => ({
+        [SHOW_MODAL_SUCCESS]: (state,{ payload: {prdtCd}}) => ({
             ...state,
+            prdtCd:prdtCd
         }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
@@ -183,9 +192,10 @@ const productmodal = handleActions(
         [SHOW_UPDATE_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: {form}}) =>
+        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: {form,prdtCd}}) =>
             produce(state, draft => {
                 draft["productForm"] = form
+                draft["prdtCd"] = prdtCd
             }),
         [HANDLE_CANCEL]: state => ({
             ...state,

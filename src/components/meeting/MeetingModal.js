@@ -37,13 +37,13 @@ const MeetingModal = ({
     handleUpdateOk,
     meetCd,
     updateVisible,
-    HandleCancel,
+    handleCancel,
     handleChangeInput,
-    meetingModal,
+    meetingForm,
     buttonFlag,
     handleOk,
     custList,
-    myComList,
+    managerList,
 }) => {
 
     const classes = useStyles();
@@ -51,25 +51,25 @@ const MeetingModal = ({
     const { Option } = Select;
 
     const handleinstallDtChange = (id, date) => {
-        handleChangeInput({ form: "meetingModal", key: "meetDt", value: date })
+        handleChangeInput({ form: "meetingForm", key: "meetDt", value: date })
     };
 
     const handleChange = ev => {
-        handleChangeInput({ form: "meetingModal", key: ev.target.id, value: ev.target.value })
+        handleChangeInput({ form: "meetingForm", key: ev.target.id, value: ev.target.value })
     };
 
     const meetingCodeHandleChange = (ev, value) => {
-        handleChangeInput({ form: "meetingModal", key: "meetTpCd", value: value["cmmnDetailCd"] });
-        handleChangeInput({ form: "meetingModal", key: "meetTpCdNm", value: value["cmmnDetailCdNm"] });
+        handleChangeInput({ form: "meetingForm", key: "meetTpCd", value: value["cmmnDetailCd"] });
+        handleChangeInput({ form: "meetingForm", key: "meetTpCdNm", value: value["cmmnDetailCdNm"] });
 
     }
     const custSelectHandler = (value) => {
         console.log("custSelectHandler",value)
-        selectHandleChange({ form: "meetingModal", key: "custs", value: value });
+        selectHandleChange({ form: "meetingForm", key: "custs", value: value });
     }
     const empSelectHandler = (value) => {
         console.log("empSelectHandler",value)
-        selectHandleChange({ form: "meetingModal", key: "emps", value: value });
+        selectHandleChange({ form: "meetingForm", key: "emps", value: value });
     }
 
 
@@ -79,13 +79,13 @@ const MeetingModal = ({
             visible={updateVisible}
             okText={buttonFlag ? "등록" : "수정"}
             onOk={buttonFlag ? handleOk : handleUpdateOk}
-            onCancel={HandleCancel}
+            onCancel={handleCancel}
             cancelText="취소"
-            disableClearable={true}
             style={{ top: 25 }}
+            maskClosable={false}
         >
             <Container component="main" maxWidth="xs">
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate autoComplete="off">
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -96,7 +96,7 @@ const MeetingModal = ({
                                     id="meetDt"
                                     label="미팅 날짜"
                                     fullWidth
-                                    value={meetingModal.meetDt}
+                                    value={meetingForm.meetDt}
                                     onChange={handleinstallDtChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -110,7 +110,7 @@ const MeetingModal = ({
                                 label="시작 시간"
                                 type="time"
                                 fullWidth
-                                value={meetingModal.meetStartTime}
+                                value={meetingForm.meetStartTime}
                                 onChange={handleChange}
                                 className={classes.textField}
                                 InputLabelProps={{
@@ -132,7 +132,7 @@ const MeetingModal = ({
                                 id="meetTotTime"
                                 label="소요 시간"
                                 name="meetTotTime"
-                                value={meetingModal.meetTotTime}
+                                value={meetingForm.meetTotTime}
                                 onChange={handleChange}
                                 InputProps={{
                                     endAdornment: <InputAdornment position="end">시간</InputAdornment>,
@@ -149,8 +149,8 @@ const MeetingModal = ({
                                 id="meetTpCdId"
                                 options={meetCd}
                                 onChange={meetingCodeHandleChange}
-                                inputValue={meetingModal.meetTpCdNm}
-                                value={{ cmmnDetailCdNm: meetingModal.meetTpCdNm }}
+                                inputValue={meetingForm.meetTpCdNm}
+                                value={{ cmmnDetailCdNm: meetingForm.meetTpCdNm }}
                                 getOptionLabel={option => option.cmmnDetailCdNm}
                                 disableClearable={true}
                                 renderInput={params => (
@@ -159,9 +159,9 @@ const MeetingModal = ({
                                         variant="outlined"
                                         required
                                         //margin="normal"
-                                        label="미팅 코드"
+                                        label="미팅 유형"
                                         fullWidth
-                                        value={meetingModal.meetTpCdNm}
+                                        value={meetingForm.meetTpCdNm}
                                     />
                                 )}
                             />
@@ -178,7 +178,7 @@ const MeetingModal = ({
                                 id="meetCnt"
                                 onChange={handleChange}
                                 autoComplete="off"
-                                value={meetingModal.meetCnt}
+                                value={meetingForm.meetCnt}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -188,7 +188,7 @@ const MeetingModal = ({
                                 size='large'
                                 placeholder="고객 담당자"
                                 onChange={custSelectHandler}
-                                value={meetingModal.custs}
+                                value={meetingForm.custs}
                                 labelInValue
                                 style={{ width: '100%' }}
                             >
@@ -204,11 +204,11 @@ const MeetingModal = ({
                                 size='large'
                                 placeholder="비투엔 담당자"
                                 onChange={empSelectHandler}
-                                value={meetingModal.emps}
+                                value={meetingForm.emps}
                                 labelInValue
                                 style={{ width: '100%' }}
                             >
-                                {myComList.map((myCom, index) => (
+                                {managerList.map((myCom, index) => (
                                     <Option key={myCom.empId}>{myCom.empNm}</Option>
                                 ))}
                             </Select>
