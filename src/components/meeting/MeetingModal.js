@@ -36,7 +36,7 @@ const MeetingModal = ({
     selectHandleChange,
     handleUpdateOk,
     meetCd,
-    updateVisible,
+    visible,
     handleCancel,
     handleChangeInput,
     meetingForm,
@@ -76,7 +76,7 @@ const MeetingModal = ({
     return (
         <Modal
             title="미팅 정보"
-            visible={updateVisible}
+            visible={visible}
             okText={buttonFlag ? "등록" : "수정"}
             onOk={buttonFlag ? handleOk : handleUpdateOk}
             onCancel={handleCancel}

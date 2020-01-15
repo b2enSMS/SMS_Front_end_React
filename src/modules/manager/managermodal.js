@@ -223,7 +223,6 @@ const managermodal = handleActions(
         [POST_MANAGER_FAILURE]: state => ({
             ...state,
             confirmLoading: false,
-            visible: false,
         }),
         [UPDATE_MANAGER]: state => ({
             ...state,
@@ -239,7 +238,6 @@ const managermodal = handleActions(
         [UPDATE_MANAGER_FAILURE]: state => ({
             ...state,
             confirmLoading: false,
-            visible: false,
         }),
     },
     initialState,

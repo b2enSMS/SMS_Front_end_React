@@ -217,7 +217,6 @@ const orgmodal = handleActions(
         }),
         [POST_ORG_FAILURE]: state => ({
             ...state,
-            visible: false,
             confirmLoading: false,
         }),
         [UPDATE_ORG]: state => ({

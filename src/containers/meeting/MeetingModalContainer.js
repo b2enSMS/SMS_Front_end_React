@@ -14,7 +14,7 @@ import MeetingModal from "../../components/meeting/MeetingModal";
 const MeetingModalContainer = 
 ({
     meetCd,
-    updateVisible,
+    visible,
     getHandleCancel,
     handleChangeInput,
     meetingForm,
@@ -38,7 +38,7 @@ const MeetingModalContainer =
     return (
         <MeetingModal
             meetCd={meetCd}
-            updateVisible={updateVisible}
+            visible={visible}
             handleOk={UpdateOk}
             handleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
@@ -55,7 +55,7 @@ const MeetingModalContainer =
 export default connect(
     ({ meetingmodal }) => ({
         buttonFlag: meetingmodal.buttonFlag,
-        updateVisible: meetingmodal.updateVisible,
+        visible: meetingmodal.visible,
         meetingForm: meetingmodal.meetingForm,
         meetCd: meetingmodal.meetCd,
         custList: meetingmodal.custList,
