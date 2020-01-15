@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     // },
 }));
 
-const ManagerModal = ({handleUpdateOk, visible, HandleCancel, handleChangeInput, managerForm, buttonFlag, handleOk, confirmLoading}) => {
+const ManagerModal = ({handleUpdateOk, visible, handleCancel, handleChangeInput, managerForm, buttonFlag, handleOk, confirmLoading}) => {
 
     const classes = useStyles();
 
@@ -39,11 +39,12 @@ const ManagerModal = ({handleUpdateOk, visible, HandleCancel, handleChangeInput,
             confirmLoading={confirmLoading}
             okText={buttonFlag?"등록":"수정"}
             onOk={buttonFlag?handleOk:handleUpdateOk}
-            onCancel={HandleCancel}
+            onCancel={handleCancel}
             style={{ top: 25 }}
+            maskClosable={false}
         >
             <Container component="main" maxWidth="xs">
-                <form className={classes.form}>
+                <form className={classes.form} autoComplete="off">
 
                     <TextField
                         className={classes.textField}

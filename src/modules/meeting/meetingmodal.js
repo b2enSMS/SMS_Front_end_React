@@ -45,7 +45,7 @@ export const getShowModal = () => async dispatch => {
             payload: {
                 meetCd: resCd.data,
                 custList: responseCust,
-                myComList:responseBM
+                managerList:responseBM
             }
         })
     } catch (err) {
@@ -69,7 +69,7 @@ export const getShowUpdateModal = meeting => async dispatch => {
                 form: res.data,
                 meetCd: resCd.data,
                 custList: responseCust,
-                myComList:responseBM
+                managerList:responseBM
             }
         })
     } catch (e) {
@@ -106,7 +106,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
         });
         dispatch({
             type: MEETING_INIT,
-            payload: "meetingModal"
+            payload: "meetingForm"
         });
         dispatch({
             type: GET_MEETING
@@ -137,7 +137,7 @@ export const handleUpdateOk = (formData) => async dispatch => {
 
 export const getHandleCancel = () => dispatch => {
     dispatch({ type: HANDLE_CANCEL });
-    dispatch({ type: MEETING_INIT, payload: "meetingModal" });
+    dispatch({ type: MEETING_INIT, payload: "meetingForm" });
 };
 
 export const handleOk = (formData) => async dispatch => {
@@ -149,7 +149,7 @@ export const handleOk = (formData) => async dispatch => {
         })
         dispatch({
             type: MEETING_INIT,
-            payload: "meetingModal"
+            payload: "meetingForm"
         });
         dispatch({
             type: GET_MEETING
@@ -185,11 +185,12 @@ export const handleChangeInput = (changeData) => dispatch => {
 const initialState = {
     updateVisible: false,
     buttonFlag: true,
-    meetingModal: {
+    meetingForm: {
         emps: [],
         custs: [],
         meetDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-        meetStartTime: new Date().getHours() + ':' + new Date().getMinutes(),
+        meetStartTime: (new Date().getHours().toString()[1]?new Date().getHours().toString(): "0"+new Date().getHours().toString()[0]  )+ ':' + 
+        (new Date().getMinutes().toString()[1]?new Date().getMinutes().toString(): "0"+new Date().getMinutes().toString()[0]  ),
         meetTotTime: '',
         meetTpCd: '',
         meetTpCdNm: '',
@@ -198,7 +199,7 @@ const initialState = {
     },
     meetCd: [],
     custList:[],
-    myComList:[],
+    managerList:[],
 };
 
 const meetingmodal = handleActions(
@@ -218,11 +219,11 @@ const meetingmodal = handleActions(
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_MODAL_SUCCESS]: (state, { payload: { meetCd,custList,myComList } }) =>
+        [SHOW_MODAL_SUCCESS]: (state, { payload: { meetCd,custList,managerList } }) =>
             produce(state, draft => {
                 draft["meetCd"] = meetCd;
                 draft["custList"] = custList.data;
-                draft["myComList"] = myComList.data;
+                draft["managerList"] = managerList.data;
             }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
@@ -231,12 +232,12 @@ const meetingmodal = handleActions(
         [SHOW_UPDATE_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: { form, meetCd,custList,myComList } }) =>
+        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: { form, meetCd,custList,managerList } }) =>
             produce(state, draft => {
-                draft["meetingModal"] = form;
+                draft["meetingForm"] = form;
                 draft["meetCd"] = meetCd;
                 draft["custList"] = custList.data;
-                draft["myComList"] = myComList.data;
+                draft["managerList"] = managerList.data;
             }),
 
         [HANDLE_CANCEL]: state => ({
@@ -251,7 +252,7 @@ const meetingmodal = handleActions(
         [MEETING_INIT]: (state, { payload: form }) => ({
             ...state,
             [form]: initialState[form],
-            myComList:[],
+            managerList:[],
             custList:[],
         }),
         [POST_MEETING]: state => ({

@@ -17,13 +17,13 @@ const MeetingModalContainer =
     updateVisible,
     getHandleCancel,
     handleChangeInput,
-    meetingModal,
+    meetingForm,
     buttonFlag,
     handleOk,
     handleUpdateOk,
     getSelectHandleChange,
     custList,
-    myComList,
+    managerList,
 }) => {
 
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const MeetingModalContainer =
     useEffect(() => {
     },[dispatch])
 
-    const {formData} = useSelector(({ meetingmodal })=>({formData : meetingmodal.meetingModal}))
+    const {formData} = useSelector(({ meetingmodal })=>({formData : meetingmodal.meetingForm}))
     const UpdateOk = () =>{
         handleOk(formData);
     }
@@ -40,14 +40,14 @@ const MeetingModalContainer =
             meetCd={meetCd}
             updateVisible={updateVisible}
             handleOk={UpdateOk}
-            HandleCancel={getHandleCancel}
+            handleCancel={getHandleCancel}
             handleChangeInput={handleChangeInput}
-            meetingModal={meetingModal}
+            meetingForm={meetingForm}
             buttonFlag={buttonFlag}
             handleUpdateOk={()=>handleUpdateOk(formData)}
             selectHandleChange={getSelectHandleChange}
             custList={custList}
-            myComList={myComList}
+            managerList={managerList}
         />
     );
 };
@@ -56,10 +56,10 @@ export default connect(
     ({ meetingmodal }) => ({
         buttonFlag: meetingmodal.buttonFlag,
         updateVisible: meetingmodal.updateVisible,
-        meetingModal: meetingmodal.meetingModal,
+        meetingForm: meetingmodal.meetingForm,
         meetCd: meetingmodal.meetCd,
         custList: meetingmodal.custList,
-        myComList:meetingmodal.myComList,
+        managerList:meetingmodal.managerList,
     }),
     {
         getShowModal,

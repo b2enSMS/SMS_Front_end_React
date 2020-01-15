@@ -39,10 +39,11 @@ const OrgModal = ({handleUpdateOk, visible, confirmLoading,handleCancel, handleC
             okText={buttonFlag?"등록":"수정"}
             onOk={buttonFlag?handleOk:handleUpdateOk}
             onCancel={handleCancel}
+            cancelText="취소"
             style={{ top: 25 }}
         >
             <Container component="main" maxWidth="xs">
-                <form className={classes.form}>
+                <form className={classes.form} autoComplete="off">
 
                     <TextField
                         className={classes.textField}

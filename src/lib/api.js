@@ -22,7 +22,7 @@ axios.interceptors.response.use(
         //let msg = ""
         //error.response.data.map((arr, index) => msg += `${arr.info}\n`)
         //error.response.data.map((arr, index) => message.error( `${arr.info}\n`))
-        console.log("error Response",error.response.data)
+        console.log("error Response",error.response)
         message.error(error.response.data[1].info)
         return Promise.reject(error);
     });
@@ -187,22 +187,26 @@ export const updateManager = (formData) => {
 
 export const postProduct = (formData) => {
     const data = {
-        prdtId: formData.prdtId,
         prdtNm: formData.prdtNm,
         prdtAmt: formData.prdtAmt,
         prdtDesc: formData.prdtDesc,
+        prdtTpCd: formData.prdtTpCd
     }
     return axios.post('/prdt/create', data);
 }
 
 export const updateProduct = (formData) => {
     const data = {
+        prdtId: formData.prdtId,
         prdtNm: formData.prdtNm,
         prdtAmt: formData.prdtAmt,
         prdtDesc: formData.prdtDesc,
+        prdtTpCd: formData.prdtTpCd
     }
     return axios.put(`/prdt/${formData.prdtId}`, data);
 }
+export const getProductCD = () =>
+    axios.get('/cmmncd/prdt_tp_cd')
 
 //모계약 리스트
 export const getheadConts = () =>

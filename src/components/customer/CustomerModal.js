@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, TextField } from '@material-ui/core/';
-import {Modal} from "antd";
+import { Modal } from "antd";
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     // },
 }));
 
-const CustomerModal = ({handleUpdateOk, orgList, custCdList, confirmLoading, visible, HandleCancel, handleChangeInput, customerForm, buttonFlag, handleOk}) => {
+const CustomerModal = ({ handleUpdateOk, orgList, custCdList, confirmLoading, visible, handleCancel, handleChangeInput, customerForm, buttonFlag, handleOk }) => {
 
     const classes = useStyles();
 
@@ -37,24 +37,26 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, confirmLoading, vis
             handleChangeInput({ form: "customerForm", key: key, value: value[key] });
         }
     }
-    const contractCodeHandleChange = (ev, value)=>{
+    const contractCodeHandleChange = (ev, value) => {
         handleChangeInput({ form: "customerForm", key: "custTpCd", value: value["cmmnDetailCd"] });
         handleChangeInput({ form: "customerForm", key: "custTpCdNm", value: value["cmmnDetailCdNm"] });
 
     }
 
-    return(
+    return (
         <Modal
             title="고객 정보"
             visible={visible}
             confirmLoading={confirmLoading}
-            okText={buttonFlag?"등록":"수정"}
-            onOk={buttonFlag?handleOk:handleUpdateOk}
-            onCancel={HandleCancel}
+            okText={buttonFlag ? "등록" : "수정"}
+            onOk={buttonFlag ? handleOk : handleUpdateOk}
+            onCancel={handleCancel}
+            cancelText="취소"
             style={{ top: 25 }}
+            maskClosable={false}
         >
             <Container component="main" maxWidth="xs">
-                <form className={classes.form}>
+                <form className={classes.form} autoComplete="off">
                     <Autocomplete
                         id="orgId"
                         options={orgList}
@@ -122,9 +124,11 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, confirmLoading, vis
                         name="telNo"
                         label="연락처"
                         id="telNo"
-                        value={customerForm.telNo}
-                        onChange={handleChange}
+                        value= {customerForm.telNo}
+                        onChange= {handleChange}
                     />
+
+
                     <Autocomplete
                         id="custTpCd"
                         options={custCdList}
@@ -141,7 +145,7 @@ const CustomerModal = ({handleUpdateOk, orgList, custCdList, confirmLoading, vis
                                 margin="normal"
                                 label="고객 코드"
                                 fullWidth
-                                //value={possibleCustomerModal.custTpCdNm}
+                            //value={possibleCustomerModal.custTpCdNm}
                             />
                         )}
                     />
