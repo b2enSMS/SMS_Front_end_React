@@ -178,6 +178,7 @@ const LicenseModal = ({ handleUpdateCancel,
                                 }}
                                 inputProps={{
                                     step: 10000,//만 원씩
+                                    min: "0"
                                 }}
                                 onChange={handleChange}
                                 autoComplete="off"

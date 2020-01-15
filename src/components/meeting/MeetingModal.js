@@ -139,6 +139,7 @@ const MeetingModal = ({
                                 }}
                                 inputProps={{
                                     step: 1,
+                                    min: "0"
                                 }}
                             />
                         </Grid>

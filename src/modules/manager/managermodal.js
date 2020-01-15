@@ -29,11 +29,15 @@ export const getButtonChange = createAction(BUTTON_CHANGE);
 export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
 export const initialForm = createAction(MANAGER_INIT, form => form);
 
-export const getShowModal = () => dispatch => {
+export const getShowModal = () =>async dispatch => {
     dispatch({ type: SHOW_MODAL});
     try {
+        const response = await api.getManagerCD();
         dispatch({
             type: SHOW_MODAL_SUCCESS,
+            payload:{
+                empCd:response.data
+            },
         })
     } catch (err) {
         dispatch({
@@ -46,10 +50,12 @@ export const getShowUpdateModal = product => async dispatch => {
     dispatch({ type: SHOW_UPDATE_MODAL });
     try {
         const res = await api.getManager(product);
+        const response = await api.getManagerCD();
         dispatch({
             type: SHOW_UPDATE_MODAL_SUCCESS,
             payload: {
                 form: res.data,
+                empCd:response.data,
             }
         })
     } catch(e) {
@@ -156,7 +162,10 @@ const initialState = {
         empNm: '',
         email: '',
         telNo: '',
+        empTpCd: '',
+        empTpCdNm: '',
     },
+    empCd: [],
 };
 
 const managermodal = handleActions(
@@ -172,9 +181,10 @@ const managermodal = handleActions(
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: {form}}) =>
+        [SHOW_UPDATE_MODAL_SUCCESS]: (state, { payload: {form,empCd}}) =>
             produce(state, draft => {
                 draft["managerForm"] = form
+                draft["empCd"] = empCd
             }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
@@ -183,9 +193,10 @@ const managermodal = handleActions(
         [SHOW_UPDATE_MODAL_FAILURE]: state => ({
             ...state,
         }),
-        [SHOW_MODAL_SUCCESS]: state => ({
+        [SHOW_MODAL_SUCCESS]: (state,{payload: {empCd}}) => ({
             ...state,
             visible: true,
+            empCd:empCd,
         }),
         [HANDLE_CANCEL]: state => ({
             ...state,

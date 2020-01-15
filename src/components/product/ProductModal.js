@@ -78,6 +78,7 @@ const ProductModal = ({ prdtCd, handleUpdateOk, visible, handleCancel, confirmLo
                         }}
                         inputProps={{
                             step: 10000,//만 원씩
+                            min: "0"
                         }}
                     />
                     <TextField
