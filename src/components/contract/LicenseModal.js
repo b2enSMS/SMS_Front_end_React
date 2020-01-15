@@ -5,7 +5,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 import 'date-fns';
 
 const useStyles = makeStyles(theme => ({
@@ -164,14 +163,13 @@ const LicenseModal = ({ handleUpdateCancel,
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <CurrencyTextField
+                            <TextField
                                 className={classes.textField}
                                 variant="outlined"
                                 margin="normal"
                                 required
                                 fullWidth
-                                currencySymbol=""
-                                //type="number"
+                                type="number"
                                 name="contAmt"
                                 label="납품 가격"
                                 id="contAmt"

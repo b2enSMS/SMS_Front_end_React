@@ -40,6 +40,7 @@ const ManagerModal = ({handleUpdateOk, visible, handleCancel, handleChangeInput,
             okText={buttonFlag?"등록":"수정"}
             onOk={buttonFlag?handleOk:handleUpdateOk}
             onCancel={handleCancel}
+            cancelText="취소"
             style={{ top: 25 }}
             maskClosable={false}
         >

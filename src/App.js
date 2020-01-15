@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
     height: 'auto',
     paddingLeft: theme.spacing(2),
     color: textcolor,
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
   },
   imageStyle: {
     width: '100%',
