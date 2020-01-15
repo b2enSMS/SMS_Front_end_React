@@ -10,15 +10,16 @@ import {
 import ManagerModal from "../../components/manager/ManagerModal";
 
 const ManagerModalContainer = ({
-                                   visible,
-                                         getHandleCancel,
-                                         handleChangeInput,
-                                   managerForm,
-                                   confirmLoading,
-                                         buttonFlag,
-                                         handleOk,
-                                         handleUpdateOk
-                                     }) => {
+                                    visible,
+                                    getHandleCancel,
+                                    handleChangeInput,
+                                    managerForm,
+                                    confirmLoading,
+                                    buttonFlag,
+                                    handleOk,
+                                    handleUpdateOk,
+                                    empCd,
+}) => {
 
     const dispatch = useDispatch();
 
@@ -38,6 +39,7 @@ const ManagerModalContainer = ({
             handleChangeInput={handleChangeInput}
             managerForm={managerForm}
             buttonFlag={buttonFlag}
+            empCd={empCd}
             handleUpdateOk={()=>handleUpdateOk(formData)}
         />
     );
@@ -49,6 +51,7 @@ export default connect(
         buttonFlag: managermodal.buttonFlag,
         visible: managermodal.visible,
         managerForm: managermodal.managerForm,
+        empCd:managermodal.empCd
     }),
     {
         getShowUpdateModal,

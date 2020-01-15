@@ -11,9 +11,9 @@ if (process.env.NODE_ENV === "development") {
 axios.interceptors.response.use(
     function (response) {
         console.log("success Response", response)
-        if(response.config.method === "get"){
+        if (response.config.method === "get") {
 
-        }else{
+        } else {
             message.success(response.data[0].info)
         }
         return response;
@@ -22,7 +22,7 @@ axios.interceptors.response.use(
         //let msg = ""
         //error.response.data.map((arr, index) => msg += `${arr.info}\n`)
         //error.response.data.map((arr, index) => message.error( `${arr.info}\n`))
-        console.log("error Response",error.response)
+        console.log("error Response", error.response)
         message.error(error.response.data[1].info)
         return Promise.reject(error);
     });
@@ -172,6 +172,7 @@ export const postManager = (formData) => {
         empNm: formData.empNm,
         email: formData.email,
         telNo: formData.telNo,
+        empTpCd: formData.empTpCd,
     }
     return axios.post('/b2en/create', data);
 }
@@ -181,9 +182,12 @@ export const updateManager = (formData) => {
         empNm: formData.empNm,
         email: formData.email,
         telNo: formData.telNo,
+        empTpCd: formData.empTpCd,
     }
     return axios.put(`/b2en/${formData.empId}`, data);
 }
+export const getManagerCD = () =>
+    axios.get('/cmmncd/emp_tp_cd')
 
 export const postProduct = (formData) => {
     const data = {

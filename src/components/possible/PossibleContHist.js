@@ -39,7 +39,7 @@ const PossibleContHist = ({ visible, handleCancel, loadingTable, histList }) => 
             }
         },
         {
-            title: '비고',
+            title: '요청사유',
             dataIndex: 'issueReason',
             align: 'center',
             // width: '5%',
@@ -48,7 +48,7 @@ const PossibleContHist = ({ visible, handleCancel, loadingTable, histList }) => 
 
     return (
         <Modal
-            title="계약 히스토리"
+            title="임시 라이센스 히스토리"
             visible={visible}
             //onOk={}
             okText="닫기"

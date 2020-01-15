@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, TextField } from '@material-ui/core/';
-import {Modal} from "antd";
+import { Modal } from "antd";
 import { makeStyles } from '@material-ui/core/styles';
 //import MenuItem from '@material-ui/core/MenuItem';
-
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles(theme => ({
     form: {
@@ -24,21 +24,25 @@ const useStyles = makeStyles(theme => ({
     // },
 }));
 
-const ManagerModal = ({handleUpdateOk, visible, handleCancel, handleChangeInput, managerForm, buttonFlag, handleOk, confirmLoading}) => {
+const ManagerModal = ({ empCd,handleUpdateOk, visible, handleCancel, handleChangeInput, managerForm, buttonFlag, handleOk, confirmLoading }) => {
 
     const classes = useStyles();
 
     const handleChange = ev => {
         handleChangeInput({ form: "managerForm", key: ev.target.id, value: ev.target.value })
     }
+    const empCodeHandleChange = (ev, value) => {
+        handleChangeInput({ form: "managerForm", key: "empTpCd", value: value["cmmnDetailCd"] });
+        handleChangeInput({ form: "managerForm", key: "empTpCdNm", value: value["cmmnDetailCdNm"] });
+    }
 
-    return(
+    return (
         <Modal
-            title="제품 정보"
+            title="담당자 정보"
             visible={visible}
             confirmLoading={confirmLoading}
-            okText={buttonFlag?"등록":"수정"}
-            onOk={buttonFlag?handleOk:handleUpdateOk}
+            okText={buttonFlag ? "등록" : "수정"}
+            onOk={buttonFlag ? handleOk : handleUpdateOk}
             onCancel={handleCancel}
             cancelText="취소"
             style={{ top: 25 }}
@@ -82,6 +86,26 @@ const ManagerModal = ({handleUpdateOk, visible, handleCancel, handleChangeInput,
                         id="telNo"
                         value={managerForm.telNo}
                         onChange={handleChange}
+                    />
+                    <Autocomplete
+                        id="empTpCdId"
+                        options={empCd}
+                        onChange={empCodeHandleChange}
+                        inputValue={managerForm.empTpCdNm}
+                        value={{ cmmnDetailCdNm: managerForm.empTpCdNm }}
+                        getOptionLabel={option => option.cmmnDetailCdNm}
+                        disableClearable={true}
+                        renderInput={params => (
+                            <TextField
+                                {...params}
+                                variant="outlined"
+                                required
+                                margin="normal"
+                                label="담당자 유형"
+                                fullWidth
+                                value={managerForm.empTpCdNm}
+                            />
+                        )}
                     />
                 </form>
             </Container>
