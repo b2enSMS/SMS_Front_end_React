@@ -183,7 +183,7 @@ export const handleChangeInput = (changeData) => dispatch => {
 };
 
 const initialState = {
-    updateVisible: false,
+    visible: false,
     buttonFlag: true,
     meetingForm: {
         emps: [],
@@ -214,7 +214,7 @@ const meetingmodal = handleActions(
         }),
         [SHOW_MODAL]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
         }),
         [SHOW_MODAL_FAILURE]: state => ({
             ...state,
@@ -227,7 +227,7 @@ const meetingmodal = handleActions(
             }),
         [SHOW_UPDATE_MODAL]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
         }),
         [SHOW_UPDATE_MODAL_FAILURE]: state => ({
             ...state,
@@ -242,7 +242,7 @@ const meetingmodal = handleActions(
 
         [HANDLE_CANCEL]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
             buttonFlag: true,
         }),
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
@@ -257,22 +257,23 @@ const meetingmodal = handleActions(
         }),
         [POST_MEETING]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
         }),
         [POST_MEETING_SUCCESS]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
         }),
         [POST_MEETING_FAILURE]: state => ({
             ...state,
         }),
         [UPDATE_MEETING]: state => ({
             ...state,
-            updateVisible: true,
+            visible: true,
         }),
         [UPDATE_MEETING_SUCCESS]: state => ({
             ...state,
-            updateVisible: false,
+            visible: false,
+            buttonFlag : true,
         }),
         [UPDATE_MEETING_FAILURE]: state => ({
             ...state,

@@ -221,7 +221,6 @@ const productmodal = handleActions(
         }),
         [POST_PRODUCT_FAILURE]: state => ({
             ...state,
-            visible: false,
             confirmLoading: false,
         }),
         [UPDATE_PRODUCT]: state => ({
@@ -237,7 +236,6 @@ const productmodal = handleActions(
         }),
         [UPDATE_PRODUCT_FAILURE]: state => ({
             ...state,
-            visible: false,
             confirmLoading: false,
         }),
     },

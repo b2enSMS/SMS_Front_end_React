@@ -136,6 +136,7 @@ const CustomerModal = ({ handleUpdateOk, orgList, custCdList, confirmLoading, vi
                         inputValue={customerForm.custTpCdNm}
                         value={{ cmmnDetailCdNm: customerForm.custTpCdNm }}
                         getOptionLabel={option => option.cmmnDetailCdNm}
+                        disableClearable={true}
                         renderInput={params => (
                             <TextField
                                 {...params}

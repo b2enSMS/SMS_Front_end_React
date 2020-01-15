@@ -231,7 +231,6 @@ const customermodal = handleActions(
         }),
         [POST_CUSTOMER_FAILURE]: state => ({
             ...state,
-            visible: false,
             confirmLoading: false,
         }),
         [UPDATE_CUSTOMER]: state => ({
@@ -248,7 +247,6 @@ const customermodal = handleActions(
         [UPDATE_CUSTOMER_FAILURE]: state => ({
             ...state,
             confirmLoading: false,
-            visible: false,
         }),
     },
     initialState,
