@@ -42,7 +42,7 @@ export const gethandleUpdate = (formData) => async dispatch => {
 
         dispatch({ type: GET_CONT });
         try {
-            const response = await api.getTempConts();
+            const response = await api.getPossibleConts();
             dispatch({
                 type: GET_CONT_SUCCESS,
                 payload: response.data
@@ -75,7 +75,7 @@ export const getLicenseHandleDelete = (idx) => dispacth => {
 export const getUpdateModal = (key) => async dispatch => {
     dispatch({ type: UPDATE_CONT })
     try {
-        const response = await api.getTempCont(key)
+        const response = await api.getPossibleCont(key)
         const responseML = await api.getB2enManager();
         const responseOML = await api.getorgML();
 
@@ -161,7 +161,7 @@ export const handleOk = (formData) => async dispatch => {
 
         dispatch({ type: GET_CONT});
         try {
-            const response = await api.getTempConts();
+            const response = await api.getPossibleConts();
             dispatch({
                 type: GET_CONT_SUCCESS,
                 payload: response.data

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { PossibleContLicense } from 'components';
 import { gethandleUpdateCancel, handleOk, handleChangeInput, getHandleCancel } from 'modules/possible/possiblelicense';
 import { inputLicense,updateLicense } from 'modules/possible/possiblemodal'
@@ -19,15 +19,15 @@ const PossibleContLicenseContainer = ({
 }) => {
     const dispatch = useDispatch();
 
-    const { formData } = useSelector(({ possiblelicense }) => ({ formData: possiblelicense.licenseForm }));
+    //const { formData } = useSelector(({ possiblelicense }) => ({ formData: possiblelicense.licenseForm }));
 
     const okok = () => {
         handleOk();
-        dispatch(inputLicense(formData));
+        dispatch(inputLicense(licenseForm));
     }
     const updateOkOk = () => {
         handleOk();
-        dispatch(updateLicense(formData,keyIndex))
+        dispatch(updateLicense(licenseForm,keyIndex))
     }
 
     return (

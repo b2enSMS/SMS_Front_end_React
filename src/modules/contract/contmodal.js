@@ -2,7 +2,7 @@ import { handleActions, createAction } from 'redux-actions';
 import * as api from '../../lib/api';
 import produce from 'immer';
 import { GET_CONT, GET_CONT_SUCCESS, GET_CONT_FAILURE } from './conttable'
-import {INITIALIZE_FORM as licensemodal_INITIALIZE_FORM} from './licensemodal'
+import { INITIALIZE_FORM as licensemodal_INITIALIZE_FORM } from './licensemodal'
 
 const CHANGE_INPUT = 'contmodal/CHANGE_INPUT';
 const HANDLE_CANCEL = 'contmodal/HANDLE_CANCLE';
@@ -27,8 +27,8 @@ const INITIALIZE_FORM = 'contmodal/INITIALIZE_FORM'
 
 const BUTTON_CHANGE = 'contmodal/BUTTON_CHANGE'
 
-
 //export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+
 
 //Form안에 있는 TextField 값 초기화
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
@@ -182,7 +182,7 @@ export const handleOk = (formData) => async dispatch => {
             type: POST_CONT_SUCCESS,
         });
         dispatch({ type: INITIALIZE_FORM, payload: "contForm" });
-        dispatch({type: licensemodal_INITIALIZE_FORM,payload: 'licenseForm'})
+        dispatch({ type: licensemodal_INITIALIZE_FORM, payload: 'licenseForm' })
         dispatch({ type: GET_CONT });
         try {
             const response = await api.getConts();
@@ -290,7 +290,7 @@ const contmodal = handleActions(
                 draft["contForm"]["lcns"] = state.contForm.lcns.concat(lcns)
             }),
 
-        [UPDATE_LICENSE]: (state, {payload: {licenseForm,fileList,keyIndex}}) =>
+        [UPDATE_LICENSE]: (state, { payload: { licenseForm, fileList, keyIndex } }) =>
             produce(state, draft => {
                 let lcns = Object.assign({}, licenseForm);//action.payload.licenseForm);
                 lcns.fileList = fileList;//action.payload.fileList;

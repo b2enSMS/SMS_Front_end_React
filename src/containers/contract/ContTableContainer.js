@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect} from 'react-redux';
 import { ContTable } from 'components';
-import { getContList,getContDelete } from 'modules/contract/conttable';
+import { getContList,getContDelete,getFilterHandler } from 'modules/contract/conttable';
 import { getShowModal,getUpdateModal,getButtonChange } from 'modules/contract/contmodal';
 import { gethistShowModal } from 'modules/contract/conthist';
 const ContTableContainer = ({
@@ -13,6 +13,7 @@ const ContTableContainer = ({
     getUpdateModal,
     getButtonChange,
     gethistShowModal,
+    getFilterHandler,
  }) => {
 
     useEffect(() => {
@@ -28,6 +29,7 @@ const ContTableContainer = ({
             updateModalHandler={getUpdateModal}
             modalBtnHandler = {getButtonChange}
             histShowModal = {gethistShowModal}
+            filterHandler = {getFilterHandler}
         />
     );
 };
@@ -38,6 +40,7 @@ export default connect(
         loadingTable: conttable.loadingTable,
     }),
     {
+        getFilterHandler,
         getContList,
         getUpdateModal,
         getShowModal,

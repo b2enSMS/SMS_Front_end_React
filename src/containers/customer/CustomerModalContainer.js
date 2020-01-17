@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {connect, useDispatch, useSelector} from 'react-redux';
-import  {
+import React, { useEffect } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import {
     getShowUpdateModal,
     getHandleCancel,
     handleChangeInput,
@@ -11,25 +11,25 @@ import CustomerModal from "../../components/customer/CustomerModal"
 
 
 const CustomerModalContainer = ({
-                                    visible,
-                                         getHandleCancel,
-                                         handleChangeInput,
-                                    customerForm,
-                                         buttonFlag,
-                                         handleOk,
-                                         handleUpdateOk,
-                                         orgList,
-                                    confirmLoading,
-                                         custCdList
-                                     }) => {
+    visible,
+    getHandleCancel,
+    handleChangeInput,
+    customerForm,
+    buttonFlag,
+    handleOk,
+    handleUpdateOk,
+    orgList,
+    confirmLoading,
+    custCdList
+}) => {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-    },[dispatch])
+    }, [dispatch])
 
-    const {formData} = useSelector(({customermodal})=>({formData : customermodal.customerForm}))
-    const UpdateOk = () =>{
+    const { formData } = useSelector(({ customermodal }) => ({ formData: customermodal.customerForm }))
+    const UpdateOk = () => {
         handleOk(formData);
     }
     return (
@@ -42,7 +42,7 @@ const CustomerModalContainer = ({
             handleChangeInput={handleChangeInput}
             customerForm={customerForm}
             buttonFlag={buttonFlag}
-            handleUpdateOk={()=>handleUpdateOk(formData)}
+            handleUpdateOk={() => handleUpdateOk(formData)}
             custCdList={custCdList}
         />
     );

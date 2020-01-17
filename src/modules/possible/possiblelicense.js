@@ -94,7 +94,7 @@ const initialState = {
     licenseForm: {
         lcnsIssuDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
         lcnsStartDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-        lcnsEndDt: (new Date().getFullYear() + 1) + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+        lcnsEndDt: new Date().getFullYear() + '-' + (new Date().getMonth() + 2) + '-' + new Date().getDate(),
         prdtId: "",
         prdtNm: "",
         lcnsTpCd: "",

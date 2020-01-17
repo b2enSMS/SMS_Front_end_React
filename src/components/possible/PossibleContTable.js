@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table, Menu, Dropdown, Icon } from 'antd';
+import React, { useState } from 'react';
+import { Table, Menu, Dropdown, Icon, Radio } from 'antd';
 import { withStyles, Button } from '@material-ui/core/';
 import 'antd/dist/antd.css';
 //import RemoveIcon from '@material-ui/icons/Remove';
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: theme.spacing(1),
         paddingRight: theme.spacing(5),
         textAlign: 'right',
-        marginTop: -21,
+        marginTop: -25,
 
     },
     plusbutton: {
@@ -44,6 +44,10 @@ const useStyles = makeStyles(theme => ({
     amountColumn: {
         marginRight: '10px'
     },
+    radio: {
+        marginBottom: theme.spacing(-1),
+        marginTop: theme.spacing()
+    },
 
 }));
 const ColorButton = withStyles(theme => ({
@@ -64,20 +68,27 @@ const ColorButton = withStyles(theme => ({
 //   },
 // }))(Button);
 
-function PossibleContTable({ histShowModal, loadingTable, contList, showModal, contDelete, updateModalHandler, modalBtnHandler }) {
+function PossibleContTable({ filterHandler, histShowModal, loadingTable, contList, showModal, contDelete, updateModalHandler, modalBtnHandler }) {
     const classes = useStyles();
     // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [tableFilterFlag, settableFilterFlag] = useState('all');
     const handleMenuClick = key => {
         console.log("key", key);
         updateModalHandler(key)
     }
+
+    const handleRadioChange = e => {
+        const { value } = e.target;
+        settableFilterFlag(value)
+        filterHandler(value);
+    };
     const columns = [
         {
             title: '기관/회사',
             dataIndex: 'orgNm',
             ellipsis: true,
             width: '15%',
-            ...GetColumnSearchProps('orgNm','기관/회사')
+            ...GetColumnSearchProps('orgNm', '기관/회사')
         },
         {
             title: '기관담당자',
@@ -85,14 +96,14 @@ function PossibleContTable({ histShowModal, loadingTable, contList, showModal, c
             align: 'center',
             //ellipsis: true,
             //width: '20%'
-            ...GetColumnSearchProps('custNm','기관 담당자')
+            ...GetColumnSearchProps('custNm', '기관 담당자')
         },
         {
             title: '담당자',
             dataIndex: 'empNm',
             align: 'center',
             // width: '5%',
-            ...GetColumnSearchProps('empNm','담당자')
+            ...GetColumnSearchProps('empNm', '담당자')
         },
         {
             title: 'Mac주소',
@@ -123,7 +134,7 @@ function PossibleContTable({ histShowModal, loadingTable, contList, showModal, c
         {
             title: '요청사유',
             dataIndex: 'issueReason',
-            ellipsis:true,
+            ellipsis: true,
             align: 'center',
             // width: '5%',
         },
@@ -175,7 +186,16 @@ function PossibleContTable({ histShowModal, loadingTable, contList, showModal, c
         <div>
             <div style={{ marginLeft: 8, textAlign: 'left' }}>
                 {/* {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'} */}
-            </div> 
+                <Radio.Group className={classes.radio}
+                    defaultValue='all'
+                    value={tableFilterFlag}
+                    onChange={handleRadioChange}
+                >
+                    <Radio.Button value="all">전체</Radio.Button>
+                    <Radio.Button value="toExpire">만료예정</Radio.Button>
+                    <Radio.Button value="expired">만료</Radio.Button>
+                </Radio.Group>
+            </div>
             <div className={classes.button}>
                 <span style={{ paddingRight: 14 }}>
 
@@ -204,7 +224,9 @@ function PossibleContTable({ histShowModal, loadingTable, contList, showModal, c
                 rowKey="tempVerId"
                 loading={loadingTable}
                 tableLayout='fixed'
-                rowClassName="editable-row"
+                rowClassName={(record, index) => {
+                    if (record.tight) return classes.backgroundRed
+                }}
                 columns={columns}
                 dataSource={loadingTable ? null : contList}
                 size="small" />

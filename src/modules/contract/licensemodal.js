@@ -23,6 +23,10 @@ const MODAL_IMAGE_REMOVE_FAILURE = 'licensemodal/MODAL_IMAGE_REMOVE_FAILURE'
 
 const BUTTON_CHANGE = 'licensemodal/BUTTON_CHANGE'
 
+const LCNS_NUMBER = 'licensemodal/LCNS_NUMBER'
+const LCNS_NUMBER_SUCCESS='licensemodal/LCNS_NUMBER_SUCCESS'
+const LCNS_NUMBER_FAILURE='licensemodal/LCNS_NUMBER_FAILURE'
+
 //등록 수정 버튼 Flag
 export const licenseButtonChange = createAction(BUTTON_CHANGE);
 
@@ -116,8 +120,12 @@ export const getHandleCancel = (fileList) => async dispatch => {
         dispatch({ type: INITIALIZE_FORM, payload: "licenseForm" });
 
     } catch (e) {
-        dispatch({ type: MODAL_IMAGE_REMOVE_FAILURE })
-        throw (e)
+        dispatch({ 
+            type: MODAL_IMAGE_REMOVE_FAILURE,
+            payload: e,
+            error: true
+        })
+        throw e
     }
 
 }
@@ -137,6 +145,24 @@ export const handleOk = () => dispatch => {
     dispatch({ type: OFF_MODAL });
     dispatch({ type: INITIALIZE_FORM, payload: "licenseForm" });
 };
+//라이센스 번호 생성
+export const getLcnsNumber = (prdtNm,installDt)=> async dispatch =>{
+    dispatch({ type: LCNS_NUMBER})
+    try {
+        const response = await api.getContLcnsNumber(prdtNm,installDt);
+        dispatch({
+            type: LCNS_NUMBER_SUCCESS,
+            payload: response.data
+        });
+
+    } catch (e) {
+        dispatch({ 
+            type: LCNS_NUMBER_FAILURE,
+            payload: e,
+            error: true
+        })
+    }
+}
 
 const initialState = {
     visible: false,
@@ -155,6 +181,7 @@ const initialState = {
         cmmnDetailCd: "",
         fileList: [],
     },
+    lcnsBtnFlag: false,
     products: [],
     licCode: [],
     tempLcnsId: null,
@@ -165,6 +192,20 @@ const initialState = {
 
 const licensemodal = handleActions(
     {
+
+        [LCNS_NUMBER] : state => ({
+            ...state,
+            lcnsBtnFlag: true
+        }),
+        [LCNS_NUMBER_SUCCESS]: (state,action) => 
+            produce(state, draft => {
+                draft['licenseForm']['lcnsNo'] = action.payload
+                draft['lcnsBtnFlag'] = false
+        }),
+        [LCNS_NUMBER_FAILURE]: state => ({
+            ...state,
+            lcnsBtnFlag: false,
+        }),
         [BUTTON_CHANGE]: state => ({
             ...state,
             btnFlag: false,
