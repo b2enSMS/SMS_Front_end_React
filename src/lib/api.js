@@ -107,8 +107,14 @@ export const getDeleteConts = (selectedRowKeys) => {
     return axios.delete(`/cont`, { data: { idx: selectedRowKeys } })
 }
 
-export const getContLcnsNumber = (prdtNm,installDt) =>
-    axios.get('/lcns/generate',{data:{prdtNm:prdtNm,installDt:installDt}})
+export const getContLcnsNumber = (prdtNm,installDt) =>{
+    const data = {
+        prdtNm:prdtNm,
+        installDt:installDt
+    }
+    console.log("api getContLcnsNumber",data)
+    return axios.post('/lcns/generate',data)
+}
 
 // 고객 하나씩 가져오기
 export const getCust = (custId) =>
