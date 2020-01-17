@@ -9,13 +9,17 @@ const DELETE_CONT = 'conttable/DELETE_CONT';
 const DELETE_CONT_SUCCESS = 'conttable/DELETE_CONT_SUCCESS';
 const DELETE_CONT_FAILURE = 'conttable/DELETE_CONT_FAILURE'
 
+const TABLE_CHANGE = 'conttable/TABLE_CHANGE'
+const TABLE_CHANGE_SUCCESS = 'conttable/TABLE_CHANGE_SUCCESS'
+const TABLE_CHANGE_FAILURE = 'conttable/TABLE_CHANGE_FAILURE'
+
 //테이블 로우 다중 삭제
 export const getContDelete = selectedRowKeys => async dispatch => {
-    dispatch({type: DELETE_CONT});
-    try{
+    dispatch({ type: DELETE_CONT });
+    try {
         await api.getDeleteConts(selectedRowKeys);
-        dispatch({type: DELETE_CONT_SUCCESS});
-    }catch(e){
+        dispatch({ type: DELETE_CONT_SUCCESS });
+    } catch (e) {
         dispatch({
             type: DELETE_CONT_FAILURE,
             payload: e,
@@ -59,6 +63,27 @@ export const getContList = () => async dispatch => {
     }
 };
 
+//테이블 필터
+export const getFilterHandler = (value) => async dispatch => {
+    dispatch({ type: TABLE_CHANGE })
+    try {
+        let response = []
+        if (value === 'all') response = await api.getConts();
+        else response = await api.getMTNC();
+        dispatch({
+            type: TABLE_CHANGE_SUCCESS,
+            payload: response.data,
+
+        })
+    } catch (e) {
+        dispatch({
+            type: TABLE_CHANGE_FAILURE,
+            payload: e,
+            error: true
+        })
+    }
+}
+
 /*
 visible: true/false 모달 띄우기
 contList: 모든 계약 정보
@@ -72,18 +97,31 @@ const initialState = {
 
 const conttable = handleActions(
     {
-
-        [DELETE_CONT]: state =>({
+        [TABLE_CHANGE]: state => ({
             ...state,
-            loadingTable:true
+            loadingTable: true
         }),
-
-        [DELETE_CONT_SUCCESS]: state =>({
+        [TABLE_CHANGE_SUCCESS]: (state,action) => ({
+            ...state,
+            loadingTable: false,
+            contList: action.payload,
+        }),
+        [TABLE_CHANGE_FAILURE]: state => ({
             ...state,
             loadingTable: false,
         }),
 
-        [DELETE_CONT_FAILURE]: state =>({
+        [DELETE_CONT]: state => ({
+            ...state,
+            loadingTable: true
+        }),
+
+        [DELETE_CONT_SUCCESS]: state => ({
+            ...state,
+            loadingTable: false,
+        }),
+
+        [DELETE_CONT_FAILURE]: state => ({
             ...state,
             loadingTable: false,
         }),

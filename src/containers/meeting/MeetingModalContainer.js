@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {connect, useDispatch, useSelector} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {
     getShowModal,
     getShowUpdateModal,
@@ -31,9 +31,9 @@ const MeetingModalContainer =
     useEffect(() => {
     },[dispatch])
 
-    const {formData} = useSelector(({ meetingmodal })=>({formData : meetingmodal.meetingForm}))
+    //const {formData} = useSelector(({ meetingmodal })=>({formData : meetingmodal.meetingForm}))
     const UpdateOk = () =>{
-        handleOk(formData);
+        handleOk(meetingForm);
     }
     return (
         <MeetingModal
@@ -44,7 +44,7 @@ const MeetingModalContainer =
             handleChangeInput={handleChangeInput}
             meetingForm={meetingForm}
             buttonFlag={buttonFlag}
-            handleUpdateOk={()=>handleUpdateOk(formData)}
+            handleUpdateOk={()=>handleUpdateOk(meetingForm)}
             selectHandleChange={getSelectHandleChange}
             custList={custList}
             managerList={managerList}

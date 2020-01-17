@@ -76,7 +76,7 @@ export const postConts = (formData) => {
 }
 
 
-
+//계약 수정
 export const postUpdateConts = (formData) => {
     console.log("postUpdateConts: formData ", formData)
     const data = {
@@ -97,6 +97,8 @@ export const postUpdateConts = (formData) => {
     }
     return axios.put(`/cont/${formData.contId}`, data);
 }
+export const getMTNC = () =>
+    axios.get('/cont/mtnc');
 
 //계약 테이블 - 리스트 삭제
 export const getDeleteConts = (selectedRowKeys) => {
@@ -104,6 +106,9 @@ export const getDeleteConts = (selectedRowKeys) => {
 
     return axios.delete(`/cont`, { data: { idx: selectedRowKeys } })
 }
+
+export const getContLcnsNumber = (prdtNm,installDt) =>
+    axios.get('/lcns/generate',{data:{prdtNm:prdtNm,installDt:installDt}})
 
 // 고객 하나씩 가져오기
 export const getCust = (custId) =>
@@ -347,11 +352,17 @@ export const postUpdateMeeting = (formData) => {
     return axios.put(`/meet/${formData.meetId}`, data);
 }
 
-export const getTempCont = (key) =>
+export const getPossibleCont = (key) =>
     axios.get(`/temp/${key}`);
 
-export const getTempConts = () =>
+export const getPossibleConts = () =>
     axios.get('/temp/showall');
+
+export const getPossibleEX = () =>
+    axios.get('/temp/expired')
+
+export const getPossibleToEX = () =>
+    axios.get('/temp/toexpire')
 
 export const updatePossible = (formData) => {
     const data = {

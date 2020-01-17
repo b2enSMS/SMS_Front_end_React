@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { ContModal } from 'components';
 import { initializeForm, handleOk, handleChangeInput, getHandleCancel, getLicenseHandleDelete, gethandleUpdate } from 'modules/contract/contmodal';
 import { getContList } from 'modules/contract/conttable';
@@ -32,19 +32,19 @@ const ContModalContainer = ({
         dispatch(initializeForm("contForm"));
     }, [dispatch])
 
-    const { formData } = useSelector(({ contmodal }) => ({ formData: contmodal.contForm }));
+    //const { formData } = useSelector(({ contmodal }) => ({ formData: contmodal.contForm }));
 
     // const okok = () => {
     //     handleOk(formData);
     // }
     const modifyLicense= (key) =>{
-        licenseUpdateHandler(formData.lcns[key],key);
+        licenseUpdateHandler(contForm.lcns[key],key);
     }
 
     return (
         <ContModal
             visible={visible}
-            handleOk={()=>handleOk(formData)}
+            handleOk={()=>handleOk(contForm)}
             confirmLoading={confirmLoading}
             handleChangeInput={handleChangeInput}
             handleCancel={getHandleCancel}
@@ -59,7 +59,7 @@ const ContModalContainer = ({
             headContList={headContList}
             licenseUpdateHandler={modifyLicense}
             custList={custList}
-            handleUpdate={() => gethandleUpdate(formData)}
+            handleUpdate={() => gethandleUpdate(contForm)}
             licenseButtonChange={licenseButtonChange}
         />
     );

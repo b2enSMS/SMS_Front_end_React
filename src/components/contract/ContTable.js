@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Menu, Dropdown, Icon } from 'antd';
+import { Table, Menu, Dropdown, Icon, Radio } from 'antd';
 import { withStyles, Button } from '@material-ui/core/';
 import 'antd/dist/antd.css';
 //import RemoveIcon from '@material-ui/icons/Remove';
@@ -24,8 +24,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(1),
     paddingRight: theme.spacing(5),
     textAlign: 'right',
-    marginTop: -21,
-
+    marginTop: -25,
   },
   plusbutton: {
     paddingRight: theme.spacing(3),
@@ -49,6 +48,10 @@ const useStyles = makeStyles(theme => ({
 
   amountColumn: {
     marginRight: '10px'
+  },
+  radio:{
+    marginBottom: theme.spacing(-1),
+    marginTop: theme.spacing()
   },
 
 }));
@@ -80,15 +83,26 @@ const ColorButton = withStyles(theme => ({
 //   extraInfo: [],
 // };
 
-function ContTable({ histShowModal, loadingTable, contList, showModal, contDelete, updateModalHandler, modalBtnHandler }) {
+function ContTable({ filterHandler,histShowModal, loadingTable, contList, showModal, contDelete, updateModalHandler, modalBtnHandler }) {
   const classes = useStyles();
   // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState([]);
+  const [isTableFilter, setTableFilter] = useState(false);
 
   const handleMenuClick = key => {
     console.log("key", key);
     updateModalHandler(key)
   }
+  const handleRadioChange = e => {
+    const { value } = e.target;
+    if(value === 'all' )
+      setTableFilter(false)
+    else
+      setTableFilter(true)
+      
+    filterHandler(value);
+  };
+
   const columns = [
     {
       title: '기관/회사',
@@ -108,8 +122,8 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
       title: '담당자',
       dataIndex: 'empNm',
       align: 'center',
-      ...GetColumnSearchProps('empNm','담당자'),
-      
+      ...GetColumnSearchProps('empNm', '담당자'),
+
     },
     // {
     //   title: '수주번호',
@@ -153,11 +167,11 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
       dataIndex: 'contDt',
       align: 'center',
       sorter: (a, b) => {
-          let ar1 = a.contDt.split('-');
-          let ar2 = b.contDt.split('-');
-          let da1 = new Date(ar1[0], ar1[1], ar1[2]);
-          let da2 = new Date(ar2[0], ar2[1], ar2[2]);
-          return da1 - da2;
+        let ar1 = a.contDt.split('-');
+        let ar2 = b.contDt.split('-');
+        let da1 = new Date(ar1[0], ar1[1], ar1[2]);
+        let da2 = new Date(ar2[0], ar2[1], ar2[2]);
+        return da1 - da2;
       },
       // width: '8%',
       render: (value, record, index) => {
@@ -259,6 +273,14 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
   return (
     <div>
       <div style={{ marginLeft: 8, textAlign: 'left' }}>
+        <Radio.Group className={classes.radio}
+          defaultValue='all'
+          value={isTableFilter ? 'keep' : 'all'}
+          onChange={handleRadioChange}
+        >
+          <Radio.Button value="all">전체보기</Radio.Button>
+          <Radio.Button value="keep">유지보수</Radio.Button>
+        </Radio.Group>
         {/* {hasSelected ? `${selectedRowKeys.length} 개 선택` : '0 개 선택'} */}
       </div>
       <div className={classes.button}>
@@ -317,7 +339,7 @@ function ContTable({ histShowModal, loadingTable, contList, showModal, contDelet
             }
             console.log("onChange !!!!!!!!!!!!!!!", arr)
             setExpandedRowKeys(arr)
-          }else{
+          } else {
             setExpandedRowKeys([])
           }
         }}

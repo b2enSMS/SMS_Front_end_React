@@ -5,15 +5,15 @@ import { getShowUpdateModal, getButtonChange, getShowModal } from "modules/custo
 import CustomerTable from "../../components/customer/CustomerTable";
 
 const CustomerTableContainer = ({
-                                   getShowUpdateModal,
-                                   getCustList,
-                                   deleteCustomer,
-                                   customerList,
-                                   loadingTable,
-                                   getShowModal,
-                                   getButtonChange,
-                               }) => {
-    useEffect(()=> {
+    getShowUpdateModal,
+    getCustList,
+    deleteCustomer,
+    customerList,
+    loadingTable,
+    getShowModal,
+    getButtonChange,
+}) => {
+    useEffect(() => {
         getCustList();
     }, [getCustList]);
 

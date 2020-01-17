@@ -10,6 +10,32 @@ const DELETE_CONT = 'possibletable/DELETE_CONT';
 const DELETE_CONT_SUCCESS = 'possibletable/DELETE_CONT_SUCCESS';
 const DELETE_CONT_FAILURE = 'possibletable/DELETE_CONT_FAILURE'
 
+const TABLE_CHANGE = 'possibletable/TABLE_CHANGE'
+const TABLE_CHANGE_SUCCESS = 'possibletable/TABLE_CHANGE_SUCCESS'
+const TABLE_CHANGE_FAILURE = 'possibletable/TABLE_CHANGE_FAILURE'
+
+
+export const getfilterHandler = value => async dispatch => {
+    dispatch({ type: TABLE_CHANGE })
+    console.log("getfilterHandler",value)
+    try {
+        let response = []
+        if (value === 'all') response = await api.getPossibleConts();
+        else if(value==='expired')response = await api.getPossibleEX();
+        else response =await api.getPossibleToEX();
+        dispatch({
+            type: TABLE_CHANGE_SUCCESS,
+            payload: response.data,
+
+        })
+    } catch (e) {
+        dispatch({
+            type: TABLE_CHANGE_FAILURE,
+            payload: e,
+            error: true
+        })
+    }
+}
 
 export const getContDelete = selectedRowKeys => async dispatch => {
     dispatch({type: DELETE_CONT});
@@ -27,7 +53,7 @@ export const getContDelete = selectedRowKeys => async dispatch => {
 
     dispatch({ type: GET_CONT });
     try {
-        const response = await api.getTempConts();
+        const response = await api.getPossibleConts();
         dispatch({
             type: GET_CONT_SUCCESS,
             payload: response.data
@@ -45,7 +71,7 @@ export const getContDelete = selectedRowKeys => async dispatch => {
 export const getContList = () => async dispatch => {
     dispatch({ type: GET_CONT });
     try {
-        const response = await api.getTempConts();
+        const response = await api.getPossibleConts();
         dispatch({
             type: GET_CONT_SUCCESS,
             payload: response.data
@@ -68,6 +94,19 @@ const initialState = {
 
 const possibletable = handleActions(
     {
+        [TABLE_CHANGE]: state => ({
+            ...state,
+            loadingTable: true
+        }),
+        [TABLE_CHANGE_SUCCESS]: (state,action) => ({
+            ...state,
+            loadingTable: false,
+            contList: action.payload,
+        }),
+        [TABLE_CHANGE_FAILURE]: state => ({
+            ...state,
+            loadingTable: false,
+        }),
 
         [DELETE_CONT]: state =>({
             ...state,

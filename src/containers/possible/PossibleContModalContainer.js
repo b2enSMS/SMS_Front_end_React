@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { PossibleContModal } from 'components';
 import { initializeForm, handleOk, handleChangeInput, getHandleCancel, getLicenseHandleDelete, gethandleUpdate } from 'modules/possible/possiblemodal';
 import { getContList } from 'modules/possible/possibletable';
@@ -32,19 +32,19 @@ const PossibleContModalContainer = ({
         dispatch(initializeForm("possibleForm"));
     }, [dispatch])
 
-    const { formData } = useSelector(({ possiblemodal }) => ({ formData: possiblemodal.possibleForm }));
+    //const { formData } = useSelector(({ possiblemodal }) => ({ formData: possiblemodal.possibleForm }));
 
     // const okok = () => {
     //     handleOk(formData);
     // }
     const modifyLicense= (key) =>{
-        licenseUpdateHandler(formData.lcns[key],key);
+        licenseUpdateHandler(possibleForm.lcns[key],key);
     }
 
     return (
         <PossibleContModal
             visible={visible}
-            handleOk={()=>handleOk(formData)}
+            handleOk={()=>handleOk(possibleForm)}
             confirmLoading={confirmLoading}
             handleChangeInput={handleChangeInput}
             handleCancel={getHandleCancel}
@@ -59,7 +59,7 @@ const PossibleContModalContainer = ({
             headContList={headContList}
             licenseUpdateHandler={modifyLicense}
             custList={custList}
-            handleUpdate={() => gethandleUpdate(formData)}
+            handleUpdate={() => gethandleUpdate(possibleForm)}
             licenseButtonChange={licenseButtonChange}
         />
     );

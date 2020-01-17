@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect} from 'react-redux';
 import { PossibleContTable } from 'components';
-import { getContList,getContDelete } from 'modules/possible/possibletable';
+import { getfilterHandler,getContList,getContDelete } from 'modules/possible/possibletable';
 import { getShowModal,getUpdateModal,getButtonChange } from 'modules/possible/possiblemodal';
 import { gethistShowModal } from 'modules/possible/possiblehist';
 const PossibleContTableContainer = ({
@@ -13,6 +13,8 @@ const PossibleContTableContainer = ({
     getUpdateModal,
     getButtonChange,
     gethistShowModal,
+    getfilterHandler,
+
  }) => {
 
     useEffect(() => {
@@ -28,6 +30,7 @@ const PossibleContTableContainer = ({
             updateModalHandler={getUpdateModal}
             modalBtnHandler = {getButtonChange}
             histShowModal = {gethistShowModal}
+            filterHandler = {getfilterHandler}
         />
     );
 };
@@ -44,5 +47,6 @@ export default connect(
         getContDelete,
         getButtonChange,
         gethistShowModal,
+        getfilterHandler,
     }
 )(PossibleContTableContainer);
