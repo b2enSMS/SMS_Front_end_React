@@ -1,13 +1,20 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
-import {ContCustContainer} from "containers";
+import { ContCustContainer } from "containers";
+import { Header,MainItemList } from "components";
 
 const textcolor = '#174A84';
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
+    },
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+        backgroundColor: '#FAFDFF'
     },
     container: {
         paddingTop: theme.spacing(0),
@@ -33,22 +40,25 @@ const useStyles = makeStyles(theme => ({
 const ContCustInfoPage = () => {
     const classes = useStyles();
     return (
-        <span>
-            <div>
+        <div className={classes.root}>
+            <MainItemList />
+
+            <main className={classes.content}>
+                <Header />
                 <Typography className={classes.menuName} variant="h5">
                     계약 고객 관리
                 </Typography>
-            </div>
-            <div className={classes.tablepart}>
-                <Paper >
-                    <Container maxWidth="lg" className={classes.container}>
-                        <div >
-                            <ContCustContainer />
-                        </div>
-                    </Container>
-                </Paper>
-            </div>
-        </span>
+                <div className={classes.tablepart}>
+                    <Paper >
+                        <Container maxWidth="lg" className={classes.container}>
+                            <div >
+                                <ContCustContainer />
+                            </div>
+                        </Container>
+                    </Paper>
+                </div>
+            </main>
+        </div>
     );
 }
 

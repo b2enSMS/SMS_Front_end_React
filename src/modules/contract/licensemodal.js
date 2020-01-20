@@ -151,9 +151,10 @@ export const getLcnsNumber = (prdtNm,installDt)=> async dispatch =>{
     dispatch({ type: LCNS_NUMBER})
     try {
         const response = await api.getContLcnsNumber(prdtNm,installDt);
+        console.log("getLcnsNumber response", response)
         dispatch({
             type: LCNS_NUMBER_SUCCESS,
-            payload: response.data
+            payload: response.data[0].info
         });
 
     } catch (e) {
