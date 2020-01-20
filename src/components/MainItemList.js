@@ -43,7 +43,7 @@ class MainItemList extends React.Component {
             }
           >
 
-            <Menu.Item key="1" ><Link to="/"><Icon type="reconciliation" />계약 라이선스</Link></Menu.Item>
+            <Menu.Item key="1" ><Link to="/cont"><Icon type="reconciliation" />계약 라이선스</Link></Menu.Item>
             <Menu.Item key="2" ><Link to="/contcust"><Icon type="user" />계약 고객 관리</Link></Menu.Item>
           </SubMenu>
           <SubMenu

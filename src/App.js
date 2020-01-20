@@ -138,7 +138,7 @@ const useStyles = makeStyles(theme => ({
                     </Typography>
             </div>
             <Divider />
-            <Route exact path="/" component={ContInfoPage} />
+            <Route exact path="/cont" component={ContInfoPage} />
             <Route path="/contcust" component={ContCustInfoPage} />
             <Route path="/product" component={ProductInfoPage} />
             <Route path="/manager" component={ManagerInfoPage} />
