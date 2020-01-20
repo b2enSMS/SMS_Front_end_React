@@ -14,7 +14,9 @@ axios.interceptors.response.use(
         if (response.config.method === "get") {
 
         } else {
-            message.success(response.data[0].info)
+            if(response.data[0].info){
+                message.success(response.data[0].info)
+            }
         }
         return response;
     },
@@ -23,7 +25,8 @@ axios.interceptors.response.use(
         //error.response.data.map((arr, index) => msg += `${arr.info}\n`)
         //error.response.data.map((arr, index) => message.error( `${arr.info}\n`))
         console.log("error Response", error.response)
-        message.error(error.response.data[1].info)
+        if(error.response)
+            message.error(error.response.data[1].info)
         return Promise.reject(error);
     });
 

@@ -271,7 +271,7 @@ function ContTable({ filterHandler,histShowModal, loadingTable, contList, showMo
 
   // const hasSelected = selectedRowKeys.length > 0;
   return (
-    <div>
+    <div >
       <div style={{ marginLeft: 8, textAlign: 'left' }}>
         <Radio.Group className={classes.radio}
           defaultValue='all'

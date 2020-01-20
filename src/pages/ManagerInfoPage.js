@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Paper } from '@material-ui/core/';
-import {ManagerTableContainer} from "../containers";
+import { ManagerTableContainer } from "../containers";
 import ManagerModalContainer from "../containers/manager/ManagerModalContainer";
+import { Header, MainItemList } from "components";
 
 const textcolor = '#174A84';
 
@@ -16,7 +17,12 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(0),
         //paddingBottom: theme.spacing(1),
     },
-
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+        backgroundColor: '#FAFDFF'
+    },
     tablepart: {
         //paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
@@ -31,8 +37,8 @@ const useStyles = makeStyles(theme => ({
         paddingBotton: theme.spacing(-1.25),
         paddingTop: theme.spacing(4.5),
         paddingLeft: theme.spacing(5.5),
-        lineHeight:1.33,
-        fontSize:'1.5rem',
+        lineHeight: 1.33,
+        fontSize: '1.5rem',
         color: textcolor,
         fontWeight: 580,
     },
@@ -42,24 +48,24 @@ const useStyles = makeStyles(theme => ({
 const ProductInfoPage = () => {
     const classes = useStyles();
     return (
-        <span>
-            <div>
-                {/* <Typography className={classes.menuName} variant="h5">
-                    
-                </Typography> */}
+        <div className={classes.root}>
+            <MainItemList />
+
+            <main className={classes.content}>
+                <Header />
                 <h1 className={classes.menuName}>b2en 담당자 관리</h1>
-            </div>
-            <div className={classes.tablepart}>
-                <Paper >
-                    <Container maxWidth="lg" className={classes.container}>
-                        <div >
-                            <ManagerTableContainer />
-                            <ManagerModalContainer />
-                        </div>
-                    </Container>
-                </Paper>
-            </div>
-        </span>
+                <div className={classes.tablepart}>
+                    <Paper >
+                        <Container maxWidth="lg" className={classes.container}>
+                            <div >
+                                <ManagerTableContainer />
+                                <ManagerModalContainer />
+                            </div>
+                        </Container>
+                    </Paper>
+                </div>
+            </main>
+        </div>
     );
 }
 
