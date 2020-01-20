@@ -14,7 +14,9 @@ axios.interceptors.response.use(
         if (response.config.method === "get") {
 
         } else {
-            message.success(response.data[0].info)
+            if(response.data[0].info){
+                message.success(response.data[0].info)
+            }
         }
         return response;
     },
@@ -23,7 +25,8 @@ axios.interceptors.response.use(
         //error.response.data.map((arr, index) => msg += `${arr.info}\n`)
         //error.response.data.map((arr, index) => message.error( `${arr.info}\n`))
         console.log("error Response", error.response)
-        message.error(error.response.data[1].info)
+        if(error.response)
+            message.error(error.response.data[1].info)
         return Promise.reject(error);
     });
 
@@ -107,8 +110,14 @@ export const getDeleteConts = (selectedRowKeys) => {
     return axios.delete(`/cont`, { data: { idx: selectedRowKeys } })
 }
 
-export const getContLcnsNumber = (prdtNm,installDt) =>
-    axios.get('/lcns/generate',{data:{prdtNm:prdtNm,installDt:installDt}})
+export const getContLcnsNumber = (prdtNm,installDt) =>{
+    const data = {
+        prdtNm:prdtNm,
+        installDt:installDt
+    }
+    console.log("api getContLcnsNumber",data)
+    return axios.post('/lcns/generate',data)
+}
 
 // 고객 하나씩 가져오기
 export const getCust = (custId) =>

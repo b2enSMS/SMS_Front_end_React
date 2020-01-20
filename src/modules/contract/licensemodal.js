@@ -147,12 +147,14 @@ export const handleOk = () => dispatch => {
 };
 //라이센스 번호 생성
 export const getLcnsNumber = (prdtNm,installDt)=> async dispatch =>{
+    console.log('getLcnsNumber',prdtNm,installDt)
     dispatch({ type: LCNS_NUMBER})
     try {
         const response = await api.getContLcnsNumber(prdtNm,installDt);
+        console.log("getLcnsNumber response", response)
         dispatch({
             type: LCNS_NUMBER_SUCCESS,
-            payload: response.data
+            payload: response.data[0].info
         });
 
     } catch (e) {

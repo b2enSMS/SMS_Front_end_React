@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
 import { ContTableContainer } from "containers";
 import { ContModalContainer } from "containers";
-import {LicenseContainer,ContHistContainer} from "containers";
+import { LicenseContainer, ContHistContainer } from "containers";
+import { Header,MainItemList } from "components";
 
 const textcolor = '#174A84';
 
@@ -16,6 +17,13 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: theme.spacing(0),
         paddingRight: theme.spacing(0),
         //paddingBottom: theme.spacing(1),
+        
+    },
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+        backgroundColor: '#FAFDFF'
     },
 
     tablepart: {
@@ -29,6 +37,9 @@ const useStyles = makeStyles(theme => ({
         color: textcolor,
         fontWeight: '700',
     },
+    menuProps: {
+        paddingTop: theme.spacing(4)
+    }
 
 }));
 
@@ -36,25 +47,29 @@ const useStyles = makeStyles(theme => ({
 const ContInfoPage = () => {
     const classes = useStyles();
     return (
-        <span>
-            <div>
+        <div className={classes.root}>
+            <MainItemList/>
+
+            <main className={classes.content}>
+            <Header />
                 <Typography className={classes.menuName} variant="h5">
                     계약정보
-                </Typography>
-            </div>
-            <div className={classes.tablepart}>
-                <Paper >
-                    <Container maxWidth="lg" className={classes.container}>
-                        <div >
-                            <ContHistContainer/>
-                            <ContTableContainer />
-                            <ContModalContainer />
-                            <LicenseContainer/>
-                        </div>
-                    </Container>
-                </Paper>
-            </div>
-        </span>
+            </Typography>
+
+                <div className={classes.tablepart}>
+                    <Paper >
+                        <Container maxWidth="lg" className={classes.container}>
+                            <div >
+                                <ContHistContainer />
+                                <ContTableContainer />
+                                <ContModalContainer />
+                                <LicenseContainer />
+                            </div>
+                        </Container>
+                    </Paper>
+                </div>
+            </main>
+        </div>
     );
 }
 
