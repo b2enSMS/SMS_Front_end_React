@@ -39,7 +39,6 @@ const App = () => {
       <Route path="/org" component={OrgInfoPage} />
       <Route path="/possiblecont" component={PossibleContInfoPage} />
       <Route path="/meeting" component={MeetingInfoPage} />
-
     </div>
   );
 }

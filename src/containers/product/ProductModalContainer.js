@@ -53,7 +53,7 @@ export default connect(
         productForm: productmodal.productForm,
         prdtCd:productmodal.prdtCd,
     }),
-    {
+{
         getShowUpdateModal,
         getHandleCancel,
         handleChangeInput,
