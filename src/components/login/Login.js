@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Login = () => {
+const Login = (loginForm,onChange,onSubmit) => {
   const classes = useStyles();
 
   return (
@@ -73,7 +73,7 @@ const Login = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={onSubmit}>
             <TextField
                 variant="outlined"
                 margin="normal"
@@ -84,6 +84,8 @@ const Login = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={onChange}
+                value={loginForm.username}
             />
             <TextField
                 variant="outlined"
@@ -95,6 +97,8 @@ const Login = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={onChange}
+                value={loginForm.password}
             />
             <Button
                 type="submit"

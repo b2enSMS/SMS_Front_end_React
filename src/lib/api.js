@@ -403,3 +403,12 @@ export const postPossible = (formData) => {
 export const getTempHistList = (tempVerId) =>
     axios.get(`temp/hist/${tempVerId}`);
 
+export const login =(username,password) =>{
+    const data = {
+        email: username,
+        password:password,
+    }
+    return axios.post('login/login',data)
+}
+export const loginCheck = () =>
+    axios.get('login/check')

@@ -19,6 +19,8 @@ import possiblehist from './possible/possiblehist';
 import meetingmodal from "./meeting/meetingmodal";
 import meetingtable from "./meeting/meetingtable";
 import customermodal from "./customer/customermodal";
+import auth from "./auth/auth";
+import user from "./auth/user";
 
 
 const rootReducer = combineReducers({
@@ -26,7 +28,7 @@ const rootReducer = combineReducers({
     contmodal,conttable,licensemodal,producttable
     ,managertable,orgtable,conthist,
     possiblecustomertable,managermodal,orgmodal,contcusttable,customertable,meetingmodal,
-    meetingtable,possibletable,possiblemodal,possiblelicense,possiblehist,customermodal,productmodal
+    meetingtable,possibletable,possiblemodal,possiblelicense,possiblehist,customermodal,productmodal,auth,user
 
 });
 

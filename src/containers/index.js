@@ -11,3 +11,4 @@ export {default as PossibleContHistContainer} from './possible/PossibleContHistC
 export {default as OrgTableContainer} from './organization/OrgTableContainer'
 export {default as OrgModalContainer} from './organization/OrgModalContainer'
 export {default as ContCustContainer} from './contractCustomer/ContCustContainer'
+export {default as LoginContainer} from './auth/LoginContainer'
