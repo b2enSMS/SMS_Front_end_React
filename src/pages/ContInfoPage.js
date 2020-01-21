@@ -6,7 +6,7 @@ import { ContModalContainer } from "containers";
 import { LicenseContainer, ContHistContainer } from "containers";
 import { Header,MainItemList } from "components";
 
-const textcolor = '#174A84';
+const textcolor = '#546e7a';
 
 const useStyles = makeStyles(theme => ({
     root: {
