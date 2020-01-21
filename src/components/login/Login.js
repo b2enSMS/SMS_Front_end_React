@@ -1,24 +1,21 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+const textcolor = '#174A84';
 
 const Copyright = () => {
   return (
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="http://52.78.51.108/">
-          SMS
+          SMS Project
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -29,6 +26,7 @@ const Copyright = () => {
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
+      backgroundColor: '#eceff1',
       fontFamily: [
         '"Noto Sans KR"',
         '-apple-system',
@@ -61,6 +59,12 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  loginName: {
+    padding: theme.spacing(3),
+    color: textcolor,
+    fontSize : '3.5rem',
+    fontWeight: '700',
+  },
 }));
 
 const Login = () => {
@@ -70,11 +74,9 @@ const Login = () => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+
+          <Typography className={classes.loginName} component="h1" variant="h5">
+            SMS
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -83,7 +85,7 @@ const Login = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="아이디"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -94,7 +96,7 @@ const Login = () => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="비밀번호"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -106,7 +108,7 @@ const Login = () => {
                 color="primary"
                 className={classes.submit}
             >
-              Sign In
+              로그인
             </Button>
           </form>
         </div>

@@ -3,7 +3,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-const textcolor = '#174A84';
+const textcolor = '#546e7a';
 const toolheight = 48;
 
 const useStyles = makeStyles(theme => ({

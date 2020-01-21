@@ -7,10 +7,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Image from 'images/Logo.png';
 
 const { SubMenu } = Menu;
-const bc = '#4E7097';
+const bc = '#78909c';
 const toolheight = 48;
 const drawerWidth = 201;
-const menucolor = '#4E7097';
+const menucolor = '#78909c';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -87,19 +87,19 @@ const MainItemList = () => {
               <SubMenu
                 key="sub1"
                 title={
-                  <span style={{ color: '#AAFFBE' }}>
+                  <span style={{ color: '#eceff1' }}>
                     <Icon type="appstore" />
                     <span >계약 정보 관리</span>
                   </span>
                 }
               >
-            <Menu.Item key="1" ><Link to="/cont"><Icon type="reconciliation" />계약 라이선스</Link></Menu.Item>
+            <Menu.Item key="1" ><Link to="/cont"><Icon type="reconciliation" />계약 라이센스</Link></Menu.Item>
             <Menu.Item key="2" ><Link to="/contcust"><Icon type="user" />계약 고객 관리</Link></Menu.Item>
           </SubMenu>
           <SubMenu
             key="sub2"
             title={
-              <span style={{ color: '#AAFFBE' }}>
+              <span style={{ color: '#eceff1' }}>
                 <Icon type="appstore" />
                 <span>임시 라이센스 관리</span>
               </span>
@@ -112,7 +112,7 @@ const MainItemList = () => {
           <SubMenu
               key="sub3"
               title={
-                <span style={{ color: '#AAFFBE' }}>
+                <span style={{ color: '#eceff1' }}>
                 <Icon type="appstore" />
                 <span>관리자 페이지</span>
               </span>
