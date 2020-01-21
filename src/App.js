@@ -23,9 +23,6 @@ const useStyles = makeStyles(theme => ({
       ].join(','),
     },
   },
-  root: {
-    boxSizing: "content-box"
-  },
 }))
 const App = () => {
   useStyles();
