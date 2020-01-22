@@ -50,6 +50,7 @@ const auth = handleActions(
     {
         [CHANGE_INPUT]: (state, { payload: { form, key, value } }) =>
             produce(state, draft => {
+                console.log("change input",form,key,value)
                 draft[form][key] = value;
             }),
         [INITIALIZE_FORM]: (state, { payload: form }) => ({

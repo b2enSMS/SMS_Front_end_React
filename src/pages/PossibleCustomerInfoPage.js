@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
 import PossibleCustomerTableContainer from "../containers/possibleCustomer/PossibleCustomerTableContainer";
-import { Header, MainItemList } from "components";
+import { HeaderContainer, MainItemListContainer } from "containers";
 
 const textcolor = '#174A84';
 
@@ -40,10 +40,10 @@ const PossibleCustomerInfoPage = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <MainItemList />
+            <MainItemListContainer />
 
             <main className={classes.content}>
-                <Header />
+                <HeaderContainer />
                 <Typography className={classes.menuName} variant="h5">
                     가망 고객 관리
                 </Typography>

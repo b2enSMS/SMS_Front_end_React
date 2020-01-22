@@ -5,7 +5,7 @@ import { Container, Paper } from "@material-ui/core";
 import CustomerTableContainer from "../containers/customer/CustomerTableContainer";
 import { Tabs } from 'antd';
 import CustomerModalContainer from "../containers/customer/CustomerModalContainer";
-import { Header, MainItemList } from "components";
+import { HeaderContainer, MainItemListContainer } from "containers";
 
 const { TabPane } = Tabs;
 
@@ -57,10 +57,10 @@ const OrgInfoPage = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <MainItemList />
+            <MainItemListContainer />
 
             <main className={classes.content}>
-                <Header />
+                <HeaderContainer />
                 <div className={classes.tabMagic}>
                     <Tabs defaultActiveKey="1" size='large'>
                         <TabPane tab="고객사 관리" key="1">

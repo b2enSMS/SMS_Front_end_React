@@ -25,7 +25,7 @@ axios.interceptors.response.use(
         //error.response.data.map((arr, index) => msg += `${arr.info}\n`)
         //error.response.data.map((arr, index) => message.error( `${arr.info}\n`))
         console.log("error Response", error.response)
-        if(error.response)
+        if(Array.isArray(error.response.data))
             message.error(error.response.data[1].info)
         return Promise.reject(error);
     });
@@ -405,10 +405,13 @@ export const getTempHistList = (tempVerId) =>
 
 export const login =(username,password) =>{
     const data = {
-        email: username,
+        username: username,
         password:password,
     }
     return axios.post('login/login',data)
 }
 export const loginCheck = () =>
     axios.get('login/check')
+
+export const logout = () =>
+    axios.post('auth/logout')

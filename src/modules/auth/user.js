@@ -6,16 +6,16 @@ const TEMP_SET_USER = 'user/TEMP_SET_USER';
 const CHECK = 'user/CHECK'
 const CHECK_SUCCESS = 'user/CHECK_SUCCESS'
 const CHECK_FAILURE = 'user/CHECK_FAILURE'
+const LOGOUT = 'user/LOGOUT'
 
 export const tempSetUser = createAction(TEMP_SET_USER,user => user);
-export const check = createAction(CHECK);
-
 export const requestCheck = async dispatch =>{
     dispatch({type: CHECK});
     try{
-        api.loginCheck();
+        const response = api.loginCheck();
         dispatch({
             type: CHECK_SUCCESS,
+            payload: response.data
         });
     }catch(e){
         dispatch({
@@ -23,7 +23,18 @@ export const requestCheck = async dispatch =>{
             payload: e,
             error: true
         })
+        try{
+            localStorage.removeItem('user');
+        }catch(e){
+            console.log('localStorage 작동 안함')
+        }
     }
+}
+export const logout = () => async dispatch =>{
+    await api.logout()
+    dispatch({
+        type: LOGOUT
+    })
 }
 const initialState = {
     user:null,
@@ -32,9 +43,16 @@ const initialState = {
 
 const user = handleActions(
     {
+        [LOGOUT]: (state) => ({
+            ...state,
+            user:null,
+        }),
         [TEMP_SET_USER]: (state, {payload: user})=> ({
             ...state,
             user,
+        }),
+        [CHECK]: state => ({
+            ...state,
         }),
         [CHECK_SUCCESS]:(state,{payload:user}) => ({
             ...state,

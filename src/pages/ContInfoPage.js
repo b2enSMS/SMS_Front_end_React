@@ -4,7 +4,7 @@ import { Typography, Container, Paper } from '@material-ui/core/';
 import { ContTableContainer } from "containers";
 import { ContModalContainer } from "containers";
 import { LicenseContainer, ContHistContainer } from "containers";
-import { Header,MainItemList } from "components";
+import { HeaderContainer, MainItemListContainer } from "containers";
 
 const textcolor = '#546e7a';
 
@@ -48,10 +48,10 @@ const ContInfoPage = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <MainItemList/>
+            <MainItemListContainer/>
 
             <main className={classes.content}>
-            <Header />
+            <HeaderContainer />
                 <Typography className={classes.menuName} variant="h5">
                     계약정보
             </Typography>
