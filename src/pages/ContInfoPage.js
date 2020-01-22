@@ -53,7 +53,7 @@ const ContInfoPage = () => {
             <main className={classes.content}>
             <HeaderContainer />
                 <Typography className={classes.menuName} variant="h5">
-                    계약정보
+                    계약 라이센스
             </Typography>
 
                 <div className={classes.tablepart}>

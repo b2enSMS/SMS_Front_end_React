@@ -4,7 +4,7 @@ import { Typography, Container, Paper } from '@material-ui/core/';
 import PossibleCustomerTableContainer from "../containers/possibleCustomer/PossibleCustomerTableContainer";
 import { HeaderContainer, MainItemListContainer } from "containers";
 
-const textcolor = '#174A84';
+const textcolor = '#546e7a';
 
 const useStyles = makeStyles(theme => ({
     root: {

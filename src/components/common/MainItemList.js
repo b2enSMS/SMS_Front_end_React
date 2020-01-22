@@ -89,7 +89,7 @@ const MainItemList = () => {
                 title={
                   <span style={{ color: '#eceff1' }}>
                     <Icon type="appstore" />
-                    <span >계약 정보 관리</span>
+                    <span >계약 라이센스 관리</span>
                   </span>
                 }
               >
