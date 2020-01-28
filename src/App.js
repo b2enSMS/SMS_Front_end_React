@@ -4,7 +4,7 @@ import { OrgInfoPage, ContInfoPage, MeetingInfoPage, PossibleCustomerInfoPage, L
 import { ContCustInfoPage, ProductInfoPage, ManagerInfoPage, PossibleContInfoPage } from "pages";
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
@@ -43,9 +43,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-PrivateRoute.propTypes = {
-  component: PropTypes.elementType.isRequired,
-};
+// PrivateRoute.propTypes = {
+//   component: PropTypes.elementType.isRequired,
+// };
 const App = () => {
   useStyles();
   return (
