@@ -3,16 +3,11 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from 'antd';
-import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const textcolor = '#546e7a';
 const toolheight = 48;
 
-const UserInfo = styled.div`
-    font-weight: 800;
-    margin-right: 1rem;
-`
 const useStyles = makeStyles(theme => ({
     content: {
         flexGrow: 1,
@@ -39,9 +34,12 @@ const useStyles = makeStyles(theme => ({
         color:'white',
         backgroundColor:'#78909c'
     },
+    loginment:{
+        marginLeft: theme.spacing(3),
+    }
 }));
 
-const Header = ({ user, onLogout }) => {
+const Header = ({ auth, onLogout }) => {
     const classes = useStyles();
 
 
@@ -54,10 +52,10 @@ const Header = ({ user, onLogout }) => {
                     <Link className={classes.title} to="/">SMS</Link>
                 </Typography>
 
-                {user ? (
+                {auth ? (
                     <div className={classes.login}>
-                        <UserInfo>{user.username}</UserInfo>
-                        <Button onClick={onLogout}>로그아웃</Button>
+                        <Typography variant="h7" noWrap>{auth.name}{'님 안녕하세요.'}<Button className={classes.loginment} onClick={onLogout}>로그아웃</Button></Typography>
+                        
                     </div>
                 ) : (
                         <div className={classes.login}>

@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,9 +14,9 @@ const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="http://www.b2en.com/">
+
         b2en
-        </Link>{' '}
+        {' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -85,13 +84,13 @@ const Login = ({ loginForm, onChange, onSubmit, error }) => {
               margin="normal"
               required
               fullWidth
-              id="username"
+              id="email"
               label="아이디"
-              name="username"
+              name="email"
               autoComplete="email"
               autoFocus
               onChange={onChange}
-              value={loginForm.username}
+              value={loginForm.email}
             />
             <TextField
               variant="outlined"

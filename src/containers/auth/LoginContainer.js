@@ -3,16 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleChangeInput, initializeForm, login } from '../../modules/auth/auth'
 import { Login } from "components"
 import { withRouter } from 'react-router-dom';
-import { requestCheck } from '../../modules/auth/user';
+import { requestCheck } from '../../modules/auth/auth';
 
 const LoginContainer = ({history}) => {
     const[error,setError] = useState(null);
     const dispatch = useDispatch();
-    const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
+    const { form, auth, authError } = useSelector(({ auth }) => ({
         form: auth.loginForm,
         auth: auth.auth,
         authError: auth.authError,
-        user: user.user,
     }));
 
     const onChange = e => {
@@ -28,8 +27,9 @@ const LoginContainer = ({history}) => {
 
     const onSubmit = e => {
         e.preventDefault();
-        const { username, password } = form;
-        dispatch(login({ username, password }));
+        const { email, password } = form;
+        console.log("onSubmit",email,password)
+        dispatch(login({ email, password }));
     }
     useEffect(() => {
         dispatch(initializeForm('loginForm'));
@@ -48,15 +48,15 @@ const LoginContainer = ({history}) => {
         }
     }, [auth,authError,dispatch]);
     useEffect(() => {
-        if(user) {
-            history.push('/cont');
+        if(auth) {
             try{
-                localStorage.setItem('user',JSON.stringify(user));
+                sessionStorage.setItem('auth',JSON.stringify(auth));
+                history.push('/cont');  
             }catch(e){
-                console.log('localStorage 작동 안함')
+                console.log('sessionStorage 작동 안함')
             }
         }
-    },[history,user]);
+    },[history,auth]);
     
     return (
         <Login

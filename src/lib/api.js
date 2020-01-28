@@ -7,6 +7,26 @@ axios.defaults.baseURL = "/sms/api";
 if (process.env.NODE_ENV === "development") {
     axios.defaults.baseURL = "http://localhost:9000/sms/api";
 }
+const token = () => {
+    const auth = JSON.parse(sessionStorage.getItem("auth")) ? JSON.parse(sessionStorage.getItem("auth")) : null;
+    console.log("token 호출",auth)
+    if (auth && auth.token) {
+        console.log("token", auth.token)
+        return auth.token
+    }
+    return ""
+}
+axios.interceptors.request.use(
+    function (config) {
+        config.headers.common["Authorization"] = token()
+        config.headers.common["Access-Control-Allow-Origin"] = "*"
+        return config
+    },
+    function (error) {
+
+        return Promise.reject(error)
+    }
+)
 // 응답 인터셉터 추가
 axios.interceptors.response.use(
     function (response) {
@@ -14,9 +34,10 @@ axios.interceptors.response.use(
         if (response.config.method === "get") {
 
         } else {
-            if(response.data[0].info){
-                message.success(response.data[0].info)
-            }
+            if (Array.isArray(response.data))
+                if (response.data[0].info) {
+                    message.success(response.data[0].info)
+                }
         }
         return response;
     },
@@ -24,8 +45,8 @@ axios.interceptors.response.use(
         //let msg = ""
         //error.response.data.map((arr, index) => msg += `${arr.info}\n`)
         //error.response.data.map((arr, index) => message.error( `${arr.info}\n`))
-        console.log("error Response", error.response)
-        if(Array.isArray(error.response.data))
+        console.log("error Response", error)
+        if (error.response.data && Array.isArray(error.response.data))
             message.error(error.response.data[1].info)
         return Promise.reject(error);
     });
@@ -110,13 +131,13 @@ export const getDeleteConts = (selectedRowKeys) => {
     return axios.delete(`/cont`, { data: { idx: selectedRowKeys } })
 }
 
-export const getContLcnsNumber = (prdtNm,installDt) =>{
+export const getContLcnsNumber = (prdtNm, installDt) => {
     const data = {
-        prdtNm:prdtNm,
-        installDt:installDt
+        prdtNm: prdtNm,
+        installDt: installDt
     }
-    console.log("api getContLcnsNumber",data)
-    return axios.post('/lcns/generate',data)
+    console.log("api getContLcnsNumber", data)
+    return axios.post('/lcns/generate', data)
 }
 
 // 고객 하나씩 가져오기
@@ -403,15 +424,16 @@ export const postPossible = (formData) => {
 export const getTempHistList = (tempVerId) =>
     axios.get(`temp/hist/${tempVerId}`);
 
-export const login =(username,password) =>{
+export const login = (email, password) => {
     const data = {
-        username: username,
-        password:password,
+        email: email,
+        password: password,
     }
-    return axios.post('login/login',data)
+    return axios.post('auth/login', data)
 }
 export const loginCheck = () =>
-    axios.get('login/check')
+    axios.get('auth/check')
+
 
 export const logout = () =>
     axios.post('auth/logout')
