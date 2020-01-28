@@ -2,46 +2,33 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import styled from 'styled-components'
 
 const textcolor = '#174A84';
 
 const Copyright = () => {
   return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="http://52.78.51.108/">
-          SMS Project
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+
+        b2en
+        {' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
   );
 }
 
 const useStyles = makeStyles(theme => ({
-  "@global": {
-    body: {
-      backgroundColor: '#eceff1',
-      fontFamily: [
-        '"Noto Sans KR"',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-    },
-  },
+  // "@global": {
+  //   body: {
+  //     backgroundColor: '#eceff1',
+  //   },
+  // },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -58,19 +45,32 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: textcolor
   },
   loginName: {
     padding: theme.spacing(3),
     color: textcolor,
-    fontSize : '3.5rem',
-    fontWeight: '700',
+    fontSize: '3.5rem',
+    fontWeight: '500',
   },
+  root: {
+    backgroundColor: '#eceff1',
+    display: 'flex',
+    height:'-webkit-fill-available',
+  }
 }));
 
-const Login = () => {
+const ErrorMessage = styled.div`
+    color: red;
+    text-align:center;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+`
+const Login = ({ loginForm, onChange, onSubmit, error }) => {
   const classes = useStyles();
 
   return (
+    <div className={classes.root}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -78,35 +78,40 @@ const Login = () => {
           <Typography className={classes.loginName} component="h1" variant="h5">
             SMS
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={onSubmit}>
             <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="아이디"
-                name="email"
-                autoComplete="email"
-                autoFocus
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="아이디"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={onChange}
+              value={loginForm.email}
             />
             <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="비밀번호"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="비밀번호"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={onChange}
+              value={loginForm.password}
             />
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
             >
               로그인
             </Button>
@@ -116,6 +121,7 @@ const Login = () => {
           <Copyright />
         </Box>
       </Container>
+    </div>
   );
 }
 

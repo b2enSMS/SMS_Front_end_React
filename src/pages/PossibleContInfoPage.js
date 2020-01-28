@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Paper, Typography } from '@material-ui/core/';
 import { PossibleContTableContainer, PossibleContModalContainer, PossibleContLicenseContainer, PossibleContHistContainer } from "containers";
-import { Header, MainItemList } from "components";
+import { HeaderContainer, MainItemListContainer } from "containers";
 
 const textcolor = '#546e7a';
 
@@ -41,10 +41,10 @@ const PossibleContInfoPage = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <MainItemList />
+            <MainItemListContainer />
 
             <main className={classes.content}>
-                <Header />
+                <HeaderContainer />
                 <Typography className={classes.menuName} variant="h5">
                     임시 라이센스
                 </Typography>

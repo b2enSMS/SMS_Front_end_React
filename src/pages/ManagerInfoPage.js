@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Paper } from '@material-ui/core/';
 import { ManagerTableContainer } from "../containers";
 import ManagerModalContainer from "../containers/manager/ManagerModalContainer";
-import { Header, MainItemList } from "components";
+import { HeaderContainer, MainItemListContainer } from "containers";
 
 const textcolor = '#546e7a';
 
@@ -49,10 +49,10 @@ const ProductInfoPage = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <MainItemList />
+            <MainItemListContainer />
 
             <main className={classes.content}>
-                <Header />
+                <HeaderContainer />
                 <h1 className={classes.menuName}>b2en 담당자 관리</h1>
                 <div className={classes.tablepart}>
                     <Paper >

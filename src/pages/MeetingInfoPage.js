@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Paper } from '@material-ui/core/';
 import MeetingTableContainer from "../containers/meeting/MeetingTableContainer";
 import MeetingModalContainer from "../containers/meeting/MeetingModalContainer";
-import { Header, MainItemList } from "components";
+import { HeaderContainer, MainItemListContainer } from "containers";
 
 const textcolor = '#546e7a';
 
@@ -41,10 +41,10 @@ const MeetingInfoPage = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <MainItemList />
+            <MainItemListContainer />
 
             <main className={classes.content}>
-                <Header />
+                <HeaderContainer />
                 <Typography className={classes.menuName} variant="h5">
                     미팅 이력 관리
                 </Typography>

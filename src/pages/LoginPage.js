@@ -1,10 +1,10 @@
 import React from 'react';
-import Login from "../components/login/Login";
+import { LoginContainer } from "containers";
 
 const LoginPage = () => {
     return (
         <span>
-            <Login/>
+            <LoginContainer/>
         </span>
     )
 }
