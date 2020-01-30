@@ -165,7 +165,16 @@ export const getLcnsNumber = (prdtNm,installDt)=> async dispatch =>{
         })
     }
 }
-
+/*
+    visible: 모달 띄우는 flag
+    confirmLoading: 모달 로딩 flag
+    licenseForm: 모달안에 들어있는 form
+    btnFlag: 등록 수정 버튼 변경 flag
+    lcnsBtnFlag: 라이센스 번호 생성 로딩 flag
+    products: 제품 리스트
+    licCode: 라이센스 리스트
+    keyIndex: 라이센스 수정 시 계약 모달의 lcns 배열의 몇번 째 index인지를 가리키는 값
+*/
 const initialState = {
     visible: false,
     confirmLoading: false,
@@ -186,8 +195,6 @@ const initialState = {
     lcnsBtnFlag: false,
     products: [],
     licCode: [],
-    tempLcnsId: null,
-    imageRemoveFlag: true,
     btnFlag: true,
     keyIndex: 0,
 }
@@ -237,7 +244,6 @@ const licensemodal = handleActions(
 
         [MODAL_IMAGE_REMOVE]: (state) => ({
             ...state,
-            imageRemoveFlag: true
         }),
         [MODAL_IMAGE_REMOVE_SUCCESS]: (state, { payload: fileList,nowFileList }) =>
 
@@ -257,7 +263,6 @@ const licensemodal = handleActions(
             }),
         [MODAL_IMAGE_REMOVE_FAILURE]: state => ({
             ...state,
-            imageRemoveFlag: false
         }),
 
         [IMAGE_CHANGE]: (state, { payload: { fileList } }) =>

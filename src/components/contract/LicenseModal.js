@@ -46,7 +46,6 @@ const LicenseModal = ({ handleUpdateCancel,
     updateOk,
     btnFlag,
     lcnsBtnFlag,
-    imageRemoveFlag,
     imageHandleRemove,
     visible,
     confirmLoading,
@@ -96,7 +95,7 @@ const LicenseModal = ({ handleUpdateCancel,
     console.log("fileList::", fileList);
 
     const props2 = {
-        action: 'http://localhost:9000/sms/api/scan/upload',
+        action: 'http://52.78.51.108/sms/api/scan/upload',
         listType: 'picture',
         className: 'upload-list-inline',
         fileList: fileList,
@@ -106,24 +105,12 @@ const LicenseModal = ({ handleUpdateCancel,
             setFileList(newFileList)
         },
         onRemove(file) {
-            console.log("onRemove", fileList, file, imageRemoveFlag)
+            console.log("onRemove", fileList, file)
 
             const arr = []
             arr.push(file)
             setFileList(fileList.filter((v, index) => v.uid !== file.uid))
             imageHandleRemove(arr, fileList)
-            // console.log("onRemove after fileList", fileList)
-            // if (imageRemoveFlag) {
-            //     return true;
-            // }
-            // else {
-            //     return false;
-            // }
-            // const index = fileList.indexOf(file);
-            // const newFileList = fileList.slice();
-            // newFileList.splice(index, 1);
-            // console.log("onRemove", newFileList);
-            // setFileList(newFileList);
             return false;
         },
     };

@@ -15,7 +15,6 @@ const LicenseContainer = ({
     products,
     licCode,
     licenseForm,
-    imageRemoveFlag,
     btnFlag,
     keyIndex,
     getImageHandleChange,
@@ -56,7 +55,6 @@ const LicenseContainer = ({
             licenseCodeList={licCode}
             licenseForm={licenseForm}
             imageHandleRemove={getImageHandleRemove}
-            imageRemoveFlag={imageRemoveFlag}
             btnFlag={btnFlag}
             handleUpdateCancel={gethandleUpdateCancel}
             updateOk={updateOkOk}
@@ -74,7 +72,6 @@ export default connect(
         licenseForm: licensemodal.licenseForm,
         products: licensemodal.products,
         licCode: licensemodal.licCode,
-        imageRemoveFlag: licensemodal.imageRemoveFlag,
         btnFlag: licensemodal.btnFlag,
         keyIndex: licensemodal.keyIndex,
         lcnsBtnFlag: licensemodal.lcnsBtnFlag,
