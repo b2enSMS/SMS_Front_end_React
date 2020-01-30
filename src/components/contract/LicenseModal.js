@@ -93,11 +93,20 @@ const LicenseModal = ({ handleUpdateCancel,
     }, [licenseForm.fileList])
 
     console.log("fileList::", fileList);
-
+    const token = () => {
+        const auth = JSON.parse(sessionStorage.getItem("auth")) ? JSON.parse(sessionStorage.getItem("auth")) : null;
+        console.log("token 호출",auth)
+        if (auth && auth.token) {
+            console.log("token", auth.token)
+            return auth.token
+        }
+        return ""
+    }
     const props2 = {
         action: '/sms/api/scan/upload',
         listType: 'picture',
         className: 'upload-list-inline',
+        headers: {Authorization:token},
         fileList: fileList,
         onChange(info) {
 
