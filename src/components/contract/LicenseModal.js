@@ -106,7 +106,7 @@ const LicenseModal = ({ handleUpdateCancel,
         action: '/sms/api/scan/upload',
         listType: 'picture',
         className: 'upload-list-inline',
-        headers: {Authorization:token},
+        headers: {Authorization:token()},
         fileList: fileList,
         onChange(info) {
 
