@@ -55,7 +55,6 @@ export default connect(
         licenseForm: possiblelicense.licenseForm,
         products: possiblelicense.products,
         licCode: possiblelicense.licCode,
-        imageRemoveFlag: possiblelicense.imageRemoveFlag,
         btnFlag: possiblelicense.btnFlag,
         keyIndex: possiblelicense.keyIndex,
     }),

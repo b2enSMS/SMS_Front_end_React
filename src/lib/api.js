@@ -185,7 +185,7 @@ export const postCustomer = (formData) => {
 }
 
 export const getCustList = () => {
-    return axios.get('/cust/showall');
+    return axios.get('/cust');
 }
 
 export const getCustListMeet = () => {
@@ -265,7 +265,7 @@ export const getOrganization = () =>
 
 //계약 리스트
 export const getConts = () =>
-    axios.get('/cont/showall');
+    axios.get('/cont');
 
 //비투엔 담당자 이름 리스트
 export const getB2enManager = () =>
@@ -273,7 +273,7 @@ export const getB2enManager = () =>
 
 //기관 담당자 리스트
 export const getManagers = () =>
-    axios.get('/cust/showall');
+    axios.get('/cust');
 
 //기관 담당자 이름 리스트
 export const getorgML = () =>
@@ -292,7 +292,7 @@ export const getLicenseCode = () =>
 
 // 제품 리스트
 export const getProductList = () =>
-    axios.get('/prdt/showall');
+    axios.get('/prdt');
 
 export const getProduct = (prdtId) =>
     axios.get(`/prdt/${prdtId}`);
@@ -310,13 +310,13 @@ export const deleteManager = (selectedRowKeys) =>
 
 // b2en 담당자 리스트
 export const getManagerList = () =>
-    axios.get('/b2en/showall');
+    axios.get('/b2en');
 
 export const getManager = (empNo) =>
     axios.get(`/b2en/${empNo}`)
 
 export const getOrgList = () =>
-    axios.get('/org/showall');
+    axios.get('/org');
 
 
 export const deleteOrg = (selectedRowKeys) => {
@@ -347,7 +347,7 @@ export const deleteMeeting = (selectedRowKeys) =>
     axios.delete(`/meet`, { data: { idx: selectedRowKeys } })
 
 export const getMeetingList = () =>
-    axios.get('/meet/showall');
+    axios.get('/meet');
 
 export const getMeeting = (meetId) =>
     axios.get(`/meet/${meetId}`);
@@ -386,7 +386,7 @@ export const getPossibleCont = (key) =>
     axios.get(`/temp/${key}`);
 
 export const getPossibleConts = () =>
-    axios.get('/temp/showall');
+    axios.get('/temp');
 
 export const getPossibleEX = () =>
     axios.get('/temp/expired')

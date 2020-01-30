@@ -103,7 +103,6 @@ const initialState = {
     },
     products: [],
     licCode: [],
-    tempLcnsId: null,
     btnFlag: true,
     keyIndex: 0,
 }
