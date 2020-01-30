@@ -95,7 +95,7 @@ const LicenseModal = ({ handleUpdateCancel,
     console.log("fileList::", fileList);
 
     const props2 = {
-        action: 'http://52.78.51.108/sms/api/scan/upload',
+        action: '/sms/api/scan/upload',
         listType: 'picture',
         className: 'upload-list-inline',
         fileList: fileList,
