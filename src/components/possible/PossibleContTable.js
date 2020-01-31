@@ -37,8 +37,8 @@ const useStyles = makeStyles(theme => ({
     },
 
     backgroundRed: {
-        backgroundColor: '#fff1f0',
-        color: 'red'
+        backgroundColor: '#e6fffb',
+        color: '#00474f'
     },
 
     amountColumn: {

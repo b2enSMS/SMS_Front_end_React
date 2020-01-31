@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { LicenseModal } from 'components';
 import { gethandleUpdateCancel,getImageHandleRemove, getImageHandleChange, handleOk, handleChangeInput, getHandleCancel,getLcnsNumber } from 'modules/contract/licensemodal';
-import { inputLicense,updateLicense } from 'modules/contract/contmodal'
+import { inputLicense,updateLicense, removeFileList } from 'modules/contract/contmodal'
 
 const LicenseContainer = ({
     visible,
@@ -43,6 +43,11 @@ const LicenseContainer = ({
         handleOk();
         dispatch(updateLicense(licenseForm,fileList, keyIndex))
     }
+    const imageRemove = (arr, fileList) => {
+        getImageHandleRemove(arr,fileList)
+        console.log("contForm도 비울래")
+        dispatch(removeFileList(arr,keyIndex))
+    }
 
     return (
         <LicenseModal
@@ -54,7 +59,7 @@ const LicenseContainer = ({
             productList={products}
             licenseCodeList={licCode}
             licenseForm={licenseForm}
-            imageHandleRemove={getImageHandleRemove}
+            imageHandleRemove={imageRemove}
             btnFlag={btnFlag}
             handleUpdateCancel={gethandleUpdateCancel}
             updateOk={updateOkOk}
