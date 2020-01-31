@@ -102,14 +102,15 @@ const LicenseModal = ({ handleUpdateCancel,
         }
         return ""
     }
+    
     const props2 = {
+        //action: 'http://localhost:9000/sms/api/scan/upload',
         action: '/sms/api/scan/upload',
         listType: 'picture',
         className: 'upload-list-inline',
         headers: {Authorization:token()},
         fileList: fileList,
         onChange(info) {
-
             let newFileList = [...info.fileList];
             setFileList(newFileList)
         },

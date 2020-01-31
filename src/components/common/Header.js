@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     login: {
         textAlign: 'right',
         marginTop: theme.spacing(-4),
-        paddingRight: theme.spacing(4)
+        paddingRight: theme.spacing(4),
     },
     antbtn:{
         color:'white',
@@ -36,6 +36,10 @@ const useStyles = makeStyles(theme => ({
     },
     loginment:{
         marginLeft: theme.spacing(3),
+    },
+    loginTitle:{
+        fontWeight:700,
+        color:textcolor,
     }
 }));
 
@@ -54,7 +58,7 @@ const Header = ({ auth, onLogout }) => {
 
                 {auth ? (
                     <div className={classes.login}>
-                        <Typography variant="h7" noWrap>{auth.name}{'님 안녕하세요.'}<Button className={classes.loginment} onClick={onLogout}>로그아웃</Button></Typography>
+                        <Typography className={classes.loginTitle} variant="subtitle1" noWrap>{auth.name}{'님 안녕하세요.'}<Button className={classes.loginment} onClick={onLogout}>로그아웃</Button></Typography>
                         
                     </div>
                 ) : (

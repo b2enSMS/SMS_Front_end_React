@@ -249,7 +249,11 @@ const licensemodal = handleActions(
 
             produce(state, draft => {
                 console.log("form remove before", fileList, state.licenseForm.fileList)
+                //이미지가 존재한 경우
                 if (fileList && fileList.length > 0) {
+                    //라이센스폼안에 fileList에 값이 들어가려면 라이센스 수정까지 눌러야만 값이 들어갑니다.
+                    //수정을 누르기전에 이미지를 넣었다가 삭제하는 경우 useEffect를 이용하여 license component의 fileList를 비워줍니다. 
+                    //위의 경우는 조건문 licenseForm에 fileList가 없는 경우입니다.
                     if (state.licenseForm.fileList > 0) {
                         for (let i in fileList) {
                             draft['licenseForm']["fileList"] = state.licenseForm.fileList.filter((v, index) => v.uid !== fileList[i].uid)

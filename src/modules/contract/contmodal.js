@@ -27,8 +27,15 @@ const INITIALIZE_FORM = 'contmodal/INITIALIZE_FORM'
 
 const BUTTON_CHANGE = 'contmodal/BUTTON_CHANGE'
 
-//export const changeInput = createAction(CHANGE_INPUT, ({ form, key, value }) => ({ form, key, value }));
+const REMOVE_FILELIST = 'contmodal/REMOVE_FILELIST'
 
+
+//contForm 안에 fileList 수정(삭제하기)
+export const removeFileList = createAction(REMOVE_FILELIST,
+    (arr, keyIndex) => ({
+        arr, keyIndex
+    }),
+);
 
 //Form안에 있는 TextField 값 초기화
 export const initializeForm = createAction(INITIALIZE_FORM, form => form);
@@ -250,6 +257,15 @@ const initialState = {
 
 const contmodal = handleActions(
     {
+        [REMOVE_FILELIST]: (state, { payload: { arr, keyIndex } }) =>
+            produce(state, draft => {
+                console.log("contForm 파일리스트 삭제요~", arr, keyIndex)
+                if (state.contForm.lcns.length>0)
+                    for (let i in arr) {
+                        draft["contForm"]["lcns"][keyIndex]["fileList"] = state.contForm.lcns[keyIndex].fileList.filter((v, index) => v.uid !== arr[i].uid)
+                    }
+            }),
+
         [BUTTON_CHANGE]: state => ({
             ...state,
             buttonFlag: false
